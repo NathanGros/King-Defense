@@ -5,7 +5,6 @@ public class BlackPawn extends BlackPiece {
         super(x, y, health, attack);
     }
 
-    @Override
     public String getPieceType() {
         return "BlackPawn";
     }

@@ -1,5 +1,7 @@
 package kingdefense.backend.pieces;
 
+import kingdefense.backend.board.Board;
+
 public abstract class WhitePiece {
     private Integer x;
     private Integer y;
@@ -21,11 +23,9 @@ public abstract class WhitePiece {
 	public void setY(Integer y) {
 		this.y = y;
 	}
-    public String getPieceType() {
-        return "WhitePiece";
-    }
+    public abstract String getPieceType();
 
-    public abstract void activate();
+    public abstract void activate(Board board);
 
     @Override
     public String toString() {

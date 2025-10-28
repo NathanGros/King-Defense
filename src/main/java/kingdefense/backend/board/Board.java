@@ -8,7 +8,7 @@ public class Board {
     private ArrayList<BlackPiece> blackPieces;
     private BlackKing blackKing;
 
-    public Board(Integer blackKingX, Integer BlackKingY) {
+	public Board(Integer blackKingX, Integer BlackKingY) {
         whitePieces = new ArrayList<>();
         blackPieces = new ArrayList<>();
         blackKing = new BlackKing(blackKingX, BlackKingY);
@@ -17,15 +17,27 @@ public class Board {
         this(0, 0);
     }
 
+    public ArrayList<WhitePiece> getWhitePieces() {
+		return whitePieces;
+	}
     public void addWhitePiece(WhitePiece whitePiece) {
         whitePieces.add(whitePiece);
     }
-
+	public ArrayList<BlackPiece> getBlackPieces() {
+		return blackPieces;
+	}
     public void addBlackPiece(BlackPiece blackPiece) {
         blackPieces.add(blackPiece);
     }
+	public BlackKing getBlackKing() {
+		return blackKing;
+	}
+	public void setBlackKing(BlackKing blackKing) {
+		this.blackKing = blackKing;
+	}
 
     public void printState() {
+        System.out.println("---------- Board ----------");
         System.out.println(blackKing);
         for (BlackPiece blackPiece: blackPieces) {
             System.out.println(blackPiece);
@@ -33,5 +45,6 @@ public class Board {
         for (WhitePiece whitePiece: whitePieces) {
             System.out.println(whitePiece);
         }
+        System.out.println();
     }
 }

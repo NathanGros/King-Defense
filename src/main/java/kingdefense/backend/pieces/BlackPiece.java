@@ -38,9 +38,7 @@ public abstract class BlackPiece {
 		this.attack = attack;
 	}
 
-    public String getPieceType() {
-        return "BlackPiece";
-    }
+    public abstract String getPieceType();
 
     public void move(Integer x, Integer y) {
         this.x = x;
