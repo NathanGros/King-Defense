@@ -1,5 +1,6 @@
 package kingdefense.backend.pieces;
 
+import kingdefense.backend.Game;
 import kingdefense.backend.board.Board;
 
 public abstract class WhitePiece {
@@ -25,7 +26,7 @@ public abstract class WhitePiece {
 	}
     public abstract String getPieceType();
 
-    public abstract void activate(Board board);
+    public abstract void activate(Board board, Game game);
 
     @Override
     public String toString() {

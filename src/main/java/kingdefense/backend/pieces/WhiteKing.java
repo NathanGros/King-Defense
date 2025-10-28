@@ -2,6 +2,7 @@ package kingdefense.backend.pieces;
 
 import java.util.ArrayList;
 
+import kingdefense.backend.Game;
 import kingdefense.backend.board.Board;
 
 public class WhiteKing extends WhitePiece {
@@ -30,8 +31,7 @@ public class WhiteKing extends WhitePiece {
         return false;
     }
     
-    public void activate(Board board) {
-        System.out.println("White King activated");
+    public void activate(Board board, Game game) {
         ArrayList<BlackPiece> toRemove = new ArrayList<>();
         for (BlackPiece blackPiece: board.getBlackPieces()) {
             if (isAdjacent(blackPiece)) {
@@ -44,7 +44,7 @@ public class WhiteKing extends WhitePiece {
         }
         if (health <= 0) {
             health = 0;
-            System.out.println("Black wins");
+            game.stopGame();
         }
     }
 }
