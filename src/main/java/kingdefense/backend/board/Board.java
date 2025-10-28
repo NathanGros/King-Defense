@@ -23,11 +23,17 @@ public class Board {
     public void addWhitePiece(WhitePiece whitePiece) {
         whitePieces.add(whitePiece);
     }
+    public void removeWhitePiece(WhitePiece whitePiece) {
+        whitePieces.remove(whitePiece);
+    }
 	public ArrayList<BlackPiece> getBlackPieces() {
 		return blackPieces;
 	}
     public void addBlackPiece(BlackPiece blackPiece) {
         blackPieces.add(blackPiece);
+    }
+    public void removeBlackPiece(BlackPiece blackPiece) {
+        blackPieces.remove(blackPiece);
     }
 	public BlackKing getBlackKing() {
 		return blackKing;

@@ -1,10 +1,10 @@
 package kingdefense.backend.pieces;
 
 public abstract class BlackPiece {
-    private Integer x;
-    private Integer y;
-    private Integer health;
-    private Integer attack;
+    protected Integer x;
+    protected Integer y;
+    protected Integer health;
+    protected Integer attack;
 
 	public BlackPiece(Integer x, Integer y, Integer health, Integer attack) {
         this.x = x;

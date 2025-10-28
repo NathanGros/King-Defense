@@ -3,8 +3,8 @@ package kingdefense.backend.pieces;
 import kingdefense.backend.board.Board;
 
 public abstract class WhitePiece {
-    private Integer x;
-    private Integer y;
+    protected Integer x;
+    protected Integer y;
 
     public WhitePiece(Integer x, Integer y) {
         this.x = x;
