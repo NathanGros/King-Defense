@@ -13,6 +13,7 @@ public class WhiteKing extends WhitePiece {
         this.health = health;
     }
 
+	@Override
     public String getPieceType() {
         return "WhiteKing";
     }
@@ -31,6 +32,7 @@ public class WhiteKing extends WhitePiece {
         return false;
     }
     
+	@Override
     public void activate(Board board, Game game) {
         ArrayList<BlackPiece> toRemove = new ArrayList<>();
         for (BlackPiece blackPiece: board.getBlackPieces()) {
