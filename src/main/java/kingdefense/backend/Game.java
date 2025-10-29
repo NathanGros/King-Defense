@@ -20,8 +20,8 @@ public class Game {
     public void startGame() {
         isRunning = true;
         board.addWhitePiece(new WhiteKing(2, 3, 2));
-        board.addBlackPiece(new BlackPawn(1, 1, 1, 1));
-        board.addBlackPiece(new BlackPawn(3, 1, 1, 1));
+        board.getBlackKing().addStockPiece(new BlackPawn());
+        board.getBlackKing().addStockPiece(new BlackPawn());
         gameLoop();
     }
 

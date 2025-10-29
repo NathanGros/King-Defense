@@ -8,13 +8,13 @@ public class Board {
     private ArrayList<BlackPiece> blackPieces;
     private BlackKing blackKing;
 
-	public Board(Integer blackKingX, Integer BlackKingY) {
+    public Board(BlackKing blackKing) {
         whitePieces = new ArrayList<>();
         blackPieces = new ArrayList<>();
-        blackKing = new BlackKing(blackKingX, BlackKingY);
+        this.blackKing = blackKing;
     }
     public Board() {
-        this(0, 0);
+        this(new BlackKing(0, 0, 1));
     }
 
     public ArrayList<WhitePiece> getWhitePieces() {
@@ -43,6 +43,8 @@ public class Board {
 	}
 
     public boolean isEmpty(Integer x, Integer y) {
+        if (x < 0 || x > 7 || y < 0 || y > 7)
+            return false;
         for (BlackPiece blackPiece: blackPieces) {
             if (blackPiece.getX() == x && blackPiece.getY() == y)
                 return false;

@@ -9,6 +9,7 @@ import kingdefense.backend.pieces.BlackPieceComparator;
 public class BlackLogic {
     public static void play(Board board) {
         movePieces(board);
+        putNewPiece(board);
     }
 
     // While not (everything has moved OR no piece can move)
@@ -34,5 +35,21 @@ public class BlackLogic {
             moveList.sort(new BlackPieceComparator());
             moveList.getFirst().move();
         }
+    }
+
+    public static void putNewPiece(Board board) {
+        // No more pieces to place
+        if (board.getBlackKing().getStockPieces().isEmpty())
+            return;
+        // The place is blocked
+        for (BlackPiece blackPiece: board.getBlackPieces()) {
+            if (blackPiece.getX() == board.getBlackKing().getX() && blackPiece.getY() == board.getBlackKing().getY())
+                return;
+        }
+        // Place next piece at kings position
+        BlackPiece nextPiece = board.getBlackKing().popStockPiece();
+        nextPiece.setX(board.getBlackKing().getX());
+        nextPiece.setY(board.getBlackKing().getY());
+        board.addBlackPiece(nextPiece);
     }
 }
