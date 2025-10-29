@@ -42,6 +42,18 @@ public class Board {
 		this.blackKing = blackKing;
 	}
 
+    public boolean isEmpty(Integer x, Integer y) {
+        for (BlackPiece blackPiece: blackPieces) {
+            if (blackPiece.getX() == x && blackPiece.getY() == y)
+                return false;
+        }
+        for (WhitePiece whitePiece: whitePieces) {
+            if (whitePiece.getX() == x && whitePiece.getY() == y)
+                return false;
+        }
+        return true;
+    }
+
     public void printState() {
         System.out.println("---------- Board ----------");
         System.out.println(blackKing);

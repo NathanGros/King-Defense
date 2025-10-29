@@ -20,19 +20,21 @@ public class Game {
     public void startGame() {
         isRunning = true;
         board.addWhitePiece(new WhiteKing(2, 3, 2));
-        board.addBlackPiece(new BlackPawn(0, 1, 1, 1));
-        board.addBlackPiece(new BlackPawn(4, 7, 1, 1));
+        board.addBlackPiece(new BlackPawn(1, 1, 1, 1));
+        board.addBlackPiece(new BlackPawn(3, 1, 1, 1));
         gameLoop();
     }
 
     public void gameLoop() {
+        board.printState();
         while(isRunning) {
-            board.printState();
-            BlackLogic.movePieces(board);
+            BlackLogic.play(board);
+            System.out.println("after black turn:");
             board.printState();
             WhiteLogic.activatePieces(board, this);
+            System.out.println("after white turn:");
+            board.printState();
         }
-        board.printState();
         System.out.println("\nEnd of game\n");
     }
 }
