@@ -9,7 +9,7 @@ public class InputManager {
     }
 
     public void checkMovement(CameraManager cameraManager) {
-        if (IsKeyPressed(KEY_SPACE)) {
+        if (IsKeyPressed(KEY_R)) {
             cameraManager.rotate();
         }
         if (GetMouseWheelMove() == -1) {
@@ -18,22 +18,10 @@ public class InputManager {
         if (GetMouseWheelMove() == 1) {
             cameraManager.zoomIn();
         }
-        if (IsKeyDown(KEY_W)) {
-            cameraManager.moveUp();
-        }
-        if (IsKeyDown(KEY_S)) {
-            cameraManager.moveDown();
-        }
-        if (IsKeyDown(KEY_A)) {
-            cameraManager.moveLeft();
-        }
-        if (IsKeyDown(KEY_D)) {
-            cameraManager.moveRight();
-        }
     }
 
     public void checkTurn(Game game) {
-        if (IsKeyPressed(KEY_T)) {
+        if (IsKeyPressed(KEY_SPACE)) {
             game.makeOneTurn();
         }
     }
