@@ -139,71 +139,61 @@ public abstract class BlackPiece {
         move(targetX, targetY);
     }
 
-    // Find the empty spots around (there is at least one)
-    // From these compute shortest path to white king using BFS, made of non white occupied tiles
-    // set this.shortestPathLength
-    // set this.targetX and this.targetY (the empty tile)
-	public void computeShortestPath(Board board) {
-        ArrayList<PathFindingTile> startTiles = getEmptyNeighbors(board, new PathFindingTile(this.x, this.y));
-        WhiteKing whiteKing = board.getWhiteKing();
-        for (PathFindingTile startTile: startTiles) {
-            ArrayList<PathFindingTile> visiting = new ArrayList<>();
-            ArrayList<PathFindingTile> visited = new ArrayList<>();
-            visited.add(new PathFindingTile(this.x, this.y));
-            visited.getFirst().setDistance(0);
-            // Add fake startTiles to the visited list to prevent issues
-            for (PathFindingTile startTile2: startTiles) {
-                PathFindingTile fakeStartTile = new PathFindingTile(startTile2.getTileX(), startTile2.getTileY());
-                fakeStartTile.setDistance(1);
-                visited.add(fakeStartTile);
+    private boolean isNeighborValid(Board board, PathFindingTile neighbor, ArrayList<PathFindingTile> visited, ArrayList<PathFindingTile> visiting) {
+        boolean isNeighborValid = true;
+        // Check if neighbor is not a white piece
+        for (WhitePiece whitePiece: board.getWhitePieces()) {
+            if (neighbor.getTileX() == whitePiece.getX() && neighbor.getTileY() == whitePiece.getY())
+                isNeighborValid = false;
+        }
+        // Check if neighbor is not already visited
+        for (PathFindingTile visitedTile: visited) {
+            if (neighbor.getTileX() == visitedTile.getTileX() && neighbor.getTileY() == visitedTile.getTileY())
+                isNeighborValid = false;
+        }
+        // Check if neighbor is not already in visiting queue (BFS property)
+        for (PathFindingTile visitingTile: visiting) {
+            if (neighbor.getTileX() == visitingTile.getTileX() && neighbor.getTileY() == visitingTile.getTileY())
+                isNeighborValid = false;
+        }
+        return isNeighborValid;
+    }
+
+    private void bfs(Board board, PathFindingTile startTile, WhiteKing whiteKing) {
+        ArrayList<PathFindingTile> visiting = new ArrayList<>();
+        ArrayList<PathFindingTile> visited = new ArrayList<>();
+        visited.add(new PathFindingTile(this.x, this.y));
+        visited.getFirst().setDistance(0);
+        startTile.setDistance(1);
+        visiting.add(startTile);
+        boolean foundKing = false;
+        while (!visiting.isEmpty()) {
+            Integer tileDistance = visiting.getFirst().getDistance();
+            // End BFS
+            if (visiting.getFirst().getTileX() == whiteKing.getX() && visiting.getFirst().getTileY() == whiteKing.getY()) {
+                startTile.setDistance(tileDistance);
+                foundKing = true;
+                break;
             }
-            startTile.setDistance(1);
-            visiting.add(startTile);
-            boolean foundEnd= false;
-            if (startTile.getTileX() == whiteKing.getX() && startTile.getTileY() == whiteKing.getY()) {
-                foundEnd = true;
-            }
-            while (!foundEnd && !visiting.isEmpty()) {
-                Integer tileDistance = visiting.getFirst().getDistance();
-                ArrayList<PathFindingTile> neighbors = getNeighbors(board, visiting.getFirst());
-                // Mark Tile as visited
-                visited.add(visiting.getFirst());
-                visiting.remove(0);
-                // Add valid neighbors to visiting queue
-                for (PathFindingTile neighbor: neighbors) {
-                    // End pathfinding for this start tile if white king is a neighbor
-                    if (neighbor.getTileX() == whiteKing.getX() && neighbor.getTileY() == whiteKing.getY()) {
-                        startTile.setDistance(tileDistance + 1);
-                        foundEnd = true;
-                        break;
-                    }
-                    boolean isNeighborValid = true;
-                    // Check if neighbor is not a white piece
-                    for (WhitePiece whitePiece: board.getWhitePieces()) {
-                        if (neighbor.getTileX() == whitePiece.getX() && neighbor.getTileY() == whitePiece.getY())
-                            isNeighborValid = false;
-                    }
-                    // Check if neighbor is not already visited
-                    for (PathFindingTile visitedTile: visited) {
-                        if (neighbor.getTileX() == visitedTile.getTileX() && neighbor.getTileY() == visitedTile.getTileY())
-                            isNeighborValid = false;
-                    }
-                    // Check if neighbor is not already in visiting queue (BFS property)
-                    for (PathFindingTile visitingTile: visiting) {
-                        if (neighbor.getTileX() == visitingTile.getTileX() && neighbor.getTileY() == visitingTile.getTileY())
-                            isNeighborValid = false;
-                    }
-                    // Add Neighbor to visiting queue
-                    if (isNeighborValid) {
-                        neighbor.setDistance(tileDistance + 1);
-                        visiting.add(neighbor);
-                    }
+            ArrayList<PathFindingTile> neighbors = getNeighbors(board, visiting.getFirst());
+            // Mark Tile as visited
+            visited.add(visiting.getFirst());
+            visiting.remove(0);
+            // Add valid neighbors to visiting queue
+            for (PathFindingTile neighbor: neighbors) {
+                if (isNeighborValid(board, neighbor, visited, visiting)) {
+                    neighbor.setDistance(tileDistance + 1);
+                    visiting.add(neighbor);
                 }
             }
-            if (!foundEnd)
-                startTile.setDistance(-1);
         }
-        // Find smallest path among all the initial spots calculated
+        if (!foundKing)
+            startTile.setDistance(-1);
+    }
+
+    private void setShortestPathsResults(ArrayList<PathFindingTile> startTiles) {
+        // Find smallest path among all the initial spots calculated if there is one
+        // A tile with distance -1 means the king can't be reach from there
         Integer smallestPath = -1;
         Integer smallestPathIndex = -1;
         for (int i = 0; i < startTiles.size(); i++) {
@@ -216,6 +206,18 @@ public abstract class BlackPiece {
         this.setShortestPathLength(smallestPath);
         this.setTargetX(startTiles.get(smallestPathIndex).getTileX());
         this.setTargetY(startTiles.get(smallestPathIndex).getTileY());
+    }
+
+	public void computeShortestPath(Board board) {
+        // Find the empty spots around the piece (there is at least one)
+        ArrayList<PathFindingTile> startTiles = getEmptyNeighbors(board, new PathFindingTile(this.x, this.y));
+        WhiteKing whiteKing = board.getWhiteKing();
+        // For each spots, compute shortest path to white king using BFS, path made of non white occupied tiles
+        for (PathFindingTile startTile: startTiles) {
+            bfs(board, startTile, whiteKing);
+        }
+        // Then choose which initial empty spot becomes the target to move
+        setShortestPathsResults(startTiles);
 	}
 
     @Override
