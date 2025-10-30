@@ -19,10 +19,11 @@ public class Game {
 
     public void startGame() {
         isRunning = true;
-        board.addWhitePiece(new WhiteKing(2, 3, 2));
+        board.addWhitePiece(new WhiteKing(7, 7, 5));
         board.addWhitePiece(new WhitePawn(1, 0));
         board.getBlackKing().addStockPiece(new BlackPawn());
         board.getBlackKing().addStockPiece(new BlackPawn());
+        board.getBlackKing().addStockPiece(new BlackKnight());
         gameLoop();
     }
 

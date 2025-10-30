@@ -29,4 +29,9 @@ public class PathFindingTile {
 	public void setDistance(Integer distance) {
 		this.distance = distance;
 	}
+
+    @Override
+    public String toString() {
+        return "x: " + tileX + ", y: " + tileY + ", d: " + distance;
+    }
 }

@@ -42,8 +42,14 @@ public class Board {
 		this.blackKing = blackKing;
 	}
 
+    public boolean isInBound(Integer x, Integer y) {
+        return (x >= 0 && x < 8 && y >= 0 && y < 8);
+    }
+
     public boolean isEmpty(Integer x, Integer y) {
-        if (x < 0 || x > 7 || y < 0 || y > 7)
+        if (!isInBound(x, y))
+            return false;
+        if (blackKing.getX() == x && blackKing.getY() == y)
             return false;
         for (BlackPiece blackPiece: blackPieces) {
             if (blackPiece.getX() == x && blackPiece.getY() == y)
@@ -54,6 +60,14 @@ public class Board {
                 return false;
         }
         return true;
+    }
+
+    public boolean isWhite(Integer x, Integer y) {
+        for (WhitePiece whitePiece: whitePieces) {
+            if (whitePiece.getX() == x && whitePiece.getY() == y)
+                return true;
+        }
+        return false;
     }
 
     public void printState() {
