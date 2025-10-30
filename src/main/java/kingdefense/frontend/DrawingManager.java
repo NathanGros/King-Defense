@@ -14,10 +14,24 @@ public class DrawingManager {
     public DrawingManager() {}
 
     public void drawBoard(Board board) {
+        drawChessBoard();
         drawWhitePieces(board.getWhitePieces());
         drawBlackPieces(board.getBlackPieces());
         drawWhiteKing(board.getWhiteKing());
         drawBlackKing(board.getBlackKing());
+    }
+
+    private void drawChessBoard() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                Color color;
+                if ((i + j) % 2 == 0)
+                    color = WHITE;
+                else
+                    color = BLACK;
+                DrawCube(new Vector3().x(i).y(0).z(j), 1.f, 0.2f, 1.f, color);
+            }
+        }
     }
 
     private void drawPiece(Float x, Float y, Float z, Float height, Color color) {

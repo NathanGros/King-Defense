@@ -38,7 +38,6 @@ public class WindowManager {
         BeginDrawing();
         ClearBackground(RAYWHITE);
         BeginMode3D(cameraManager.getCamera());
-        DrawGrid(20, 1.0f); // Temporary
         drawingManager.drawBoard(game.getBoard());
         EndMode3D();
         EndDrawing();
