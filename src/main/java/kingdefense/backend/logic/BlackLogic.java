@@ -3,8 +3,7 @@ package kingdefense.backend.logic;
 import java.util.ArrayList;
 
 import kingdefense.backend.board.*;
-import kingdefense.backend.pieces.BlackPiece;
-import kingdefense.backend.pieces.BlackPieceComparator;
+import kingdefense.backend.pieces.*;
 
 public class BlackLogic {
     public static void play(Board board) {
@@ -33,7 +32,13 @@ public class BlackLogic {
             }
             if (moveList.isEmpty()) break;
             moveList.sort(new BlackPieceComparator());
-            moveList.getFirst().move();
+            BlackPiece pieceToMove = moveList.getFirst();
+            WhiteKing whiteKing = board.getWhiteKing();
+            if (pieceToMove.getTargetX() == whiteKing.getX() && pieceToMove.getTargetY() == whiteKing.getY()) {
+                whiteKing.damage(board, pieceToMove);
+            }
+            else
+                pieceToMove.move();
         }
     }
 

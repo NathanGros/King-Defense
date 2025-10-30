@@ -19,7 +19,6 @@ public class Game {
 
     public void startGame() {
         isRunning = true;
-        board.addWhitePiece(new WhiteKing(7, 7, 5));
         board.addWhitePiece(new WhitePawn(1, 0));
         board.getBlackKing().addStockPiece(new BlackPawn());
         board.getBlackKing().addStockPiece(new BlackPawn());
@@ -36,6 +35,9 @@ public class Game {
             WhiteLogic.activatePieces(board, this);
             System.out.println("after white turn:");
             board.printState();
+            if (board.getWhiteKing().getHealth() <= 0) {
+                stopGame();
+            }
         }
         System.out.println("\nEnd of game\n");
     }

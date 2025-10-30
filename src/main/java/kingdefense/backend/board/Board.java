@@ -7,14 +7,16 @@ public class Board {
     private ArrayList<WhitePiece> whitePieces;
     private ArrayList<BlackPiece> blackPieces;
     private BlackKing blackKing;
+    private WhiteKing whiteKing;
 
-    public Board(BlackKing blackKing) {
+    public Board(BlackKing blackKing, WhiteKing whiteKing) {
         whitePieces = new ArrayList<>();
         blackPieces = new ArrayList<>();
         this.blackKing = blackKing;
+        this.whiteKing = whiteKing;
     }
     public Board() {
-        this(new BlackKing(0, 0, 1));
+        this(new BlackKing(0, 0, 1), new WhiteKing(7, 7, 5));
     }
 
     public ArrayList<WhitePiece> getWhitePieces() {
@@ -40,6 +42,12 @@ public class Board {
 	}
 	public void setBlackKing(BlackKing blackKing) {
 		this.blackKing = blackKing;
+	}
+	public WhiteKing getWhiteKing() {
+		return whiteKing;
+	}
+	public void setWhiteKing(WhiteKing whiteKing) {
+		this.whiteKing = whiteKing;
 	}
 
     public boolean isInBound(Integer x, Integer y) {
@@ -76,6 +84,7 @@ public class Board {
         for (BlackPiece blackPiece: blackPieces) {
             System.out.println(blackPiece);
         }
+        System.out.println(whiteKing);
         for (WhitePiece whitePiece: whitePieces) {
             System.out.println(whitePiece);
         }

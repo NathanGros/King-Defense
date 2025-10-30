@@ -1,22 +1,36 @@
 package kingdefense.backend.pieces;
 
-import java.util.ArrayList;
-
-import kingdefense.backend.Game;
 import kingdefense.backend.board.Board;
 
-public class WhiteKing extends WhitePiece {
+public class WhiteKing {
+    private Integer x;
+    private Integer y;
     private Integer health;
 
-    public WhiteKing(Integer x, Integer y, Integer health) {
-        super(x, y);
+	public WhiteKing(Integer x, Integer y, Integer health) {
+        this.x = x;
+        this.y = y;
         this.health = health;
     }
 
-	@Override
-    public String getPieceType() {
-        return "WhiteKing";
-    }
+	public Integer getX() {
+		return x;
+	}
+	public void setX(Integer x) {
+		this.x = x;
+	}
+	public Integer getY() {
+		return y;
+	}
+	public void setY(Integer y) {
+		this.y = y;
+	}
+    public Integer getHealth() {
+		return health;
+	}
+	public void setHealth(Integer health) {
+		this.health = health;
+	}
 
     public boolean isAdjacent(BlackPiece blackPiece) {
         Integer x = blackPiece.getX();
@@ -31,22 +45,16 @@ public class WhiteKing extends WhitePiece {
             return true;
         return false;
     }
-    
-	@Override
-    public void activate(Board board, Game game) {
-        ArrayList<BlackPiece> toRemove = new ArrayList<>();
-        for (BlackPiece blackPiece: board.getBlackPieces()) {
-            if (isAdjacent(blackPiece)) {
-                health -= blackPiece.getAttack();
-                toRemove.add(blackPiece);
-            }
-        }
-        for (BlackPiece blackPiece: toRemove) {
-            board.removeBlackPiece(blackPiece);
-        }
-        if (health <= 0) {
+
+    public void damage(Board board, BlackPiece blackPiece) {
+        health -= blackPiece.getAttack();
+        if (health <= 0)
             health = 0;
-            game.stopGame();
-        }
+        board.removeBlackPiece(blackPiece);
+    }
+
+    @Override
+    public String toString() {
+        return "WhiteKing" + ", x:" + x + ", y:" + y + ", health:" + health;
     }
 }
