@@ -15,9 +15,9 @@ public abstract class BlackPiece {
     protected Integer targetX;
     protected Integer targetY;
     protected Integer shortestPathLength;
-    protected ArrayList<Integer> accessibleX;
-	protected ArrayList<Integer> accessibleY;
-    protected Integer accessibleNb;
+    protected ArrayList<Integer> attainableX;
+	protected ArrayList<Integer> attainableY;
+    protected Integer attainableNb;
 
 	public BlackPiece(Integer x, Integer y, Integer health, Integer attack) {
         this.x = x;
@@ -90,18 +90,18 @@ public abstract class BlackPiece {
 	public void setShortestPathLength(Integer shortestPathLength) {
 		this.shortestPathLength = shortestPathLength;
 	}
-	public void setAccessibleX(ArrayList<Integer> accessibleX) {
-		this.accessibleX = accessibleX;
+	public void setAttainableX(ArrayList<Integer> attainableX) {
+		this.attainableX = attainableX;
 	}
-	public void setAccessibleY(ArrayList<Integer> accessibleY) {
-		this.accessibleY = accessibleY;
+	public void setAttainableY(ArrayList<Integer> attainableY) {
+		this.attainableY = attainableY;
 	}
 
     public abstract String getPieceType();
 
 	public boolean canMove(Board board) {
-        for (int i = 0; i < accessibleNb; i++) {
-            if (board.isEmpty(x + accessibleX.get(i), y + accessibleY.get(i)))
+        for (int i = 0; i < attainableNb; i++) {
+            if (board.isEmpty(x + attainableX.get(i), y + attainableY.get(i)))
                 return true;
         }
         return false;
@@ -111,9 +111,9 @@ public abstract class BlackPiece {
         int x = tile.getTileX();
         int y = tile.getTileY();
         ArrayList<PathFindingTile> neighbors = new ArrayList<>();
-        for (int i = 0; i < accessibleNb; i++) {
-            if (board.isInBound(x + accessibleX.get(i), y + accessibleY.get(i)))
-                neighbors.add(new PathFindingTile(x + accessibleX.get(i), y + accessibleY.get(i)));
+        for (int i = 0; i < attainableNb; i++) {
+            if (board.isInBound(x + attainableX.get(i), y + attainableY.get(i)))
+                neighbors.add(new PathFindingTile(x + attainableX.get(i), y + attainableY.get(i)));
         }
         return neighbors;
     }
@@ -122,9 +122,9 @@ public abstract class BlackPiece {
         int x = tile.getTileX();
         int y = tile.getTileY();
         ArrayList<PathFindingTile> neighbors = new ArrayList<>();
-        for (int i = 0; i < accessibleNb; i++) {
-            if (board.isEmpty(x + accessibleX.get(i), y + accessibleY.get(i)))
-                neighbors.add(new PathFindingTile(x + accessibleX.get(i), y + accessibleY.get(i)));
+        for (int i = 0; i < attainableNb; i++) {
+            if (board.isEmpty(x + attainableX.get(i), y + attainableY.get(i)))
+                neighbors.add(new PathFindingTile(x + attainableX.get(i), y + attainableY.get(i)));
         }
         return neighbors;
     }
