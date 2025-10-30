@@ -188,6 +188,11 @@ public abstract class BlackPiece {
                         if (neighbor.getTileX() == visitedTile.getTileX() && neighbor.getTileY() == visitedTile.getTileY())
                             isNeighborValid = false;
                     }
+                    // Check if neighbor is not already in visiting queue (BFS property)
+                    for (PathFindingTile visitingTile: visiting) {
+                        if (neighbor.getTileX() == visitingTile.getTileX() && neighbor.getTileY() == visitingTile.getTileY())
+                            isNeighborValid = false;
+                    }
                     // Add Neighbor to visiting queue
                     if (isNeighborValid) {
                         neighbor.setDistance(tileDistance + 1);
