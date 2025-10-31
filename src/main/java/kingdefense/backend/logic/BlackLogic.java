@@ -30,7 +30,8 @@ public class BlackLogic {
                 if (!blackPiece.canMove(board))
                     continue;
                 blackPiece.computeShortestPath(board);
-                moveList.add(blackPiece);
+                if (blackPiece.getShortestPathLength() != -1)
+                    moveList.add(blackPiece);
             }
             if (moveList.isEmpty()) break;
             moveList.sort(new BlackPieceComparator());

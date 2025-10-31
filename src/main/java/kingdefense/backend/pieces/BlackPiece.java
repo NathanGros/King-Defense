@@ -203,9 +203,16 @@ public abstract class BlackPiece {
                 smallestPathIndex = i;
             }
         }
-        this.setShortestPathLength(smallestPath);
-        this.setTargetX(startTiles.get(smallestPathIndex).getTileX());
-        this.setTargetY(startTiles.get(smallestPathIndex).getTileY());
+        if (smallestPath == -1) {
+            this.setShortestPathLength(-1);
+            this.setTargetX(x);
+            this.setTargetY(y);
+        }
+        else {
+            this.setShortestPathLength(smallestPath);
+            this.setTargetX(startTiles.get(smallestPathIndex).getTileX());
+            this.setTargetY(startTiles.get(smallestPathIndex).getTileY());
+        }
     }
 
 	public void computeShortestPath(Board board) {
