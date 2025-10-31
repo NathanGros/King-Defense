@@ -12,6 +12,7 @@ public class Game {
 	private boolean isRunning;
     private WindowManager windowManager;
     private boolean isInWave;
+    private boolean isBlackTurn = false;
 
     public Game() {
         board = new Board();
@@ -41,6 +42,7 @@ public class Game {
         if (isInWave)
             return;
         isInWave = true;
+        isBlackTurn = true;
         board.getBlackKing().addStockPiece(new BlackPawn());
         board.getBlackKing().addStockPiece(new BlackPawn());
         board.getBlackKing().addStockPiece(new BlackKnight());
@@ -56,7 +58,7 @@ public class Game {
     }
 
     public void gameLoop() {
-        float timerPutBlackPiece = 0.f;
+        float timerPlayerAction = 0.f;
         while(isRunning) {
             // board.printState();
             windowManager.windowInteract(this);
@@ -64,10 +66,14 @@ public class Game {
                 stopGame();
             }
             if (isInWave) {
-                timerPutBlackPiece += GetFrameTime();
-                if (timerPutBlackPiece >= 1.f) {
-                    timerPutBlackPiece = 0.f;
-                    BlackLogic.play(this, board);
+                timerPlayerAction += GetFrameTime();
+                if (timerPlayerAction >= 1.f) {
+                    timerPlayerAction = 0.f;
+                    if (isBlackTurn)
+                        BlackLogic.play(this, board);
+                    else
+                        WhiteLogic.activatePieces(board, this);
+                    isBlackTurn = !isBlackTurn;
                 }
             }
         }
