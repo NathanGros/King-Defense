@@ -78,6 +78,26 @@ public class Board {
         return false;
     }
 
+    public void damageBlackAtPos(Integer x, Integer y, Integer damage) {
+        ArrayList<BlackPiece> deadList = new ArrayList<>();
+        for (BlackPiece blackPiece: blackPieces) {
+            if (blackPiece.getX() == x && blackPiece.getY() == y) {
+                blackPiece.damage(damage);
+                if (blackPiece.getHealth() <= 0)
+                    deadList.add(blackPiece);
+            }
+        }
+        for (BlackPiece blackPiece: deadList) {
+            blackPieces.remove(blackPiece);
+        }
+    }
+
+    public void damageBlackPiece(BlackPiece blackPiece, Integer damage) {
+        blackPiece.damage(damage);
+        if (blackPiece.getHealth() <= 0)
+            blackPieces.remove(blackPiece);
+    }
+
     public void printState() {
         System.out.println("---------- Board ----------");
         System.out.println(blackKing);

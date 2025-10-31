@@ -30,9 +30,6 @@ public abstract class BlackPiece {
         this.shortestPathLength = -1;
     }
 
-	public void setHealth(Integer health) {
-		this.health = health;
-	}
 	public Integer getX() {
 		return x;
 	}
@@ -47,6 +44,9 @@ public abstract class BlackPiece {
 	}
 	public Integer getHealth() {
 		return health;
+	}
+	public void setHealth(Integer health) {
+		this.health = health;
 	}
 	public void damage(Integer damage) {
 		health -= damage;

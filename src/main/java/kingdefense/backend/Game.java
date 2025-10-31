@@ -28,6 +28,9 @@ public class Game {
     public void startGame() {
         isRunning = true;
         board.addWhitePiece(new WhitePawn(1, 0));
+        board.addWhitePiece(new WhitePawn(1, 2));
+        board.addWhitePiece(new WhitePawn(6, 2));
+        board.addWhitePiece(new WhiteRook(6, 0));
         windowManager.launchWindow();
         gameLoop();
     }
