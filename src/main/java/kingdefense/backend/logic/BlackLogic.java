@@ -80,7 +80,7 @@ public class BlackLogic {
                 deadList.add(blackPiece);
         }
         for (BlackPiece blackPiece: deadList) {
-            board.getBlackPieces().remove(blackPiece);
+            board.killBlackPiece(blackPiece);
         }
     }
 

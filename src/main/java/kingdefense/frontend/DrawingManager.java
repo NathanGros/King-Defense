@@ -6,7 +6,7 @@ import static com.raylib.Raylib.*;
 import java.util.ArrayList;
 
 import kingdefense.backend.Game;
-import kingdefense.backend.board.Board;
+import kingdefense.backend.board.*;
 import kingdefense.backend.pieces.*;
 
 public class DrawingManager {
@@ -23,6 +23,15 @@ public class DrawingManager {
                 else
                     color = BLACK;
                 DrawCube(new Vector3().x(i).y(0).z(j), 1.f, 0.2f, 1.f, color);
+            }
+        }
+    }
+
+    private void drawCoins(ArrayList<CoinTile> coins) {
+        for (CoinTile coin: coins) {
+            for (int i = 0; i < coin.getNbCoin(); i++) {
+                DrawCube(new Vector3().x(coin.getX()).y(0.2f + 0.3f * i).z(coin.getY()), 0.3f, 0.2f, 0.3f, YELLOW);
+                DrawCubeWires(new Vector3().x(coin.getX()).y(0.2f + 0.3f * i).z(coin.getY()), 0.3f, 0.2f, 0.3f, BLACK);
             }
         }
     }
@@ -54,6 +63,7 @@ public class DrawingManager {
 
     private void drawBoard(Board board) {
         drawChessBoard();
+        drawCoins(board.getCoins());
         drawWhitePieces(board.getWhitePieces());
         drawBlackPieces(board.getBlackPieces());
         drawWhiteKing(board.getWhiteKing());

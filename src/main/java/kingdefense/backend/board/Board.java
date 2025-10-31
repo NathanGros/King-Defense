@@ -6,12 +6,14 @@ import kingdefense.backend.pieces.*;
 public class Board {
     private ArrayList<WhitePiece> whitePieces;
     private ArrayList<BlackPiece> blackPieces;
+    private ArrayList<CoinTile> coins;
     private BlackKing blackKing;
     private WhiteKing whiteKing;
 
     public Board(BlackKing blackKing, WhiteKing whiteKing) {
         whitePieces = new ArrayList<>();
         blackPieces = new ArrayList<>();
+        coins = new ArrayList<>();
         this.blackKing = blackKing;
         this.whiteKing = whiteKing;
     }
@@ -36,6 +38,20 @@ public class Board {
     }
     public void removeBlackPiece(BlackPiece blackPiece) {
         blackPieces.remove(blackPiece);
+    }
+    public void killBlackPiece(BlackPiece blackPiece) {
+        for (CoinTile coin: coins) {
+            if (coin.getX() == blackPiece.getX() && coin.getY() == blackPiece.getY()) {
+                coin.addCoins(blackPiece.getCoinDropNb());
+                blackPieces.remove(blackPiece);
+                return;
+            }
+        }
+        coins.add(new CoinTile(blackPiece.getX(), blackPiece.getY(), blackPiece.getCoinDropNb()));
+        blackPieces.remove(blackPiece);
+    }
+    public ArrayList<CoinTile> getCoins() {
+        return coins;
     }
 	public BlackKing getBlackKing() {
 		return blackKing;
@@ -88,14 +104,14 @@ public class Board {
             }
         }
         for (BlackPiece blackPiece: deadList) {
-            blackPieces.remove(blackPiece);
+            killBlackPiece(blackPiece);
         }
     }
 
     public void damageBlackPiece(BlackPiece blackPiece, Float damage) {
         blackPiece.damage(damage);
         if (blackPiece.getHealth() <= 0)
-            blackPieces.remove(blackPiece);
+            killBlackPiece(blackPiece);
     }
 
     public void poisonBlackAtPos(Integer x, Integer y, Float poisonDamage, Integer nbTurns) {
