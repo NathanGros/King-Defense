@@ -74,6 +74,10 @@ public class DrawingManager {
         DrawText(whiteking.getHealth().toString(), 50, 50, 20, RED);
     }
 
+    private void drawEarnedCoins(Integer coins) {
+        DrawText(coins.toString(), 50, 100, 20, YELLOW);
+    }
+
     public void drawGame(Game game, CameraManager cameraManager) {
         BeginDrawing();
         ClearBackground(RAYWHITE);
@@ -81,6 +85,7 @@ public class DrawingManager {
         drawBoard(game.getBoard());
         EndMode3D();
         drawHealth(game.getBoard().getWhiteKing());
+        drawEarnedCoins(game.getNbCoins());
         EndDrawing();
     }
 }

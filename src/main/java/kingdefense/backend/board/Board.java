@@ -53,6 +53,9 @@ public class Board {
     public ArrayList<CoinTile> getCoins() {
         return coins;
     }
+    public void removeCoins(CoinTile coinTile) {
+        coins.remove(coinTile);
+    }
 	public BlackKing getBlackKing() {
 		return blackKing;
 	}

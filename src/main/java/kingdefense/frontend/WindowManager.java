@@ -1,6 +1,5 @@
 package kingdefense.frontend;
 
-import static com.raylib.Colors.*;
 import static com.raylib.Raylib.*;
 
 import kingdefense.backend.Game;
@@ -20,7 +19,7 @@ public class WindowManager {
         SetConfigFlags(FLAG_WINDOW_RESIZABLE);
         SetConfigFlags(FLAG_FULLSCREEN_MODE);
         SetConfigFlags(FLAG_MSAA_4X_HINT);
-        InitWindow(800, 450, "King Defense");
+        InitWindow(0, 0, "King Defense");
         SetTargetFPS(60);
     }
 
@@ -35,6 +34,7 @@ public class WindowManager {
         }
         inputManager.checkMovement(cameraManager);
         inputManager.checkTurn(game);
+        inputManager.collectCoins(game, cameraManager.getCamera());
         drawingManager.drawGame(game, cameraManager);
     }
 }

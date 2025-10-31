@@ -9,20 +9,32 @@ import kingdefense.frontend.WindowManager;
 
 public class Game {
     private Board board;
-	private boolean isRunning;
     private WindowManager windowManager;
+	private boolean isRunning;
     private boolean isInWave;
-    private boolean isBlackTurn = false;
+    private boolean isBlackTurn;
+    private Integer nbCoins;
 
-    public Game() {
+	public Game() {
         board = new Board();
+        windowManager = new WindowManager();
         isRunning = false;
         isInWave = false;
-        windowManager = new WindowManager();
+        isBlackTurn = false;
+        nbCoins = 0;
     }
 
     public Board getBoard() {
 		return board;
+	}
+    public Integer getNbCoins() {
+		return nbCoins;
+	}
+	public void setNbCoins(Integer nbCoins) {
+		this.nbCoins = nbCoins;
+	}
+	public void addCoins(Integer nbCoins) {
+		this.nbCoins += nbCoins;
 	}
 
     public void startGame() {
