@@ -16,7 +16,7 @@ public class Board {
         this.whiteKing = whiteKing;
     }
     public Board() {
-        this(new BlackKing(0, 0, 1), new WhiteKing(7, 7, 5));
+        this(new BlackKing(0, 0, 1), new WhiteKing(7, 7, 20));
     }
 
     public ArrayList<WhitePiece> getWhitePieces() {

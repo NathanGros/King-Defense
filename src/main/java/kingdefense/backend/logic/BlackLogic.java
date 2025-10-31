@@ -2,16 +2,18 @@ package kingdefense.backend.logic;
 
 import java.util.ArrayList;
 
+import kingdefense.backend.Game;
 import kingdefense.backend.board.*;
 import kingdefense.backend.pieces.*;
 
 public class BlackLogic {
-    public static void play(Board board) {
+    public static void play(Game game, Board board) {
         movePieces(board);
         putNewPiece(board);
+        checkWaveEnd(game, board);
     }
 
-    // While not (everything has moved OR no piece can move)
+	// While not (everything has moved OR no piece can move)
     //    For each piece that hasnt moved
     //    calculate shortest path
     //    sort them by decreasing piece power and increasing shortest path 
@@ -44,8 +46,9 @@ public class BlackLogic {
 
     public static void putNewPiece(Board board) {
         // No more pieces to place
-        if (board.getBlackKing().getStockPieces().isEmpty())
+        if (board.getBlackKing().getStockPieces().isEmpty()) {
             return;
+        }
         // The place is blocked
         for (BlackPiece blackPiece: board.getBlackPieces()) {
             if (blackPiece.getX() == board.getBlackKing().getX() && blackPiece.getY() == board.getBlackKing().getY())
@@ -57,4 +60,10 @@ public class BlackLogic {
         nextPiece.setY(board.getBlackKing().getY());
         board.addBlackPiece(nextPiece);
     }
+
+    private static void checkWaveEnd(Game game, Board board) {
+        if (board.getBlackPieces().isEmpty() && board.getBlackKing().getStockPieces().isEmpty()) {
+            game.stopWave();
+        }
+	}
 }

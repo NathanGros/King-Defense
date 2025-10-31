@@ -22,7 +22,7 @@ public class InputManager {
 
     public void checkTurn(Game game) {
         if (IsKeyPressed(KEY_SPACE)) {
-            game.makeOneTurn();
+            game.startWave();
         }
     }
 }
