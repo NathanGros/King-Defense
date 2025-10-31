@@ -32,6 +32,7 @@ public class Game {
         board.addWhitePiece(new WhitePawn(0, 2));
         board.addWhitePiece(new WhitePawn(6, 2));
         board.addWhitePiece(new WhiteRook(6, 0));
+        board.addWhitePiece(new WhiteBishop(0, 6));
         windowManager.launchWindow();
         gameLoop();
     }

@@ -10,6 +10,7 @@ public class BlackLogic {
     public static void play(Game game, Board board) {
         movePieces(board);
         putNewPiece(board);
+        applyPoison(board);
         checkWaveEnd(game, board);
     }
 
@@ -60,6 +61,20 @@ public class BlackLogic {
         nextPiece.setX(board.getBlackKing().getX());
         nextPiece.setY(board.getBlackKing().getY());
         board.addBlackPiece(nextPiece);
+    }
+
+    public static void applyPoison(Board board) {
+        ArrayList<BlackPiece> deadList = new ArrayList<>();
+        for (BlackPiece blackPiece: board.getBlackPieces()) {
+            if (blackPiece.isPoisoned()) {
+                blackPiece.damage(1);
+                if (blackPiece.getHealth() <= 0)
+                    deadList.add(blackPiece);
+            }
+        }
+        for (BlackPiece blackPiece: deadList) {
+            board.getBlackPieces().remove(blackPiece);
+        }
     }
 
     private static void checkWaveEnd(Game game, Board board) {

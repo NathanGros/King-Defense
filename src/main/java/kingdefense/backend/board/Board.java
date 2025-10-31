@@ -98,6 +98,14 @@ public class Board {
             blackPieces.remove(blackPiece);
     }
 
+    public void poisonBlackAtPos(Integer x, Integer y) {
+        for (BlackPiece blackPiece: blackPieces) {
+            if (blackPiece.getX() == x && blackPiece.getY() == y) {
+                blackPiece.poison();
+            }
+        }
+    }
+
     public void printState() {
         System.out.println("---------- Board ----------");
         System.out.println(blackKing);

@@ -11,6 +11,7 @@ public abstract class BlackPiece {
     protected Integer health;
     protected Integer attack;
     protected Integer priority;
+    protected boolean isPoisoned;
 	protected boolean hasMoved;
     protected Integer targetX;
     protected Integer targetY;
@@ -62,6 +63,15 @@ public abstract class BlackPiece {
 	}
 	public void setPriority(Integer priority) {
 		this.priority = priority;
+	}
+	public boolean isPoisoned() {
+		return isPoisoned;
+	}
+	public void poison() {
+		this.isPoisoned = true;
+	}
+	public void unpoison() {
+		this.isPoisoned = false;
 	}
 	public boolean hasMoved() {
 		return hasMoved;
