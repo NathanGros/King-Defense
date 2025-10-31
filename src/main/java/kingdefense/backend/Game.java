@@ -17,6 +17,7 @@ public class Game {
 	private boolean isBlackTurn;
     private Integer nbCoins;
     private ArrayList<WhitePiece> availableWhitePieces;
+    private String selectedWhitePiece;
 
 	public Game() {
         board = new Board();
@@ -26,6 +27,7 @@ public class Game {
         isBlackTurn = false;
         nbCoins = 0;
         availableWhitePieces = new ArrayList<>();
+        selectedWhitePiece = "WhiteBishop";
     }
 
     public Board getBoard() {
@@ -85,11 +87,22 @@ public class Game {
     public void putNewWhitePiece(Integer x, Integer y) {
         if (availableWhitePieces.size() == 0)
             return;
-        WhitePiece newWhitePiece = availableWhitePieces.getFirst();
-        availableWhitePieces.removeFirst();
-        newWhitePiece.setX(x);
-        newWhitePiece.setY(y);
-        board.addWhitePiece(newWhitePiece);
+        if (!board.isEmpty(x, y))
+            return;
+        if (board.getBlackKing().getX() == x && board.getBlackKing().getY() == y)
+            return;
+        if (board.getWhiteKing().getX() == x && board.getWhiteKing().getY() == y)
+            return;
+        for (WhitePiece whitePiece: availableWhitePieces) {
+            if (whitePiece.getPieceType() == selectedWhitePiece) {
+                WhitePiece newWhitePiece = whitePiece;
+                availableWhitePieces.remove(newWhitePiece);
+                newWhitePiece.setX(x);
+                newWhitePiece.setY(y);
+                board.addWhitePiece(newWhitePiece);
+                break;
+            }
+        }
     }
 
     public void removeWhitePiece(Integer x, Integer y) {
