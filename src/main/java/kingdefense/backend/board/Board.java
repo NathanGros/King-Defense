@@ -78,7 +78,7 @@ public class Board {
         return false;
     }
 
-    public void damageBlackAtPos(Integer x, Integer y, Integer damage) {
+    public void damageBlackAtPos(Integer x, Integer y, Float damage) {
         ArrayList<BlackPiece> deadList = new ArrayList<>();
         for (BlackPiece blackPiece: blackPieces) {
             if (blackPiece.getX() == x && blackPiece.getY() == y) {
@@ -92,7 +92,7 @@ public class Board {
         }
     }
 
-    public void damageBlackPiece(BlackPiece blackPiece, Integer damage) {
+    public void damageBlackPiece(BlackPiece blackPiece, Float damage) {
         blackPiece.damage(damage);
         if (blackPiece.getHealth() <= 0)
             blackPieces.remove(blackPiece);

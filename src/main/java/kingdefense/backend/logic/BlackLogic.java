@@ -67,7 +67,7 @@ public class BlackLogic {
         ArrayList<BlackPiece> deadList = new ArrayList<>();
         for (BlackPiece blackPiece: board.getBlackPieces()) {
             if (blackPiece.isPoisoned()) {
-                blackPiece.damage(1);
+                blackPiece.damage(0.5f);
                 if (blackPiece.getHealth() <= 0)
                     deadList.add(blackPiece);
             }

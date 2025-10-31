@@ -8,7 +8,7 @@ import kingdefense.backend.logic.PathFindingTile;
 public abstract class BlackPiece {
     protected Integer x;
     protected Integer y;
-    protected Integer health;
+    protected Float health;
     protected Integer attack;
     protected Integer priority;
     protected boolean isPoisoned;
@@ -20,7 +20,7 @@ public abstract class BlackPiece {
 	protected ArrayList<Integer> attainableY;
     protected Integer attainableNb;
 
-	public BlackPiece(Integer x, Integer y, Integer health, Integer attack) {
+	public BlackPiece(Integer x, Integer y, Float health, Integer attack) {
         this.x = x;
         this.y = y;
         this.health = health;
@@ -43,13 +43,13 @@ public abstract class BlackPiece {
 	public void setY(Integer y) {
 		this.y = y;
 	}
-	public Integer getHealth() {
+	public Float getHealth() {
 		return health;
 	}
-	public void setHealth(Integer health) {
+	public void setHealth(Float health) {
 		this.health = health;
 	}
-	public void damage(Integer damage) {
+	public void damage(Float damage) {
 		health -= damage;
 	}
     public Integer getAttack() {
@@ -239,6 +239,6 @@ public abstract class BlackPiece {
 
     @Override
     public String toString() {
-        return this.getPieceType() + ", x:" + x + ", y:" + y;
+        return this.getPieceType() + ", x:" + x + ", y:" + y + ", health:" + health;
     }
 }
