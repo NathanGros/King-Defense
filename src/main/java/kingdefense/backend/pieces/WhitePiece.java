@@ -11,6 +11,9 @@ public abstract class WhitePiece {
         this.x = x;
         this.y = y;
     }
+    public WhitePiece() {
+        this(0, 0);
+    }
 
 	public Integer getX() {
 		return x;

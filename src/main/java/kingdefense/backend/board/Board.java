@@ -124,17 +124,4 @@ public class Board {
             }
         }
     }
-
-    public void printState() {
-        System.out.println("---------- Board ----------");
-        System.out.println(blackKing);
-        for (BlackPiece blackPiece: blackPieces) {
-            System.out.println(blackPiece);
-        }
-        System.out.println(whiteKing);
-        for (WhitePiece whitePiece: whitePieces) {
-            System.out.println(whitePiece);
-        }
-        System.out.println();
-    }
 }

@@ -2,6 +2,8 @@ package kingdefense.backend;
 
 import static com.raylib.Raylib.GetFrameTime;
 
+import java.util.ArrayList;
+
 import kingdefense.backend.board.*;
 import kingdefense.backend.logic.*;
 import kingdefense.backend.pieces.*;
@@ -12,8 +14,9 @@ public class Game {
     private WindowManager windowManager;
 	private boolean isRunning;
     private boolean isInWave;
-    private boolean isBlackTurn;
+	private boolean isBlackTurn;
     private Integer nbCoins;
+    private ArrayList<WhitePiece> availableWhitePieces;
 
 	public Game() {
         board = new Board();
@@ -22,10 +25,14 @@ public class Game {
         isInWave = false;
         isBlackTurn = false;
         nbCoins = 0;
+        availableWhitePieces = new ArrayList<>();
     }
 
     public Board getBoard() {
 		return board;
+	}
+    public boolean isInWave() {
+		return isInWave;
 	}
     public Integer getNbCoins() {
 		return nbCoins;
@@ -36,15 +43,21 @@ public class Game {
 	public void addCoins(Integer nbCoins) {
 		this.nbCoins += nbCoins;
 	}
+    public void addAvailableWhitePiece(WhitePiece whitePiece) {
+        availableWhitePieces.add(whitePiece);
+    }
+    public ArrayList<WhitePiece> getAvailableWhitePieces() {
+        return availableWhitePieces;
+    }
 
     public void startGame() {
         isRunning = true;
-        board.addWhitePiece(new WhitePawn(1, 0));
-        board.addWhitePiece(new WhitePawn(1, 2));
-        board.addWhitePiece(new WhitePawn(0, 2));
-        board.addWhitePiece(new WhiteRook(0, 3));
-        board.addWhitePiece(new WhiteBishop(0, 6, 1.f, 3));
-        board.addWhitePiece(new WhiteBishop(0, 7, 0.25f, 2));
+        addAvailableWhitePiece(new WhitePawn());
+        addAvailableWhitePiece(new WhitePawn());
+        addAvailableWhitePiece(new WhitePawn());
+        addAvailableWhitePiece(new WhiteRook());
+        addAvailableWhitePiece(new WhiteBishop());
+        addAvailableWhitePiece(new WhiteBishop());
         windowManager.launchWindow();
         gameLoop();
     }
@@ -69,15 +82,32 @@ public class Game {
         isInWave = false;
     }
 
-    public void makeOneTurn() {
-        BlackLogic.play(this, board);
-        WhiteLogic.activatePieces(board, this);
+    public void putNewWhitePiece(Integer x, Integer y) {
+        if (availableWhitePieces.size() == 0)
+            return;
+        WhitePiece newWhitePiece = availableWhitePieces.getFirst();
+        availableWhitePieces.removeFirst();
+        newWhitePiece.setX(x);
+        newWhitePiece.setY(y);
+        board.addWhitePiece(newWhitePiece);
+    }
+
+    public void removeWhitePiece(Integer x, Integer y) {
+        ArrayList<WhitePiece> removeList = new ArrayList<>();
+        for (WhitePiece whitePiece: board.getWhitePieces()) {
+            if (whitePiece.getX() == x && whitePiece.getY() == y) {
+                availableWhitePieces.add(whitePiece);
+                removeList.add(whitePiece);
+            }
+        }
+        for (WhitePiece whitePiece: removeList) {
+            board.removeWhitePiece(whitePiece);
+        }
     }
 
     public void gameLoop() {
         float timerPlayerAction = 0.f;
         while(isRunning) {
-            // board.printState();
             windowManager.windowInteract(this);
             if (board.getWhiteKing().getHealth() <= 0) {
                 stopGame();

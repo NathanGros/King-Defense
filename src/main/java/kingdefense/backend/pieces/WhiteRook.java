@@ -7,6 +7,9 @@ public class WhiteRook extends WhitePiece {
     public WhiteRook(Integer x, Integer y) {
         super(x, y);
     }
+    public WhiteRook() {
+        this(0, 0);
+    }
 
 	@Override
 	public String getPieceType() {

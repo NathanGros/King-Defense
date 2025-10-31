@@ -15,6 +15,12 @@ public class WhiteBishop extends WhitePiece {
     public WhiteBishop(Integer x, Integer y) {
         this(x, y, 1.f, 2);
     }
+    public WhiteBishop(Float poisonDamage, Integer poisonDuration) {
+        this(0, 0, poisonDamage, poisonDuration);
+    }
+    public WhiteBishop() {
+        this(0, 0);
+    }
 
 	@Override
 	public String getPieceType() {

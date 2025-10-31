@@ -32,8 +32,12 @@ public class WindowManager {
             game.stopGame();
             return;
         }
-        inputManager.checkMovement(cameraManager);
-        inputManager.checkTurn(game);
+        inputManager.checkCameraMovement(cameraManager);
+        if (!game.isInWave()) {
+            inputManager.checkPutWhitePiece(game, cameraManager.getCamera());
+            inputManager.checkRemoveWhitePiece(game, cameraManager.getCamera());
+            inputManager.checkTriggerWave(game);
+        }
         inputManager.collectCoins(game, cameraManager.getCamera());
         drawingManager.drawGame(game, cameraManager);
     }

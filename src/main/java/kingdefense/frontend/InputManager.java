@@ -11,7 +11,7 @@ public class InputManager {
     public InputManager() {
     }
 
-    public void checkMovement(CameraManager cameraManager) {
+    public void checkCameraMovement(CameraManager cameraManager) {
         if (IsKeyPressed(KEY_R)) {
             cameraManager.rotate();
         }
@@ -23,7 +23,7 @@ public class InputManager {
         }
     }
 
-    public void checkTurn(Game game) {
+    public void checkTriggerWave(Game game) {
         if (IsKeyPressed(KEY_SPACE)) {
             game.startWave();
         }
@@ -52,7 +52,6 @@ public class InputManager {
     }
 
     public void collectCoins(Game game, Camera3D camera) {
-        Vector2 mousePos = new Vector2().x(GetMouseX()).y(GetMouseY());
         ArrayList<CoinTile> removedCoinTiles = new ArrayList<>();
         for (CoinTile coinTile: game.getBoard().getCoins()) {
             ArrayList<Vector2> corners = new ArrayList<>();
@@ -60,13 +59,47 @@ public class InputManager {
             corners.add(GetWorldToScreen(new Vector3().x(coinTile.getX() - 0.5f).y(0.f).z(coinTile.getY() + 0.5f), camera));
             corners.add(GetWorldToScreen(new Vector3().x(coinTile.getX() + 0.5f).y(0.f).z(coinTile.getY() + 0.5f), camera));
             corners.add(GetWorldToScreen(new Vector3().x(coinTile.getX() + 0.5f).y(0.f).z(coinTile.getY() - 0.5f), camera));
-            if (checkCollisionPointTile(mousePos, corners)) {
+            if (checkCollisionPointTile(GetMousePosition(), corners)) {
                 game.addCoins(coinTile.getNbCoin());
                 removedCoinTiles.add(coinTile);
             }
         }
         for (CoinTile coinTile: removedCoinTiles) {
             game.getBoard().removeCoins(coinTile);
+        }
+    }
+
+    public void checkPutWhitePiece(Game game, Camera3D camera) {
+        if (!IsMouseButtonPressed(MOUSE_BUTTON_LEFT))
+            return;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                ArrayList<Vector2> corners = new ArrayList<>();
+                corners.add(GetWorldToScreen(new Vector3().x(i - 0.5f).y(0.f).z(j - 0.5f), camera));
+                corners.add(GetWorldToScreen(new Vector3().x(i - 0.5f).y(0.f).z(j + 0.5f), camera));
+                corners.add(GetWorldToScreen(new Vector3().x(i + 0.5f).y(0.f).z(j + 0.5f), camera));
+                corners.add(GetWorldToScreen(new Vector3().x(i + 0.5f).y(0.f).z(j - 0.5f), camera));
+                if (checkCollisionPointTile(GetMousePosition(), corners)) {
+                    game.putNewWhitePiece(i, j);
+                }
+            }
+        }
+    }
+
+    public void checkRemoveWhitePiece(Game game, Camera3D camera) {
+        if (!IsMouseButtonPressed(MOUSE_BUTTON_RIGHT))
+            return;
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                ArrayList<Vector2> corners = new ArrayList<>();
+                corners.add(GetWorldToScreen(new Vector3().x(i - 0.5f).y(0.f).z(j - 0.5f), camera));
+                corners.add(GetWorldToScreen(new Vector3().x(i - 0.5f).y(0.f).z(j + 0.5f), camera));
+                corners.add(GetWorldToScreen(new Vector3().x(i + 0.5f).y(0.f).z(j + 0.5f), camera));
+                corners.add(GetWorldToScreen(new Vector3().x(i + 0.5f).y(0.f).z(j - 0.5f), camera));
+                if (checkCollisionPointTile(GetMousePosition(), corners)) {
+                    game.removeWhitePiece(i, j);
+                }
+            }
         }
     }
 }

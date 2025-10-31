@@ -7,6 +7,9 @@ public class WhitePawn extends WhitePiece {
     public WhitePawn(Integer x, Integer y) {
         super(x, y);
     }
+    public WhitePawn() {
+        this(0, 0);
+    }
 
 	@Override
 	public String getPieceType() {
