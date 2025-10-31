@@ -5,6 +5,7 @@ import static com.raylib.Raylib.*;
 
 import java.util.ArrayList;
 
+import kingdefense.backend.Game;
 import kingdefense.backend.board.Board;
 import kingdefense.backend.pieces.*;
 
@@ -12,14 +13,6 @@ public class DrawingManager {
     private Color whiteColor = new Color().r((byte) 240).g((byte) 240).b((byte) 240).a((byte) 255);
     private Color blackColor = new Color().r((byte) 50).g((byte) 50).b((byte) 50).a((byte) 255);
     public DrawingManager() {}
-
-    public void drawBoard(Board board) {
-        drawChessBoard();
-        drawWhitePieces(board.getWhitePieces());
-        drawBlackPieces(board.getBlackPieces());
-        drawWhiteKing(board.getWhiteKing());
-        drawBlackKing(board.getBlackKing());
-    }
 
     private void drawChessBoard() {
         for (int i = 0; i < 8; i++) {
@@ -58,4 +51,26 @@ public class DrawingManager {
             drawPiece((float) blackPiece.getX(), 0.0f, (float) blackPiece.getY(), 1.0f, blackColor);
         }
 	}
+
+    private void drawBoard(Board board) {
+        drawChessBoard();
+        drawWhitePieces(board.getWhitePieces());
+        drawBlackPieces(board.getBlackPieces());
+        drawWhiteKing(board.getWhiteKing());
+        drawBlackKing(board.getBlackKing());
+    }
+
+    private void drawHealth(WhiteKing whiteking) {
+        DrawText(whiteking.getHealth().toString(), 50, 50, 20, RED);
+    }
+
+    public void drawGame(Game game, CameraManager cameraManager) {
+        BeginDrawing();
+        ClearBackground(RAYWHITE);
+        BeginMode3D(cameraManager.getCamera());
+        drawBoard(game.getBoard());
+        EndMode3D();
+        drawHealth(game.getBoard().getWhiteKing());
+        EndDrawing();
+    }
 }

@@ -35,11 +35,6 @@ public class WindowManager {
         }
         inputManager.checkMovement(cameraManager);
         inputManager.checkTurn(game);
-        BeginDrawing();
-        ClearBackground(RAYWHITE);
-        BeginMode3D(cameraManager.getCamera());
-        drawingManager.drawBoard(game.getBoard());
-        EndMode3D();
-        EndDrawing();
+        drawingManager.drawGame(game, cameraManager);
     }
 }
