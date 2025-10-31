@@ -30,9 +30,9 @@ public class Game {
         board.addWhitePiece(new WhitePawn(1, 0));
         board.addWhitePiece(new WhitePawn(1, 2));
         board.addWhitePiece(new WhitePawn(0, 2));
-        board.addWhitePiece(new WhitePawn(6, 2));
-        board.addWhitePiece(new WhiteRook(6, 0));
-        board.addWhitePiece(new WhiteBishop(0, 6));
+        board.addWhitePiece(new WhiteRook(0, 3));
+        board.addWhitePiece(new WhiteBishop(0, 6, 1.f, 3));
+        board.addWhitePiece(new WhiteBishop(0, 7, 0.25f, 2));
         windowManager.launchWindow();
         gameLoop();
     }

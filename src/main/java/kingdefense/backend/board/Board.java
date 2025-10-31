@@ -98,10 +98,10 @@ public class Board {
             blackPieces.remove(blackPiece);
     }
 
-    public void poisonBlackAtPos(Integer x, Integer y) {
+    public void poisonBlackAtPos(Integer x, Integer y, Float poisonDamage, Integer nbTurns) {
         for (BlackPiece blackPiece: blackPieces) {
             if (blackPiece.getX() == x && blackPiece.getY() == y) {
-                blackPiece.poison();
+                blackPiece.poison(poisonDamage, nbTurns);
             }
         }
     }

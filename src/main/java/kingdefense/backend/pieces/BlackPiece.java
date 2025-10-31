@@ -11,7 +11,8 @@ public abstract class BlackPiece {
     protected Float health;
     protected Integer attack;
     protected Integer priority;
-    protected boolean isPoisoned;
+    protected ArrayList<Float> poisonDamageList;
+    protected ArrayList<Integer> poisonTurnsLeftList;
 	protected boolean hasMoved;
     protected Integer targetX;
     protected Integer targetY;
@@ -25,6 +26,9 @@ public abstract class BlackPiece {
         this.y = y;
         this.health = health;
         this.attack = attack;
+        this.priority = 0;
+        this.poisonDamageList = new ArrayList<>();
+        this.poisonTurnsLeftList = new ArrayList<>();
         this.hasMoved = false;
         this.targetX = -1;
         this.targetY = -1;
@@ -64,15 +68,16 @@ public abstract class BlackPiece {
 	public void setPriority(Integer priority) {
 		this.priority = priority;
 	}
-	public boolean isPoisoned() {
-		return isPoisoned;
+	public void poison(Float poisonDamage, Integer nbTurns) {
+        poisonDamageList.add(poisonDamage);
+        poisonTurnsLeftList.add(nbTurns);
 	}
-	public void poison() {
-		this.isPoisoned = true;
-	}
-	public void unpoison() {
-		this.isPoisoned = false;
-	}
+    public ArrayList<Float> getPoisonDamageList() {
+        return poisonDamageList;
+    }
+    public ArrayList<Integer> getPoisonTurnsLeftList() {
+        return poisonTurnsLeftList;
+    }
 	public boolean hasMoved() {
 		return hasMoved;
 	}

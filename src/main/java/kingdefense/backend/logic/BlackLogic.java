@@ -66,11 +66,18 @@ public class BlackLogic {
     public static void applyPoison(Board board) {
         ArrayList<BlackPiece> deadList = new ArrayList<>();
         for (BlackPiece blackPiece: board.getBlackPieces()) {
-            if (blackPiece.isPoisoned()) {
-                blackPiece.damage(0.5f);
-                if (blackPiece.getHealth() <= 0)
-                    deadList.add(blackPiece);
+            for (int i = 0; i < blackPiece.getPoisonDamageList().size(); i++) {
+                blackPiece.damage(blackPiece.getPoisonDamageList().get(i));
+                blackPiece.getPoisonTurnsLeftList().set(i, blackPiece.getPoisonTurnsLeftList().get(i));
             }
+            for (int i = 0; i < blackPiece.getPoisonTurnsLeftList().size(); i++) {
+                if (blackPiece.getPoisonTurnsLeftList().get(i) <= 0) {
+                    blackPiece.getPoisonTurnsLeftList().remove(i);
+                    blackPiece.getPoisonDamageList().remove(i);
+                }
+            }
+            if (blackPiece.getHealth() <= 0)
+                deadList.add(blackPiece);
         }
         for (BlackPiece blackPiece: deadList) {
             board.getBlackPieces().remove(blackPiece);
