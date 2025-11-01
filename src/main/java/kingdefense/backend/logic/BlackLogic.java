@@ -68,7 +68,7 @@ public class BlackLogic {
         for (BlackPiece blackPiece: board.getBlackPieces()) {
             for (int i = 0; i < blackPiece.getPoisonDamageList().size(); i++) {
                 blackPiece.damage(blackPiece.getPoisonDamageList().get(i));
-                blackPiece.getPoisonTurnsLeftList().set(i, blackPiece.getPoisonTurnsLeftList().get(i));
+                blackPiece.getPoisonTurnsLeftList().set(i, blackPiece.getPoisonTurnsLeftList().get(i) - 1);
             }
             for (int i = 0; i < blackPiece.getPoisonTurnsLeftList().size(); i++) {
                 if (blackPiece.getPoisonTurnsLeftList().get(i) <= 0) {

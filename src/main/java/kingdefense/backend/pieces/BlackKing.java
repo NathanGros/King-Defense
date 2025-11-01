@@ -7,10 +7,13 @@ public class BlackKing {
     private Integer y;
     private ArrayList<BlackPiece> stockPieces;
 
-	public BlackKing(Integer x, Integer y, Integer orientation) {
+	public BlackKing(Integer x, Integer y) {
         this.x = x;
         this.y = y;
         stockPieces = new ArrayList<>();
+    }
+	public BlackKing() {
+        this(0, 0);
     }
 
     public Integer getX() {

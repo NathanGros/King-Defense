@@ -20,7 +20,7 @@ public class Game {
     private String selectedWhitePiece;
 
 	public Game() {
-        board = new Board();
+        board = new Board(20);
         windowManager = new WindowManager();
         isRunning = false;
         isInWave = false;
@@ -63,9 +63,12 @@ public class Game {
         addAvailableWhitePiece(new WhitePawn());
         addAvailableWhitePiece(new WhitePawn());
         addAvailableWhitePiece(new WhitePawn());
+        addAvailableWhitePiece(new WhitePawn());
+        addAvailableWhitePiece(new WhiteRook());
         addAvailableWhitePiece(new WhiteRook());
         addAvailableWhitePiece(new WhiteBishop());
         addAvailableWhitePiece(new WhiteBishop());
+        addAvailableWhitePiece(new WhiteQueen());
         windowManager.launchWindow();
         fillWaveStock();
         gameLoop();
@@ -111,7 +114,7 @@ public class Game {
         if (availableWhitePieces.size() == 0)
             return;
         for (WhitePiece whitePiece: availableWhitePieces) {
-            if (whitePiece.getPieceType() == selectedWhitePiece) {
+            if (whitePiece.getPieceType().equals(selectedWhitePiece)) {
                 WhitePiece newWhitePiece = whitePiece;
                 availableWhitePieces.remove(newWhitePiece);
                 newWhitePiece.setX(x);

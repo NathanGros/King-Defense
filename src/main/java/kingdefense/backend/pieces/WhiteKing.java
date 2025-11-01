@@ -16,6 +16,9 @@ public class WhiteKing {
         this.health = health;
         this.isPlaced = false;
     }
+	public WhiteKing(Integer health) {
+        this(0, 0, health);
+    }
 
 	public Integer getX() {
 		return x;

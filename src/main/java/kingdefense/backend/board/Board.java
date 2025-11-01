@@ -10,15 +10,12 @@ public class Board {
     private BlackKing blackKing;
     private WhiteKing whiteKing;
 
-    public Board(BlackKing blackKing, WhiteKing whiteKing) {
+    public Board(Integer whiteHealth) {
         whitePieces = new ArrayList<>();
         blackPieces = new ArrayList<>();
         coins = new ArrayList<>();
-        this.blackKing = blackKing;
-        this.whiteKing = whiteKing;
-    }
-    public Board() {
-        this(new BlackKing(0, 0, 1), new WhiteKing(7, 7, 20));
+        blackKing = new BlackKing();
+        whiteKing = new WhiteKing(whiteHealth);
     }
 
     public ArrayList<WhitePiece> getWhitePieces() {
@@ -121,6 +118,14 @@ public class Board {
         for (BlackPiece blackPiece: blackPieces) {
             if (blackPiece.getX() == x && blackPiece.getY() == y) {
                 blackPiece.poison(poisonDamage, nbTurns);
+            }
+        }
+    }
+
+    public void queenBoostWhiteAtPos(Integer x, Integer y, Float queenBoost) {
+        for (WhitePiece whitePiece: whitePieces) {
+            if (!whitePiece.getPieceType().equals("WhiteQueen") && whitePiece.getX() == x && whitePiece.getY() == y) {
+                whitePiece.addQueenBoost(queenBoost);
             }
         }
     }

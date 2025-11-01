@@ -6,10 +6,12 @@ import kingdefense.backend.board.Board;
 public abstract class WhitePiece {
     protected Integer x;
     protected Integer y;
+    protected Float queenBoost;
 
-    public WhitePiece(Integer x, Integer y) {
+	public WhitePiece(Integer x, Integer y) {
         this.x = x;
         this.y = y;
+        queenBoost = 0.f;
     }
     public WhitePiece() {
         this(0, 0);
@@ -26,6 +28,15 @@ public abstract class WhitePiece {
 	}
 	public void setY(Integer y) {
 		this.y = y;
+	}
+    public Float getQueenBoost() {
+		return queenBoost;
+	}
+	public void setQueenBoost(Float queenBoost) {
+		this.queenBoost = queenBoost;
+	}
+	public void addQueenBoost(Float queenBoost) {
+		this.queenBoost += queenBoost;
 	}
     public abstract String getPieceType();
 
