@@ -7,12 +7,14 @@ public class WhiteKing {
     private Integer y;
 	private Integer maxHealth;
     private Integer health;
+    private boolean isPlaced;
 
 	public WhiteKing(Integer x, Integer y, Integer health) {
         this.x = x;
         this.y = y;
         this.maxHealth = health;
         this.health = health;
+        this.isPlaced = false;
     }
 
 	public Integer getX() {
@@ -38,6 +40,15 @@ public class WhiteKing {
 	}
 	public void setHealth(Integer health) {
 		this.health = health;
+	}
+	public boolean isPlaced() {
+		return isPlaced;
+	}
+	public void place() {
+		this.isPlaced = true;
+	}
+	public void unplace() {
+		this.isPlaced = false;
 	}
 
     public boolean isAdjacent(BlackPiece blackPiece) {

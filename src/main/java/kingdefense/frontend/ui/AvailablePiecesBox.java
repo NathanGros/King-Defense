@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import kingdefense.backend.Game;
+import kingdefense.backend.pieces.WhiteKing;
 import kingdefense.backend.pieces.WhitePiece;
 
 public class AvailablePiecesBox {
@@ -77,7 +78,7 @@ public class AvailablePiecesBox {
         }
     }
 
-    public void draw(ArrayList<WhitePiece> availableWhitePieces, Color menusBackgroundColor) {
+    public void draw(WhiteKing whiteKing, ArrayList<WhitePiece> availableWhitePieces, Color menusBackgroundColor) {
         HashMap<String, Integer> pieceCount = new HashMap<>();
         pieceCount.put("WhiteKing", 0);
         pieceCount.put("WhiteQueen", 0);
@@ -85,6 +86,10 @@ public class AvailablePiecesBox {
         pieceCount.put("WhiteBishop", 0);
         pieceCount.put("WhiteKnight", 0);
         pieceCount.put("WhitePawn", 0);
+        if (whiteKing.isPlaced())
+            pieceCount.put("WhiteKing", 0);
+        else
+            pieceCount.put("WhiteKing", 1);
         for (WhitePiece whitePiece: availableWhitePieces) {
             pieceCount.put(whitePiece.getPieceType(), pieceCount.get(whitePiece.getPieceType()) + 1);
         }

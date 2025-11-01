@@ -50,7 +50,8 @@ public class DrawingManager {
     }
 
 	private void drawWhiteKing(WhiteKing whiteKing) {
-        drawPiece((float) whiteKing.getX(), 0.0f, (float) whiteKing.getY(), 3.0f, whitePieceColor);
+        if (whiteKing.isPlaced())
+            drawPiece((float) whiteKing.getX(), 0.0f, (float) whiteKing.getY(), 3.0f, whitePieceColor);
 	}
 
 	private void drawBlackKing(BlackKing blackKing) {
@@ -101,7 +102,7 @@ public class DrawingManager {
         // Draw UI
         drawHealth(game.getBoard().getWhiteKing());
         waveBox.draw(game, menusBackgroundColor, healthColor);
-        availablePiecesBox.draw(game.getAvailableWhitePieces(), menusBackgroundColor);
+        availablePiecesBox.draw(game.getBoard().getWhiteKing(), game.getAvailableWhitePieces(), menusBackgroundColor);
         drawEarnedCoins(game.getNbCoins());
         EndDrawing();
     }

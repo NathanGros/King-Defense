@@ -27,7 +27,7 @@ public class Game {
         isBlackTurn = false;
         nbCoins = 0;
         availableWhitePieces = new ArrayList<>();
-        selectedWhitePiece = "WhiteBishop";
+        selectedWhitePiece = "WhiteKing";
     }
 
     public Board getBoard() {
@@ -80,6 +80,8 @@ public class Game {
     public void startWave() {
         if (isInWave)
             return;
+        if (!board.getWhiteKing().isPlaced())
+            return;
         isInWave = true;
         isBlackTurn = true;
     }
@@ -96,13 +98,17 @@ public class Game {
     }
 
     public void putNewWhitePiece(Integer x, Integer y) {
-        if (availableWhitePieces.size() == 0)
-            return;
         if (!board.isEmpty(x, y))
             return;
-        if (board.getBlackKing().getX() == x && board.getBlackKing().getY() == y)
+        if (selectedWhitePiece == "WhiteKing" && !board.getWhiteKing().isPlaced()) {
+            board.getWhiteKing().setX(x);
+            board.getWhiteKing().setY(y);
+            board.getWhiteKing().place();
             return;
+        }
         if (board.getWhiteKing().getX() == x && board.getWhiteKing().getY() == y)
+            return;
+        if (availableWhitePieces.size() == 0)
             return;
         for (WhitePiece whitePiece: availableWhitePieces) {
             if (whitePiece.getPieceType() == selectedWhitePiece) {
@@ -117,6 +123,10 @@ public class Game {
     }
 
     public void removeWhitePiece(Integer x, Integer y) {
+        if (board.getWhiteKing().getX() == x && board.getWhiteKing().getY() == y) {
+            board.getWhiteKing().unplace();
+            return;
+        }
         ArrayList<WhitePiece> removeList = new ArrayList<>();
         for (WhitePiece whitePiece: board.getWhitePieces()) {
             if (whitePiece.getX() == x && whitePiece.getY() == y) {
