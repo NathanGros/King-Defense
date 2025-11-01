@@ -102,4 +102,11 @@ public class InputManager {
             }
         }
     }
+
+    public void checkWhitePieceChange(Game game, ArrayList<PieceButton> pieceButtons) {
+        for (PieceButton pieceButton: pieceButtons) {
+            if (pieceButton.isClicked())
+                game.setSelectedWhitePiece(pieceButton.getName());
+        }
+    }
 }

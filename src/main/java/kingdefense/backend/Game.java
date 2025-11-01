@@ -51,6 +51,12 @@ public class Game {
     public ArrayList<WhitePiece> getAvailableWhitePieces() {
         return availableWhitePieces;
     }
+	public String getSelectedWhitePiece() {
+		return selectedWhitePiece;
+	}
+	public void setSelectedWhitePiece(String selectedWhitePiece) {
+		this.selectedWhitePiece = selectedWhitePiece;
+	}
 
     public void startGame() {
         isRunning = true;

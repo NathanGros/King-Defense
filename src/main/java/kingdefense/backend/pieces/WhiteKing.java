@@ -5,11 +5,13 @@ import kingdefense.backend.board.Board;
 public class WhiteKing {
     private Integer x;
     private Integer y;
+	private Integer maxHealth;
     private Integer health;
 
 	public WhiteKing(Integer x, Integer y, Integer health) {
         this.x = x;
         this.y = y;
+        this.maxHealth = health;
         this.health = health;
     }
 
@@ -24,6 +26,12 @@ public class WhiteKing {
 	}
 	public void setY(Integer y) {
 		this.y = y;
+	}
+    public Integer getMaxHealth() {
+		return maxHealth;
+	}
+	public void setMaxHealth(Integer maxHealth) {
+		this.maxHealth = maxHealth;
 	}
     public Integer getHealth() {
 		return health;
