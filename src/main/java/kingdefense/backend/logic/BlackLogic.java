@@ -8,8 +8,8 @@ import kingdefense.backend.pieces.*;
 
 public class BlackLogic {
     public static void play(Game game, Board board) {
-        movePieces(board);
         putNewPiece(board);
+        movePieces(board);
         applyPoison(board);
         checkWaveEnd(game, board);
     }

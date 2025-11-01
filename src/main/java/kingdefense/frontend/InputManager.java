@@ -6,27 +6,22 @@ import java.util.ArrayList;
 
 import kingdefense.backend.Game;
 import kingdefense.backend.board.CoinTile;
+import kingdefense.frontend.ui.*;
 
 public class InputManager {
     public InputManager() {
     }
 
     public void checkCameraMovement(CameraManager cameraManager) {
-        if (IsKeyPressed(KEY_R)) {
-            cameraManager.rotate();
-        }
-        if (GetMouseWheelMove() == -1) {
-            cameraManager.zoomOut();
-        }
-        if (GetMouseWheelMove() == 1) {
-            cameraManager.zoomIn();
-        }
-    }
-
-    public void checkTriggerWave(Game game) {
-        if (IsKeyPressed(KEY_SPACE)) {
-            game.startWave();
-        }
+        // if (IsKeyPressed(KEY_R)) {
+        //     cameraManager.rotate();
+        // }
+        // if (GetMouseWheelMove() == -1) {
+        //     cameraManager.zoomOut();
+        // }
+        // if (GetMouseWheelMove() == 1) {
+        //     cameraManager.zoomIn();
+        // }
     }
 
     // GPT generated, no clue what's going on but it works
@@ -103,10 +98,10 @@ public class InputManager {
         }
     }
 
-    public void checkWhitePieceChange(Game game, ArrayList<PieceButton> pieceButtons) {
-        for (PieceButton pieceButton: pieceButtons) {
-            if (pieceButton.isClicked())
-                game.setSelectedWhitePiece(pieceButton.getName());
-        }
+    public void checkInputs(Game game, Camera3D camera, AvailablePiecesBox availablePiecesBox, WaveBox waveBox) {
+        checkPutWhitePiece(game, camera);
+        checkRemoveWhitePiece(game, camera);
+        availablePiecesBox.checkWhitePieceChange(game);
+        waveBox.checkStartWave(game);
     }
 }

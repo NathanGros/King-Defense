@@ -67,6 +67,7 @@ public class Game {
         addAvailableWhitePiece(new WhiteBishop());
         addAvailableWhitePiece(new WhiteBishop());
         windowManager.launchWindow();
+        fillWaveStock();
         gameLoop();
     }
 
@@ -81,13 +82,17 @@ public class Game {
             return;
         isInWave = true;
         isBlackTurn = true;
-        board.getBlackKing().addStockPiece(new BlackPawn());
-        board.getBlackKing().addStockPiece(new BlackPawn());
-        board.getBlackKing().addStockPiece(new BlackKnight());
     }
 
     public void stopWave() {
         isInWave = false;
+        fillWaveStock();
+    }
+
+    public void fillWaveStock() {
+        board.getBlackKing().addStockPiece(new BlackPawn());
+        board.getBlackKing().addStockPiece(new BlackPawn());
+        board.getBlackKing().addStockPiece(new BlackKnight());
     }
 
     public void putNewWhitePiece(Integer x, Integer y) {
@@ -125,7 +130,7 @@ public class Game {
     }
 
     public void gameLoop() {
-        float timerPlayerAction = 0.f;
+        float timerPlayerAction = 1.f;
         while(isRunning) {
             windowManager.windowInteract(this);
             if (board.getWhiteKing().getHealth() <= 0) {
@@ -141,6 +146,9 @@ public class Game {
                         WhiteLogic.activatePieces(board, this);
                     isBlackTurn = !isBlackTurn;
                 }
+            }
+            else {
+                timerPlayerAction = 1.f;
             }
         }
     }

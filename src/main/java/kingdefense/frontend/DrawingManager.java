@@ -4,11 +4,11 @@ import static com.raylib.Colors.*;
 import static com.raylib.Raylib.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import kingdefense.backend.Game;
 import kingdefense.backend.board.*;
 import kingdefense.backend.pieces.*;
+import kingdefense.frontend.ui.*;
 
 public class DrawingManager {
     private Color backgroundColor = new Color().r((byte) 51).g((byte) 51).b((byte) 51).a((byte) 255);
@@ -92,38 +92,7 @@ public class DrawingManager {
         DrawText(coins.toString(), GetScreenWidth() * 18 / 20, GetScreenHeight() / 13, 30, YELLOW);
     }
 
-    private void drawIncomingSidebar(Board board) {
-        int incomingStartX = GetScreenWidth() / 20;
-        int incomingStartY = GetScreenHeight() / 6;
-        int incomingWidth = GetScreenWidth() / 7;
-        int incomingHeight = GetScreenHeight() - incomingStartY * 4 / 3;
-        DrawRectangle(incomingStartX, incomingStartY, incomingWidth, incomingHeight, menusBackgroundColor);
-    }
-
-    private void drawAvailableSidebar(ArrayList<WhitePiece> availableWhitePieces, ArrayList<PieceButton> pieceButtons) {
-        int availableStartY = GetScreenHeight() / 6;
-        int availableHeight = GetScreenHeight() - availableStartY * 4 / 3;
-        int availableWidth = GetScreenWidth() / 6;
-        int availableStartX = GetScreenWidth() * 19 / 20 - availableWidth;
-        int pieceTileWidth = availableWidth / 2;
-        int pieceTileHeight = availableHeight / 3;
-        HashMap<String, Integer> pieceCount = new HashMap<>();
-        pieceCount.put("WhiteKing", 0);
-        pieceCount.put("WhiteQueen", 0);
-        pieceCount.put("WhiteRook", 0);
-        pieceCount.put("WhiteBishop", 0);
-        pieceCount.put("WhiteKnight", 0);
-        pieceCount.put("WhitePawn", 0);
-        for (WhitePiece whitePiece: availableWhitePieces) {
-            pieceCount.put(whitePiece.getPieceType(), pieceCount.get(whitePiece.getPieceType()) + 1);
-        }
-        DrawRectangle(availableStartX, availableStartY, availableWidth, availableHeight, menusBackgroundColor);
-        for (PieceButton pieceButton: pieceButtons) {
-            pieceButton.drawPiece(pieceCount.get(pieceButton.getName()));
-        }
-    }
-
-    public void drawGame(Game game, CameraManager cameraManager, ArrayList<PieceButton> pieceButtons) {
+    public void drawGame(Game game, CameraManager cameraManager, AvailablePiecesBox availablePiecesBox, WaveBox waveBox) {
         BeginDrawing();
         ClearBackground(backgroundColor);
         BeginMode3D(cameraManager.getCamera());
@@ -131,8 +100,8 @@ public class DrawingManager {
         EndMode3D();
         // Draw UI
         drawHealth(game.getBoard().getWhiteKing());
-        drawIncomingSidebar(game.getBoard());
-        drawAvailableSidebar(game.getAvailableWhitePieces(), pieceButtons);
+        waveBox.draw(game, menusBackgroundColor, healthColor);
+        availablePiecesBox.draw(game.getAvailableWhitePieces(), menusBackgroundColor);
         drawEarnedCoins(game.getNbCoins());
         EndDrawing();
     }
