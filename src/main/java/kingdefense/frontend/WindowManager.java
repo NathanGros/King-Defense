@@ -32,11 +32,11 @@ public class WindowManager {
         InitWindow(0, 0, "King Defense");
         SetTargetFPS(60);
         initUiElements();
-        drawingManager.getModelsManager().loadModels();
+        drawingManager.loadModels();
     }
 
     public void closeWindow() {
-        drawingManager.getModelsManager().unloadModels();
+        drawingManager.unloadModels();
         CloseWindow();
     }
 

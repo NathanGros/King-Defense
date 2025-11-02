@@ -5,6 +5,8 @@ import static com.raylib.Raylib.*;
 
 import java.util.ArrayList;
 
+import org.bytedeco.javacpp.IntPointer;
+
 import kingdefense.backend.Game;
 import kingdefense.backend.board.*;
 import kingdefense.backend.pieces.*;
@@ -18,6 +20,7 @@ public class DrawingManager {
     private Color whiteTileColor;
     private Color healthColor;
     private ModelsManager modelsManager;
+    private ShadersManager shadersManager;
 
 	public DrawingManager() {
         backgroundColor = new Color().r((byte) 51).g((byte) 51).b((byte) 51).a((byte) 255);
@@ -27,24 +30,26 @@ public class DrawingManager {
         whiteTileColor = new Color().r((byte) 204).g((byte) 166).b((byte) 110).a((byte) 255);
         healthColor = new Color().r((byte) 195).g((byte) 88).b((byte) 51).a((byte) 255);
         modelsManager = new ModelsManager();
+        shadersManager = new ShadersManager();
     }
 
-    public ModelsManager getModelsManager() {
-		return modelsManager;
+    public void loadModels() {
+        shadersManager.initShaders();
+        modelsManager.loadModels(shadersManager.getShaders());
 	}
 
+    public void unloadModels() {
+        modelsManager.unloadModels();
+        shadersManager.unloadShaders();
+    }
+
     private void drawChessBoard() {
-        DrawCube(new Vector3().x(3.5f).y(-0.15f).z(3.5f), 9.f, 0.15f, 9.f, boardColor);
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                Color color;
-                if ((i + j) % 2 == 0)
-                    color = whiteTileColor;
-                else
-                    color = blackTileColor;
-                DrawCube(new Vector3().x(i).y(-0.1f).z(j), 1.f, 0.2f, 1.f, color);
-            }
-        }
+        DrawModel(
+            modelsManager.getChessBoardModel(),
+            new Vector3().x(3.5f).y(0.f).z(3.5f),
+            8.f,
+            WHITE
+        );
     }
 
     private void drawCoins(ArrayList<CoinTile> coins) {
@@ -123,16 +128,37 @@ public class DrawingManager {
     }
 
     public void drawGame(Game game, CameraManager cameraManager, AvailablePiecesBox availablePiecesBox, WaveBox waveBox) {
+        SetShaderValue(shadersManager.getShaders(), shadersManager.getShaders().locs().get(SHADER_LOC_VECTOR_VIEW), cameraManager.getCamera()._position(), SHADER_UNIFORM_VEC3);
         BeginDrawing();
-        ClearBackground(backgroundColor);
-        BeginMode3D(cameraManager.getCamera());
-        drawBoard(game.getBoard());
-        EndMode3D();
-        // Draw UI
-        drawHealth(game.getBoard().getWhiteKing());
-        waveBox.draw(game, menusBackgroundColor, healthColor);
-        availablePiecesBox.draw(game.getBoard().getWhiteKing(), game.getAvailableWhitePieces(), menusBackgroundColor);
-        drawEarnedCoins(game.getNbCoins());
+            Matrix lightView;
+            Matrix lightProj;
+            BeginTextureMode(shadersManager.getShadowMap());
+                ClearBackground(WHITE);
+                BeginMode3D(shadersManager.getLightCamera());
+                    lightView = rlGetMatrixModelview();
+                    lightProj = rlGetMatrixProjection();
+                    drawBoard(game.getBoard());
+                EndMode3D();
+            EndTextureMode();
+            Matrix lightViewProj = MatrixMultiply(lightView, lightProj);
+
+            ClearBackground(backgroundColor);
+            SetShaderValueMatrix(shadersManager.getShaders(), shadersManager.getLightVPLoc(), lightViewProj);
+            rlEnableShader(shadersManager.getShaders().id());
+            IntPointer slot = new IntPointer(1); // Can be anything 0 to 15, but 0 will probably be taken up
+            slot.put(0, 10);
+            rlActiveTextureSlot(10);
+            rlEnableTexture(shadersManager.getShadowMap().depth().id());
+            rlSetUniform(shadersManager.getShadowMapLoc(), slot, SHADER_UNIFORM_INT, 1);
+
+            BeginMode3D(cameraManager.getCamera());
+                drawBoard(game.getBoard());
+            EndMode3D();
+            // Draw UI
+            drawHealth(game.getBoard().getWhiteKing());
+            waveBox.draw(game, menusBackgroundColor, healthColor);
+            availablePiecesBox.draw(game.getBoard().getWhiteKing(), game.getAvailableWhitePieces(), menusBackgroundColor);
+            drawEarnedCoins(game.getNbCoins());
         EndDrawing();
     }
 }
