@@ -34,7 +34,7 @@ public class DrawingManager {
 	}
 
     private void drawChessBoard() {
-        DrawCube(new Vector3().x(3.5f).y(0).z(3.5f), 9.f, 0.15f, 9.f, boardColor);
+        DrawCube(new Vector3().x(3.5f).y(-0.15f).z(3.5f), 9.f, 0.15f, 9.f, boardColor);
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 Color color;
@@ -42,24 +42,26 @@ public class DrawingManager {
                     color = whiteTileColor;
                 else
                     color = blackTileColor;
-                DrawCube(new Vector3().x(i).y(0).z(j), 1.f, 0.2f, 1.f, color);
+                DrawCube(new Vector3().x(i).y(-0.1f).z(j), 1.f, 0.2f, 1.f, color);
             }
         }
     }
 
     private void drawCoins(ArrayList<CoinTile> coins) {
         for (CoinTile coin: coins) {
-            for (int i = 0; i < coin.getNbCoin(); i++) {
-                DrawCube(new Vector3().x(coin.getX()).y(0.2f + 0.3f * i).z(coin.getY()), 0.3f, 0.2f, 0.3f, YELLOW);
-                DrawCubeWires(new Vector3().x(coin.getX()).y(0.2f + 0.3f * i).z(coin.getY()), 0.3f, 0.2f, 0.3f, BLACK);
-            }
+            DrawModel(
+                modelsManager.getCoinsModel(coin.getNbCoins()),
+                new Vector3().x(coin.getX()).y(0.f).z(coin.getY()),
+                1.f,
+                WHITE
+            );
         }
     }
 
 	private void drawWhiteKing(WhiteKing whiteKing) {
         if (whiteKing.isPlaced())
             DrawModel(
-                modelsManager.getWhiteModel("WhiteKing"),
+                modelsManager.getPieceModel("WhiteKing"),
                 new Vector3().x(whiteKing.getX()).y(0.f).z(whiteKing.getY()),
                 1.f,
                 WHITE
@@ -68,7 +70,7 @@ public class DrawingManager {
 
 	private void drawBlackKing(BlackKing blackKing) {
         DrawModel(
-            modelsManager.getWhiteModel("BlackKing"),
+            modelsManager.getPieceModel("BlackKing"),
             new Vector3().x(blackKing.getX()).y(0.f).z(blackKing.getY()),
             1.f,
             WHITE
@@ -78,7 +80,7 @@ public class DrawingManager {
 	private void drawWhitePieces(ArrayList<WhitePiece> whitePieces) {
         for (WhitePiece whitePiece: whitePieces) {
             DrawModel(
-                modelsManager.getWhiteModel(whitePiece.getPieceType()),
+                modelsManager.getPieceModel(whitePiece.getPieceType()),
                 new Vector3().x(whitePiece.getX()).y(0.f).z(whitePiece.getY()),
                 1.f,
                 WHITE
@@ -89,7 +91,7 @@ public class DrawingManager {
 	private void drawBlackPieces(ArrayList<BlackPiece> blackPieces) {
         for (BlackPiece blackPiece: blackPieces) {
             DrawModel(
-                modelsManager.getWhiteModel(blackPiece.getPieceType()),
+                modelsManager.getPieceModel(blackPiece.getPieceType()),
                 new Vector3().x(blackPiece.getX()).y(0.f).z(blackPiece.getY()),
                 1.f,
                 WHITE

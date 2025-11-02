@@ -15,23 +15,33 @@ public class ModelsManager {
     Model blackRookModel;
     Model blackQueenModel;
     Model blackKingModel;
+    Model coin1Model;
+    Model coin2Model;
+    Model coin3Model;
+    Model coin4Model;
+    Model coin5Model;
 
     public ModelsManager() {
     }
 
     public void loadModels() {
-        whitePawnModel = LoadModel("src/main/resources/models/whitePawnModel.obj");
-        whiteBishopModel = LoadModel("src/main/resources/models/whiteBishopModel.obj");
-        whiteKnightModel = LoadModel("src/main/resources/models/whiteKnightModel.obj");
-        whiteRookModel = LoadModel("src/main/resources/models/whiteRookModel.obj");
-        whiteQueenModel = LoadModel("src/main/resources/models/whiteQueenModel.obj");
-        whiteKingModel = LoadModel("src/main/resources/models/whiteKingModel.obj");
-        blackPawnModel = LoadModel("src/main/resources/models/blackPawnModel.obj");
-        blackBishopModel = LoadModel("src/main/resources/models/blackBishopModel.obj");
-        blackKnightModel = LoadModel("src/main/resources/models/blackKnightModel.obj");
-        blackRookModel = LoadModel("src/main/resources/models/blackRookModel.obj");
-        blackQueenModel = LoadModel("src/main/resources/models/blackQueenModel.obj");
-        blackKingModel = LoadModel("src/main/resources/models/blackKingModel.obj");
+        whitePawnModel = LoadModel("src/main/resources/models/pieces/whitePawnModel.obj");
+        whiteBishopModel = LoadModel("src/main/resources/models/pieces/whiteBishopModel.obj");
+        whiteKnightModel = LoadModel("src/main/resources/models/pieces/whiteKnightModel.obj");
+        whiteRookModel = LoadModel("src/main/resources/models/pieces/whiteRookModel.obj");
+        whiteQueenModel = LoadModel("src/main/resources/models/pieces/whiteQueenModel.obj");
+        whiteKingModel = LoadModel("src/main/resources/models/pieces/whiteKingModel.obj");
+        blackPawnModel = LoadModel("src/main/resources/models/pieces/blackPawnModel.obj");
+        blackBishopModel = LoadModel("src/main/resources/models/pieces/blackBishopModel.obj");
+        blackKnightModel = LoadModel("src/main/resources/models/pieces/blackKnightModel.obj");
+        blackRookModel = LoadModel("src/main/resources/models/pieces/blackRookModel.obj");
+        blackQueenModel = LoadModel("src/main/resources/models/pieces/blackQueenModel.obj");
+        blackKingModel = LoadModel("src/main/resources/models/pieces/blackKingModel.obj");
+        coin1Model = LoadModel("src/main/resources/models/coins/coin1Model.obj");
+        coin2Model = LoadModel("src/main/resources/models/coins/coin2Model.obj");
+        coin3Model = LoadModel("src/main/resources/models/coins/coin3Model.obj");
+        coin4Model = LoadModel("src/main/resources/models/coins/coin4Model.obj");
+        coin5Model = LoadModel("src/main/resources/models/coins/coin5Model.obj");
     }
 
     public void unloadModels() {
@@ -47,9 +57,14 @@ public class ModelsManager {
         UnloadModel(blackRookModel);
         UnloadModel(blackQueenModel);
         UnloadModel(blackKingModel);
+        UnloadModel(coin1Model);
+        UnloadModel(coin2Model);
+        UnloadModel(coin3Model);
+        UnloadModel(coin4Model);
+        UnloadModel(coin5Model);
     }
 
-    public Model getWhiteModel(String pieceType) {
+    public Model getPieceModel(String pieceType) {
         switch (pieceType) {
             case "WhitePawn":
                 return whitePawnModel;
@@ -77,6 +92,23 @@ public class ModelsManager {
                 return blackKingModel;
             default:
                 return whitePawnModel;
+        }
+    }
+
+    public Model getCoinsModel(Integer nbCoins) {
+        switch (nbCoins) {
+            case 1:
+                return coin1Model;
+            case 2:
+                return coin2Model;
+            case 3:
+                return coin3Model;
+            case 4:
+                return coin4Model;
+            case 5:
+                return coin5Model;
+            default:
+                return coin5Model;
         }
     }
 }

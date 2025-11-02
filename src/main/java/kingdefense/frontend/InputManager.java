@@ -55,7 +55,7 @@ public class InputManager {
             corners.add(GetWorldToScreen(new Vector3().x(coinTile.getX() + 0.5f).y(0.f).z(coinTile.getY() + 0.5f), camera));
             corners.add(GetWorldToScreen(new Vector3().x(coinTile.getX() + 0.5f).y(0.f).z(coinTile.getY() - 0.5f), camera));
             if (checkCollisionPointTile(GetMousePosition(), corners)) {
-                game.addCoins(coinTile.getNbCoin());
+                game.addCoins(coinTile.getNbCoins());
                 removedCoinTiles.add(coinTile);
             }
         }

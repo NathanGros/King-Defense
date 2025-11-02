@@ -26,10 +26,10 @@ public class CoinTile {
 	public void setY(Integer y) {
 		this.y = y;
 	}
-	public Integer getNbCoin() {
+	public Integer getNbCoins() {
 		return nbCoins;
 	}
-	public void setNbCoin(Integer nbCoins) {
+	public void setNbCoins(Integer nbCoins) {
 		this.nbCoins = nbCoins;
 	}
     public void addCoins(Integer nbCoins) {
