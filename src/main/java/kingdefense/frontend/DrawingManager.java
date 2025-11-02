@@ -11,15 +11,31 @@ import kingdefense.backend.pieces.*;
 import kingdefense.frontend.ui.*;
 
 public class DrawingManager {
-    private Color backgroundColor = new Color().r((byte) 51).g((byte) 51).b((byte) 51).a((byte) 255);
-    private Color menusBackgroundColor = new Color().r((byte) 37).g((byte) 37).b((byte) 37).a((byte) 255);
-    private Color boardColor = new Color().r((byte) 133).g((byte) 88).b((byte) 50).a((byte) 255);
-    private Color blackTileColor = new Color().r((byte) 146).g((byte) 99).b((byte) 54).a((byte) 255);
-    private Color whiteTileColor = new Color().r((byte) 204).g((byte) 166).b((byte) 110).a((byte) 255);
-    private Color healthColor = new Color().r((byte) 195).g((byte) 88).b((byte) 51).a((byte) 255);
-    private Color blackPieceColor = new Color().r((byte) 72).g((byte) 65).b((byte) 59).a((byte) 255);
-    private Color whitePieceColor = new Color().r((byte) 222).g((byte) 193).b((byte) 146).a((byte) 255);
-    public DrawingManager() {}
+    private Color backgroundColor;
+    private Color menusBackgroundColor;
+    private Color boardColor;
+    private Color blackTileColor;
+    private Color whiteTileColor;
+    private Color healthColor;
+    private Color blackPieceColor;
+    private Color whitePieceColor;
+    private ModelsManager modelsManager;
+
+	public DrawingManager() {
+        backgroundColor = new Color().r((byte) 51).g((byte) 51).b((byte) 51).a((byte) 255);
+        menusBackgroundColor = new Color().r((byte) 37).g((byte) 37).b((byte) 37).a((byte) 255);
+        boardColor = new Color().r((byte) 133).g((byte) 88).b((byte) 50).a((byte) 255);
+        blackTileColor = new Color().r((byte) 146).g((byte) 99).b((byte) 54).a((byte) 255);
+        whiteTileColor = new Color().r((byte) 204).g((byte) 166).b((byte) 110).a((byte) 255);
+        healthColor = new Color().r((byte) 195).g((byte) 88).b((byte) 51).a((byte) 255);
+        blackPieceColor = new Color().r((byte) 72).g((byte) 65).b((byte) 59).a((byte) 255);
+        whitePieceColor = new Color().r((byte) 222).g((byte) 193).b((byte) 146).a((byte) 255);
+        modelsManager = new ModelsManager();
+    }
+
+    public ModelsManager getModelsManager() {
+		return modelsManager;
+	}
 
     private void drawChessBoard() {
         DrawCube(new Vector3().x(3.5f).y(0).z(3.5f), 9.f, 0.15f, 9.f, boardColor);
@@ -51,7 +67,12 @@ public class DrawingManager {
 
 	private void drawWhiteKing(WhiteKing whiteKing) {
         if (whiteKing.isPlaced())
-            drawPiece((float) whiteKing.getX(), 0.0f, (float) whiteKing.getY(), 3.0f, whitePieceColor);
+            DrawModel(
+                modelsManager.getWhiteModel("WhiteKing"),
+                new Vector3().x(whiteKing.getX()).y(0.f).z(whiteKing.getY()),
+                1.f,
+                WHITE
+            );
 	}
 
 	private void drawBlackKing(BlackKing blackKing) {
@@ -60,7 +81,12 @@ public class DrawingManager {
 
 	private void drawWhitePieces(ArrayList<WhitePiece> whitePieces) {
         for (WhitePiece whitePiece: whitePieces) {
-            drawPiece((float) whitePiece.getX(), 0.0f, (float) whitePiece.getY(), 1.0f, whitePieceColor);
+            DrawModel(
+                modelsManager.getWhiteModel(whitePiece.getPieceType()),
+                new Vector3().x(whitePiece.getX()).y(0.f).z(whitePiece.getY()),
+                1.f,
+                WHITE
+            );
         }
 	}
 

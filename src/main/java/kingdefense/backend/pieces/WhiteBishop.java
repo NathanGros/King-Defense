@@ -29,7 +29,6 @@ public class WhiteBishop extends WhitePiece {
 
 	@Override
 	public void activate(Board board, Game game) {
-        System.out.println("boost: " + queenBoost);
         for (int i = x-1, j = y-1; i >= 0 && j >= 0 && !board.isWhite(i, j); i--, j--) {
             board.poisonBlackAtPos(i, j, poisonDamage * (1.f + queenBoost), poisonDuration);
         }
