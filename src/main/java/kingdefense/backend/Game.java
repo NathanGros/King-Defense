@@ -64,10 +64,12 @@ public class Game {
         addAvailableWhitePiece(new WhitePawn());
         addAvailableWhitePiece(new WhitePawn());
         addAvailableWhitePiece(new WhitePawn());
-        addAvailableWhitePiece(new WhiteRook());
-        addAvailableWhitePiece(new WhiteRook());
+        addAvailableWhitePiece(new WhiteKnight());
+        addAvailableWhitePiece(new WhiteKnight());
         addAvailableWhitePiece(new WhiteBishop());
         addAvailableWhitePiece(new WhiteBishop());
+        addAvailableWhitePiece(new WhiteRook());
+        addAvailableWhitePiece(new WhiteRook());
         addAvailableWhitePiece(new WhiteQueen());
         windowManager.launchWindow();
         fillWaveStock();

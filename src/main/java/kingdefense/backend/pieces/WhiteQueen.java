@@ -11,7 +11,7 @@ public class WhiteQueen extends WhitePiece {
         this.boost = boost;
     }
     public WhiteQueen(Integer x, Integer y) {
-        this(x, y, 1.f);
+        this(x, y, 0.5f);
     }
     public WhiteQueen() {
         this(0, 0);
