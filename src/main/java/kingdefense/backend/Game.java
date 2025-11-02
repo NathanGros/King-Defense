@@ -111,7 +111,7 @@ public class Game {
             board.getWhiteKing().place();
             return;
         }
-        if (board.getWhiteKing().getX() == x && board.getWhiteKing().getY() == y)
+        if (board.getWhiteKing().isPlaced() && board.getWhiteKing().getX() == x && board.getWhiteKing().getY() == y)
             return;
         if (availableWhitePieces.size() == 0)
             return;
