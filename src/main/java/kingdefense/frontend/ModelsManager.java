@@ -2,8 +2,6 @@ package kingdefense.frontend;
 
 import static com.raylib.Raylib.*;
 
-import kingdefense.backend.pieces.WhitePiece;
-
 public class ModelsManager {
     Model whitePawnModel;
     Model whiteBishopModel;
@@ -11,6 +9,12 @@ public class ModelsManager {
     Model whiteRookModel;
     Model whiteQueenModel;
     Model whiteKingModel;
+    Model blackPawnModel;
+    Model blackBishopModel;
+    Model blackKnightModel;
+    Model blackRookModel;
+    Model blackQueenModel;
+    Model blackKingModel;
 
     public ModelsManager() {
     }
@@ -22,6 +26,12 @@ public class ModelsManager {
         whiteRookModel = LoadModel("src/main/resources/models/whiteRookModel.obj");
         whiteQueenModel = LoadModel("src/main/resources/models/whiteQueenModel.obj");
         whiteKingModel = LoadModel("src/main/resources/models/whiteKingModel.obj");
+        blackPawnModel = LoadModel("src/main/resources/models/blackPawnModel.obj");
+        blackBishopModel = LoadModel("src/main/resources/models/blackBishopModel.obj");
+        blackKnightModel = LoadModel("src/main/resources/models/blackKnightModel.obj");
+        blackRookModel = LoadModel("src/main/resources/models/blackRookModel.obj");
+        blackQueenModel = LoadModel("src/main/resources/models/blackQueenModel.obj");
+        blackKingModel = LoadModel("src/main/resources/models/blackKingModel.obj");
     }
 
     public void unloadModels() {
@@ -31,6 +41,12 @@ public class ModelsManager {
         UnloadModel(whiteRookModel);
         UnloadModel(whiteQueenModel);
         UnloadModel(whiteKingModel);
+        UnloadModel(blackPawnModel);
+        UnloadModel(blackBishopModel);
+        UnloadModel(blackKnightModel);
+        UnloadModel(blackRookModel);
+        UnloadModel(blackQueenModel);
+        UnloadModel(blackKingModel);
     }
 
     public Model getWhiteModel(String pieceType) {
@@ -47,6 +63,18 @@ public class ModelsManager {
                 return whiteQueenModel;
             case "WhiteKing":
                 return whiteKingModel;
+            case "BlackPawn":
+                return blackPawnModel;
+            case "BlackBishop":
+                return blackBishopModel;
+            case "BlackKnight":
+                return blackKnightModel;
+            case "BlackRook":
+                return blackRookModel;
+            case "BlackQueen":
+                return blackQueenModel;
+            case "BlackKing":
+                return blackKingModel;
             default:
                 return whitePawnModel;
         }

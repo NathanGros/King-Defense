@@ -17,8 +17,6 @@ public class DrawingManager {
     private Color blackTileColor;
     private Color whiteTileColor;
     private Color healthColor;
-    private Color blackPieceColor;
-    private Color whitePieceColor;
     private ModelsManager modelsManager;
 
 	public DrawingManager() {
@@ -28,8 +26,6 @@ public class DrawingManager {
         blackTileColor = new Color().r((byte) 146).g((byte) 99).b((byte) 54).a((byte) 255);
         whiteTileColor = new Color().r((byte) 204).g((byte) 166).b((byte) 110).a((byte) 255);
         healthColor = new Color().r((byte) 195).g((byte) 88).b((byte) 51).a((byte) 255);
-        blackPieceColor = new Color().r((byte) 72).g((byte) 65).b((byte) 59).a((byte) 255);
-        whitePieceColor = new Color().r((byte) 222).g((byte) 193).b((byte) 146).a((byte) 255);
         modelsManager = new ModelsManager();
     }
 
@@ -60,11 +56,6 @@ public class DrawingManager {
         }
     }
 
-    private void drawPiece(Float x, Float y, Float z, Float height, Color color) {
-        DrawCylinder(new Vector3().x(x).y(y).z(z), 0.4f, 0.5f, height, 10, color);
-        DrawCylinderWires(new Vector3().x(x).y(y).z(z), 0.4f, 0.5f, height, 10, BLACK);
-    }
-
 	private void drawWhiteKing(WhiteKing whiteKing) {
         if (whiteKing.isPlaced())
             DrawModel(
@@ -76,7 +67,12 @@ public class DrawingManager {
 	}
 
 	private void drawBlackKing(BlackKing blackKing) {
-        drawPiece((float) blackKing.getX(), 0.0f, (float) blackKing.getY(), 3.0f, blackPieceColor);
+        DrawModel(
+            modelsManager.getWhiteModel("BlackKing"),
+            new Vector3().x(blackKing.getX()).y(0.f).z(blackKing.getY()),
+            1.f,
+            WHITE
+        );
 	}
 
 	private void drawWhitePieces(ArrayList<WhitePiece> whitePieces) {
@@ -92,7 +88,12 @@ public class DrawingManager {
 
 	private void drawBlackPieces(ArrayList<BlackPiece> blackPieces) {
         for (BlackPiece blackPiece: blackPieces) {
-            drawPiece((float) blackPiece.getX(), 0.0f, (float) blackPiece.getY(), 1.0f, blackPieceColor);
+            DrawModel(
+                modelsManager.getWhiteModel(blackPiece.getPieceType()),
+                new Vector3().x(blackPiece.getX()).y(0.f).z(blackPiece.getY()),
+                1.f,
+                WHITE
+            );
         }
 	}
 
