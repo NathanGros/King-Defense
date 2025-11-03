@@ -8,6 +8,9 @@ import java.util.HashMap;
 import kingdefense.backend.Game;
 import kingdefense.backend.pieces.WhiteKing;
 import kingdefense.backend.pieces.WhitePiece;
+import kingdefense.frontend.ModelsManager;
+import kingdefense.frontend.PieceRenderer;
+import kingdefense.frontend.ShadersManager;
 
 public class AvailablePiecesBox {
     private Integer x;
@@ -15,14 +18,27 @@ public class AvailablePiecesBox {
     private Integer width;
     private Integer height;
     private ArrayList<WhitePieceButton> whitePieceButtons;
+    private PieceRenderer pieceRenderer;
 
-    public AvailablePiecesBox() {
+    public AvailablePiecesBox(ModelsManager modelsManager, ShadersManager shadersManager) {
         y = GetScreenHeight() / 6;
         height = GetScreenHeight() - y * 4 / 3;
         width = GetScreenWidth() / 6;
         x = GetScreenWidth() * 19 / 20 - width;
         this.whitePieceButtons = new ArrayList<>();
         initWhitePieceButtons();
+        pieceRenderer = new PieceRenderer();
+        for (WhitePieceButton whitePieceButton: whitePieceButtons) {
+            whitePieceButton.setModelRenderTexture(
+                pieceRenderer.renderPiece(
+                    modelsManager.getPieceModel(whitePieceButton.getName()),
+                    width / 2,
+                    height / 3,
+                    shadersManager.getShaders(),
+                    shadersManager.getShadowMap()
+                )
+            );
+        }
     }
 
     private void initWhitePieceButtons() {
@@ -72,6 +88,12 @@ public class AvailablePiecesBox {
         ));
     }
 
+    public void unload() {
+        for (WhitePieceButton whitePieceButton: whitePieceButtons) {
+            whitePieceButton.unload();
+        }
+    }
+
     public void checkWhitePieceChange(Game game) {
         for (WhitePieceButton whitePieceButton: whitePieceButtons) {
             whitePieceButton.activate(game);
@@ -95,8 +117,10 @@ public class AvailablePiecesBox {
         }
         DrawRectangle(x, y, width, height, menusBackgroundColor);
         for (WhitePieceButton pieceButton: whitePieceButtons) {
-            pieceButton.draw(pieceCount.get(pieceButton.getName()));
+            pieceButton.draw(
+                false,
+                pieceCount.get(pieceButton.getName())
+            );
         }
     }
-
 }

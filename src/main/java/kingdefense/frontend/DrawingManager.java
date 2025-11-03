@@ -15,23 +15,24 @@ import kingdefense.frontend.ui.*;
 public class DrawingManager {
     private Color backgroundColor;
     private Color menusBackgroundColor;
-    private Color boardColor;
-    private Color blackTileColor;
-    private Color whiteTileColor;
     private Color healthColor;
     private ModelsManager modelsManager;
-    private ShadersManager shadersManager;
+	private ShadersManager shadersManager;
 
 	public DrawingManager() {
         backgroundColor = new Color().r((byte) 51).g((byte) 51).b((byte) 51).a((byte) 255);
         menusBackgroundColor = new Color().r((byte) 37).g((byte) 37).b((byte) 37).a((byte) 255);
-        boardColor = new Color().r((byte) 133).g((byte) 88).b((byte) 50).a((byte) 255);
-        blackTileColor = new Color().r((byte) 146).g((byte) 99).b((byte) 54).a((byte) 255);
-        whiteTileColor = new Color().r((byte) 204).g((byte) 166).b((byte) 110).a((byte) 255);
         healthColor = new Color().r((byte) 195).g((byte) 88).b((byte) 51).a((byte) 255);
         modelsManager = new ModelsManager();
         shadersManager = new ShadersManager();
     }
+
+    public ModelsManager getModelsManager() {
+		return modelsManager;
+	}
+	public ShadersManager getShadersManager() {
+		return shadersManager;
+	}
 
     public void loadModels() {
         shadersManager.initShaders();

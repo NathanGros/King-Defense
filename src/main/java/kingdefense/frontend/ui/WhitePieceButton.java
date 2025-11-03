@@ -7,6 +7,7 @@ import kingdefense.backend.Game;
 
 public class WhitePieceButton extends Button {
     private String name;
+    private RenderTexture modelRenderTexture;
 
 	public WhitePieceButton(Integer x, Integer y, Integer width, Integer height, String name) {
         super(x, y, width, height);
@@ -16,14 +17,29 @@ public class WhitePieceButton extends Button {
     public String getName() {
 		return name;
 	}
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void setModelRenderTexture(RenderTexture modelRenderTexture) {
+        this.modelRenderTexture = modelRenderTexture;
+    }
 
-    public void draw(Integer nbAvailable) {
+    public void draw(boolean isHovered, Integer nbAvailable) {
+        Texture modelTexture = modelRenderTexture.texture();
+        Rectangle sourceRec = new Rectangle()
+            .x(0)
+            .y(0)
+            .width(modelTexture.width())
+            .height(-modelTexture.height()); // Flip vertically (render texture is upside down)
+        Rectangle destRec = new Rectangle()
+            .x(x)
+            .y(y)
+            .width(width)
+            .height(height);
+        DrawTexturePro(modelTexture, sourceRec, destRec, new Vector2().x(0).y(0), 0, WHITE);
         int textHeight = 40;
-        DrawText(name.substring(5), x + width / 2 - textHeight * 2 / 3, y + height - 4 * textHeight, textHeight / 2, RAYWHITE);
         DrawText("x" + nbAvailable.toString(), x + width / 2 - textHeight / 2, y + height - 2 * textHeight, textHeight, RAYWHITE);
+    }
+
+    public void unload() {
+        UnloadRenderTexture(modelRenderTexture);
     }
 
     @Override

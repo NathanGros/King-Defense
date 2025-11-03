@@ -21,7 +21,7 @@ public class WindowManager {
     }
 
     private void initUiElements() {
-        availablePiecesBox = new AvailablePiecesBox();
+        availablePiecesBox = new AvailablePiecesBox(drawingManager.getModelsManager(), drawingManager.getShadersManager());
         waveBox = new WaveBox();
     }
 
@@ -31,12 +31,13 @@ public class WindowManager {
         // SetConfigFlags(FLAG_MSAA_4X_HINT);
         InitWindow(0, 0, "King Defense");
         SetTargetFPS(60);
-        initUiElements();
         drawingManager.loadModels();
+        initUiElements();
     }
 
     public void closeWindow() {
         drawingManager.unloadModels();
+        availablePiecesBox.unload();
         CloseWindow();
     }
 
