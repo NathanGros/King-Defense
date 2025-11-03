@@ -2,6 +2,8 @@ package kingdefense.backend.pieces;
 
 import java.util.ArrayList;
 
+import kingdefense.frontend.ui.WaveBox;
+
 public class BlackKing {
     private Integer x;
     private Integer y;
@@ -31,12 +33,14 @@ public class BlackKing {
 	public ArrayList<BlackPiece> getStockPieces() {
 		return stockPieces;
 	}
-	public void addStockPiece(BlackPiece stockPiece) {
+	public void addStockPiece(BlackPiece stockPiece, WaveBox frontWaveBox) {
 		this.stockPieces.add(stockPiece);
+        frontWaveBox.addBlackPiece(stockPiece);
 	}
-	public BlackPiece popStockPiece() {
+	public BlackPiece popStockPiece(WaveBox frontWaveBox) {
         BlackPiece nextPiece = stockPieces.getFirst();
 		stockPieces.removeFirst();
+        frontWaveBox.removeFirst();
         return nextPiece;
 	}
 

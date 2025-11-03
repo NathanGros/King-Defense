@@ -5,10 +5,11 @@ import java.util.ArrayList;
 import kingdefense.backend.Game;
 import kingdefense.backend.board.*;
 import kingdefense.backend.pieces.*;
+import kingdefense.frontend.ui.WaveBox;
 
 public class BlackLogic {
-    public static void play(Game game, Board board) {
-        putNewPiece(board);
+    public static void play(Game game, Board board, WaveBox frontWaveBox) {
+        putNewPiece(board, frontWaveBox);
         movePieces(board);
         applyPoison(board);
         checkWaveEnd(game, board);
@@ -46,7 +47,7 @@ public class BlackLogic {
         }
     }
 
-    public static void putNewPiece(Board board) {
+    public static void putNewPiece(Board board, WaveBox frontWaveBox) {
         // No more pieces to place
         if (board.getBlackKing().getStockPieces().isEmpty()) {
             return;
@@ -57,7 +58,7 @@ public class BlackLogic {
                 return;
         }
         // Place next piece at kings position
-        BlackPiece nextPiece = board.getBlackKing().popStockPiece();
+        BlackPiece nextPiece = board.getBlackKing().popStockPiece(frontWaveBox);
         nextPiece.setX(board.getBlackKing().getX());
         nextPiece.setY(board.getBlackKing().getY());
         board.addBlackPiece(nextPiece);

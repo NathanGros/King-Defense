@@ -2,17 +2,16 @@ package kingdefense.frontend;
 
 import static com.raylib.Raylib.*;
 
-import java.util.ArrayList;
-
 import kingdefense.backend.Game;
 import kingdefense.frontend.ui.*;
 
 public class WindowManager {
-    CameraManager cameraManager;
-    DrawingManager drawingManager;
-    InputManager inputManager;
-    AvailablePiecesBox availablePiecesBox;
-    WaveBox waveBox;
+    private CameraManager cameraManager;
+    private DrawingManager drawingManager;
+    private InputManager inputManager;
+    private AvailablePiecesBox availablePiecesBox;
+    private WaveBox waveBox;
+	private PieceRenderer pieceRenderer;
 
     public WindowManager() {
         cameraManager = new CameraManager();
@@ -21,8 +20,8 @@ public class WindowManager {
     }
 
     private void initUiElements() {
-        availablePiecesBox = new AvailablePiecesBox(drawingManager.getModelsManager(), drawingManager.getShadersManager());
-        waveBox = new WaveBox();
+        availablePiecesBox = new AvailablePiecesBox(drawingManager.getModelsManager(), drawingManager.getShadersManager(), pieceRenderer);
+        waveBox = new WaveBox(drawingManager.getModelsManager(), drawingManager.getShadersManager(), pieceRenderer);
     }
 
     public void launchWindow() {
@@ -32,14 +31,20 @@ public class WindowManager {
         InitWindow(0, 0, "King Defense");
         SetTargetFPS(60);
         drawingManager.loadModels();
+        pieceRenderer = new PieceRenderer();
         initUiElements();
     }
 
     public void closeWindow() {
         drawingManager.unloadModels();
         availablePiecesBox.unload();
+        waveBox.unloadAll();
         CloseWindow();
     }
+
+    public WaveBox getWaveBox() {
+		return waveBox;
+	}
 
     public void windowInteract(Game game) {
         if (WindowShouldClose()) {

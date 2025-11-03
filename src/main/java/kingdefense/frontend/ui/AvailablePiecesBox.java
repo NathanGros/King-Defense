@@ -6,8 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import kingdefense.backend.Game;
-import kingdefense.backend.pieces.WhiteKing;
-import kingdefense.backend.pieces.WhitePiece;
+import kingdefense.backend.pieces.*;
 import kingdefense.frontend.ModelsManager;
 import kingdefense.frontend.PieceRenderer;
 import kingdefense.frontend.ShadersManager;
@@ -18,16 +17,14 @@ public class AvailablePiecesBox {
     private Integer width;
     private Integer height;
     private ArrayList<WhitePieceButton> whitePieceButtons;
-    private PieceRenderer pieceRenderer;
 
-    public AvailablePiecesBox(ModelsManager modelsManager, ShadersManager shadersManager) {
+    public AvailablePiecesBox(ModelsManager modelsManager, ShadersManager shadersManager, PieceRenderer pieceRenderer) {
         y = GetScreenHeight() / 6;
         height = GetScreenHeight() - y * 4 / 3;
         width = GetScreenWidth() / 6;
         x = GetScreenWidth() * 19 / 20 - width;
         this.whitePieceButtons = new ArrayList<>();
         initWhitePieceButtons();
-        pieceRenderer = new PieceRenderer();
         for (WhitePieceButton whitePieceButton: whitePieceButtons) {
             whitePieceButton.setModelRenderTexture(
                 pieceRenderer.renderPiece(
@@ -35,7 +32,8 @@ public class AvailablePiecesBox {
                     width / 2,
                     height / 3,
                     shadersManager.getShaders(),
-                    shadersManager.getShadowMap()
+                    shadersManager.getShadowMap(),
+                    1.f
                 )
             );
         }

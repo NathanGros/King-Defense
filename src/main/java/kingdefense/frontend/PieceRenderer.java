@@ -8,15 +8,16 @@ public class PieceRenderer {
     
     public PieceRenderer() {
         pieceCamera = new Camera3D();
-        pieceCamera._position(new Vector3().x(0).y(2.5f).z(7));
+        pieceCamera._position(new Vector3().x(0).y(2.2f).z(7));
         pieceCamera.target(new Vector3().x(0).y(0.3f).z(0));
         pieceCamera.up(new Vector3().x(0).y(1).z(0));
         pieceCamera.fovy(30.0f);
         pieceCamera.projection(CAMERA_PERSPECTIVE);
     }
     
-    public RenderTexture renderPiece(Model pieceModel, int pieceWidth, int pieceHeight, Shader shadowShader, RenderTexture shadowMap) {
+    public RenderTexture renderPiece(Model pieceModel, int pieceWidth, int pieceHeight, Shader shadowShader, RenderTexture shadowMap, float distance) {
         RenderTexture pieceRenderTexture = LoadRenderTexture(pieceWidth, pieceHeight);
+        pieceCamera._position(Vector3Add(pieceCamera.target(), Vector3Scale(new Vector3().x(0).y(2.5f).z(7), distance)));
         BeginTextureMode(pieceRenderTexture);
             ClearBackground(BLANK);
             BeginMode3D(pieceCamera);

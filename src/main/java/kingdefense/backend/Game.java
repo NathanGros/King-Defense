@@ -97,9 +97,15 @@ public class Game {
     }
 
     public void fillWaveStock() {
-        board.getBlackKing().addStockPiece(new BlackPawn());
-        board.getBlackKing().addStockPiece(new BlackPawn());
-        board.getBlackKing().addStockPiece(new BlackKnight());
+        board.getBlackKing().addStockPiece(new BlackPawn(), windowManager.getWaveBox());
+        board.getBlackKing().addStockPiece(new BlackPawn(), windowManager.getWaveBox());
+        board.getBlackKing().addStockPiece(new BlackKnight(), windowManager.getWaveBox());
+        board.getBlackKing().addStockPiece(new BlackPawn(), windowManager.getWaveBox());
+        board.getBlackKing().addStockPiece(new BlackKnight(), windowManager.getWaveBox());
+        board.getBlackKing().addStockPiece(new BlackPawn(), windowManager.getWaveBox());
+        board.getBlackKing().addStockPiece(new BlackPawn(), windowManager.getWaveBox());
+        board.getBlackKing().addStockPiece(new BlackKnight(), windowManager.getWaveBox());
+        board.getBlackKing().addStockPiece(new BlackKnight(), windowManager.getWaveBox());
     }
 
     public void putNewWhitePiece(Integer x, Integer y) {
@@ -156,7 +162,7 @@ public class Game {
                 if (timerPlayerAction >= 1.f) {
                     timerPlayerAction = 0.f;
                     if (isBlackTurn)
-                        BlackLogic.play(this, board);
+                        BlackLogic.play(this, board, windowManager.getWaveBox());
                     else
                         WhiteLogic.activatePieces(board, this);
                     isBlackTurn = !isBlackTurn;
