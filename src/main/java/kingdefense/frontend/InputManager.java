@@ -98,6 +98,18 @@ public class InputManager {
         }
     }
 
+    public void checkWaveBoxScroll(WaveBox waveBox) {
+        if (!waveBox.isInBounds(GetMousePosition()))
+            return;
+        float wheelMove = GetMouseWheelMoveV().y();
+        if (wheelMove == 0.0)
+            return;
+        if (GetMouseWheelMoveV().y() < 0)
+            waveBox.scrollDown();
+        else
+            waveBox.scrollUp();
+    }
+
     public void checkInputs(Game game, Camera3D camera, AvailablePiecesBox availablePiecesBox, WaveBox waveBox) {
         checkPutWhitePiece(game, camera);
         checkRemoveWhitePiece(game, camera);

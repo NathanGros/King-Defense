@@ -52,6 +52,7 @@ public class WindowManager {
             return;
         }
         inputManager.checkCameraMovement(cameraManager);
+        inputManager.checkWaveBoxScroll(waveBox);
         if (!game.isInWave()) {
             inputManager.checkInputs(game, cameraManager.getCamera(), availablePiecesBox, waveBox);
         }

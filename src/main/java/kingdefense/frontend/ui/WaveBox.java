@@ -1,6 +1,5 @@
 package kingdefense.frontend.ui;
 
-import static com.raylib.Colors.*;
 import static com.raylib.Raylib.*;
 
 import java.util.ArrayList;
@@ -21,6 +20,7 @@ public class WaveBox {
     private Integer waveGridStartY;
     private Integer waveGridNbX;
     private Integer waveGridNbY;
+    private Integer scrollOffset;
     StartWaveButton startWaveButton;
     ArrayList<BlackPieceButton> blackPieceButtons;
     private ShadersManager shadersManager;
@@ -36,6 +36,7 @@ public class WaveBox {
         waveGridStartY = 80;
         waveGridNbX = 5;
         waveGridNbY = 10;
+        scrollOffset = 0;
         blackPieceButtons = new ArrayList<>();
         this.modelsManager = modelsManager;
         this.shadersManager = shadersManager;
@@ -52,16 +53,24 @@ public class WaveBox {
         }
     }
 
-    public void removeFirst() {
-        blackPieceButtons.getFirst().unload();
-        blackPieceButtons.removeFirst();
+    private void updateWavePiecesPosition() {
+        if (blackPieceButtons.size() - waveGridNbX * scrollOffset <= waveGridNbX * waveGridNbY - waveGridNbX)
+            scrollOffset--;
+        if (blackPieceButtons.size() <= waveGridNbX * waveGridNbY)
+            scrollOffset = 0;
         int pieceButtonWidth = width / waveGridNbX;
         int pieceButtonHeight = (height - waveGridStartY) / waveGridNbY;
         for (int i = 0; i < blackPieceButtons.size(); i++) {
             BlackPieceButton blackPieceButton = blackPieceButtons.get(i);
             blackPieceButton.setX(x + (i % waveGridNbX ) * pieceButtonWidth);
-            blackPieceButton.setY(y + waveGridStartY + (i / waveGridNbX) * pieceButtonHeight);
+            blackPieceButton.setY(y + waveGridStartY - scrollOffset * pieceButtonHeight + (i / waveGridNbX) * pieceButtonHeight);
         }
+    }
+
+    public void removeFirst() {
+        blackPieceButtons.getFirst().unload();
+        blackPieceButtons.removeFirst();
+        updateWavePiecesPosition();
     }
 
     public void addBlackPiece(BlackPiece blackPiece) {
@@ -70,7 +79,7 @@ public class WaveBox {
         int pieceButtonHeight = (height - waveGridStartY) / waveGridNbY;
         BlackPieceButton blackPieceButton = new BlackPieceButton(
             x + (position % waveGridNbX ) * pieceButtonWidth,
-            y + waveGridStartY + (position / waveGridNbX) * pieceButtonHeight,
+            y + waveGridStartY - scrollOffset * pieceButtonHeight + (position / waveGridNbX) * pieceButtonHeight,
             pieceButtonWidth,
             pieceButtonHeight,
             blackPiece.getPieceType()
@@ -88,9 +97,34 @@ public class WaveBox {
         blackPieceButtons.add(blackPieceButton);
     }
 
+    public void scrollUp() {
+        scrollOffset--;
+        if (scrollOffset < 0)
+            scrollOffset = 0;
+        updateWavePiecesPosition();
+    }
+
+    public void scrollDown() {
+        if (blackPieceButtons.size() <= waveGridNbX * waveGridNbY)
+            scrollOffset = 0;
+        else {
+            if (blackPieceButtons.size() - waveGridNbX * scrollOffset > waveGridNbX * waveGridNbY)
+                scrollOffset++;
+        }
+        updateWavePiecesPosition();
+    }
+
+    public boolean isInBounds(Vector2 pos) {
+        return pos.x() > x && pos.x() < x + width && pos.y() > y && pos.y() < y + height;
+    }
+
     private void drawWavePieces(ArrayList<BlackPiece> blackPieces) {
-        for (BlackPieceButton pieceButton: blackPieceButtons) {
-            pieceButton.draw(false);
+        for (int i = 0; i < blackPieceButtons.size(); i++) {
+            if (i - scrollOffset * waveGridNbX < 0)
+                continue;
+            if (i - scrollOffset * waveGridNbX >= waveGridNbX * waveGridNbY)
+                continue;
+            blackPieceButtons.get(i).draw(false);
         }
     }
 
