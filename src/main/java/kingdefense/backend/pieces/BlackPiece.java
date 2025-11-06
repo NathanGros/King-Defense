@@ -19,15 +19,12 @@ public abstract class BlackPiece {
     protected Integer targetX;
     protected Integer targetY;
     protected Integer shortestPathLength;
-    protected ArrayList<Integer> attainableX;
-	protected ArrayList<Integer> attainableY;
-    protected Integer attainableNb;
 
-	public BlackPiece(Integer x, Integer y, Float health, Float shieldHealth, Integer attack) {
+	public BlackPiece(Integer x, Integer y, Float health, Integer attack) {
         this.x = x;
         this.y = y;
         this.health = health;
-        this.shieldHealth = shieldHealth;
+        this.shieldHealth = 0.f;
         this.attack = attack;
         this.priority = 0;
         this.coinDropNb = 0;
@@ -37,9 +34,6 @@ public abstract class BlackPiece {
         this.targetX = -1;
         this.targetY = -1;
         this.shortestPathLength = -1;
-    }
-	public BlackPiece(Integer x, Integer y, Float health, Integer attack) {
-        this(x, y, health, 0.f, attack);
     }
 
 	public Integer getX() {
@@ -134,44 +128,16 @@ public abstract class BlackPiece {
 	public void setShortestPathLength(Integer shortestPathLength) {
 		this.shortestPathLength = shortestPathLength;
 	}
-	public void setAttainableX(ArrayList<Integer> attainableX) {
-		this.attainableX = attainableX;
-	}
-	public void setAttainableY(ArrayList<Integer> attainableY) {
-		this.attainableY = attainableY;
-	}
 
     public abstract String getPieceType();
 
+    public abstract ArrayList<PathFindingTile> getNeighbors(Board board, PathFindingTile tile);
+
+    public abstract ArrayList<PathFindingTile> getEmptyNeighbors(Board board, PathFindingTile tile);
+
 	public boolean canMove(Board board) {
-        for (int i = 0; i < attainableNb; i++) {
-            if (board.isEmpty(x + attainableX.get(i), y + attainableY.get(i)))
-                return true;
-        }
-        return false;
+        return (getEmptyNeighbors(board, new PathFindingTile(x, y)).size() > 0);
 	}
-
-    public ArrayList<PathFindingTile> getNeighbors(Board board, PathFindingTile tile) {
-        int x = tile.getTileX();
-        int y = tile.getTileY();
-        ArrayList<PathFindingTile> neighbors = new ArrayList<>();
-        for (int i = 0; i < attainableNb; i++) {
-            if (board.isInBound(x + attainableX.get(i), y + attainableY.get(i)))
-                neighbors.add(new PathFindingTile(x + attainableX.get(i), y + attainableY.get(i)));
-        }
-        return neighbors;
-    }
-
-    public ArrayList<PathFindingTile> getEmptyNeighbors(Board board, PathFindingTile tile) {
-        int x = tile.getTileX();
-        int y = tile.getTileY();
-        ArrayList<PathFindingTile> neighbors = new ArrayList<>();
-        for (int i = 0; i < attainableNb; i++) {
-            if (board.isEmpty(x + attainableX.get(i), y + attainableY.get(i)))
-                neighbors.add(new PathFindingTile(x + attainableX.get(i), y + attainableY.get(i)));
-        }
-        return neighbors;
-    }
 
     public void move(Integer x, Integer y) {
         this.x = x;
