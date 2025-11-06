@@ -100,12 +100,15 @@ public class Game {
         board.getBlackKing().addStockPiece(new BlackPawn(), windowManager.getWaveBox());
         board.getBlackKing().addStockPiece(new BlackPawn(), windowManager.getWaveBox());
         board.getBlackKing().addStockPiece(new BlackKnight(), windowManager.getWaveBox());
+        board.getBlackKing().addStockPiece(new BlackBishop(), windowManager.getWaveBox());
         board.getBlackKing().addStockPiece(new BlackRook(), windowManager.getWaveBox());
         board.getBlackKing().addStockPiece(new BlackPawn(), windowManager.getWaveBox());
         board.getBlackKing().addStockPiece(new BlackRook(), windowManager.getWaveBox());
         board.getBlackKing().addStockPiece(new BlackKnight(), windowManager.getWaveBox());
         board.getBlackKing().addStockPiece(new BlackPawn(), windowManager.getWaveBox());
+        board.getBlackKing().addStockPiece(new BlackBishop(), windowManager.getWaveBox());
         board.getBlackKing().addStockPiece(new BlackRook(), windowManager.getWaveBox());
+        board.getBlackKing().addStockPiece(new BlackBishop(), windowManager.getWaveBox());
         board.getBlackKing().addStockPiece(new BlackKnight(), windowManager.getWaveBox());
         board.getBlackKing().addStockPiece(new BlackKnight(), windowManager.getWaveBox());
         board.getBlackKing().addStockPiece(new BlackKnight(), windowManager.getWaveBox());
