@@ -114,6 +114,20 @@ public class Board {
             killBlackPiece(blackPiece);
     }
 
+    public void shieldDamageBlackAtPos(Integer x, Integer y, Float damage) {
+        ArrayList<BlackPiece> deadList = new ArrayList<>();
+        for (BlackPiece blackPiece: blackPieces) {
+            if (blackPiece.getX() == x && blackPiece.getY() == y) {
+                blackPiece.damageShield(damage);
+                if (blackPiece.getHealth() <= 0)
+                    deadList.add(blackPiece);
+            }
+        }
+        for (BlackPiece blackPiece: deadList) {
+            killBlackPiece(blackPiece);
+        }
+    }
+
     public void poisonBlackAtPos(Integer x, Integer y, Float poisonDamage, Integer nbTurns) {
         for (BlackPiece blackPiece: blackPieces) {
             if (blackPiece.getX() == x && blackPiece.getY() == y) {

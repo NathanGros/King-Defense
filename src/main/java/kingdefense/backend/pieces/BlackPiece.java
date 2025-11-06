@@ -9,6 +9,7 @@ public abstract class BlackPiece {
     protected Integer x;
     protected Integer y;
     protected Float health;
+    protected Float shieldHealth;
     protected Integer attack;
     protected Integer priority;
     protected Integer coinDropNb;
@@ -22,10 +23,11 @@ public abstract class BlackPiece {
 	protected ArrayList<Integer> attainableY;
     protected Integer attainableNb;
 
-	public BlackPiece(Integer x, Integer y, Float health, Integer attack) {
+	public BlackPiece(Integer x, Integer y, Float health, Float shieldHealth, Integer attack) {
         this.x = x;
         this.y = y;
         this.health = health;
+        this.shieldHealth = shieldHealth;
         this.attack = attack;
         this.priority = 0;
         this.coinDropNb = 0;
@@ -35,6 +37,9 @@ public abstract class BlackPiece {
         this.targetX = -1;
         this.targetY = -1;
         this.shortestPathLength = -1;
+    }
+	public BlackPiece(Integer x, Integer y, Float health, Integer attack) {
+        this(x, y, health, 0.f, attack);
     }
 
 	public Integer getX() {
@@ -56,7 +61,23 @@ public abstract class BlackPiece {
 		this.health = health;
 	}
 	public void damage(Float damage) {
-		health -= damage;
+        if (shieldHealth <= 0.f)
+            health -= damage;
+	}
+	public Float getShieldHealth() {
+		return shieldHealth;
+	}
+	public void setShieldHealth(Float health) {
+		this.health = shieldHealth;
+	}
+	public void damageShield(Float damage) {
+        if (shieldHealth <= 0.f)
+            damage(damage);
+        else {
+            shieldHealth -= damage;
+            if (shieldHealth <= 0.f)
+                shieldHealth = 0.f;
+        }
 	}
     public Integer getAttack() {
 		return attack;

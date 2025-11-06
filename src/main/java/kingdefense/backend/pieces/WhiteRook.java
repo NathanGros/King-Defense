@@ -25,16 +25,16 @@ public class WhiteRook extends WhitePiece {
 	@Override
 	public void activate(Board board, Game game) {
         for (int i = x-1; i >= 0 && !board.isWhite(i, y); i--) {
-            board.damageBlackAtPos(i, y, damage * (1.f + queenBoost));
+            board.shieldDamageBlackAtPos(i, y, damage * (1.f + queenBoost));
         }
         for (int i = x+1; i < 8 && !board.isWhite(i, y); i++) {
-            board.damageBlackAtPos(i, y, damage * (1.f + queenBoost));
+            board.shieldDamageBlackAtPos(i, y, damage * (1.f + queenBoost));
         }
         for (int i = y-1; i >= 0 && !board.isWhite(x, i); i--) {
-            board.damageBlackAtPos(x, i, damage * (1.f + queenBoost));
+            board.shieldDamageBlackAtPos(x, i, damage * (1.f + queenBoost));
         }
         for (int i = y+1; i < 8 && !board.isWhite(x, i); i++) {
-            board.damageBlackAtPos(x, i, damage * (1.f + queenBoost));
+            board.shieldDamageBlackAtPos(x, i, damage * (1.f + queenBoost));
         }
 	}
 }
