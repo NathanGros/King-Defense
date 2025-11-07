@@ -20,7 +20,7 @@ public class Game {
     private String selectedWhitePiece;
 
 	public Game() {
-        board = new Board(20);
+        board = new Board(50);
         windowManager = new WindowManager();
         isRunning = false;
         isInWave = false;
@@ -104,6 +104,7 @@ public class Game {
         board.getBlackKing().addStockPiece(new BlackRook(), windowManager.getWaveBox());
         board.getBlackKing().addStockPiece(new BlackPawn(), windowManager.getWaveBox());
         board.getBlackKing().addStockPiece(new BlackRook(), windowManager.getWaveBox());
+        board.getBlackKing().addStockPiece(new BlackQueen(), windowManager.getWaveBox());
         board.getBlackKing().addStockPiece(new BlackKnight(), windowManager.getWaveBox());
         board.getBlackKing().addStockPiece(new BlackPawn(), windowManager.getWaveBox());
         board.getBlackKing().addStockPiece(new BlackBishop(), windowManager.getWaveBox());
@@ -113,6 +114,7 @@ public class Game {
         board.getBlackKing().addStockPiece(new BlackKnight(), windowManager.getWaveBox());
         board.getBlackKing().addStockPiece(new BlackKnight(), windowManager.getWaveBox());
         board.getBlackKing().addStockPiece(new BlackRook(), windowManager.getWaveBox());
+        board.getBlackKing().addStockPiece(new BlackQueen(), windowManager.getWaveBox());
     }
 
     public void putNewWhitePiece(Integer x, Integer y) {

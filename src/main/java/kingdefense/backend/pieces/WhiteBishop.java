@@ -30,16 +30,16 @@ public class WhiteBishop extends WhitePiece {
 	@Override
 	public void activate(Board board, Game game) {
         for (int i = x-1, j = y-1; i >= 0 && j >= 0 && !board.isWhite(i, j); i--, j--) {
-            board.poisonBlackAtPos(i, j, poisonDamage * (1.f + queenBoost), poisonDuration);
+            board.poisonBlackAtPos(i, j, poisonDamage * (1.f + queenBoost - queenNerf), poisonDuration);
         }
         for (int i = x-1, j = y+1; i >= 0 && j < 8 && !board.isWhite(i, j); i--, j++) {
-            board.poisonBlackAtPos(i, j, poisonDamage * (1.f + queenBoost), poisonDuration);
+            board.poisonBlackAtPos(i, j, poisonDamage * (1.f + queenBoost - queenNerf), poisonDuration);
         }
         for (int i = x+1, j = y-1; i < 8 && j >= 0 && !board.isWhite(i, j); i++, j--) {
-            board.poisonBlackAtPos(i, j, poisonDamage * (1.f + queenBoost), poisonDuration);
+            board.poisonBlackAtPos(i, j, poisonDamage * (1.f + queenBoost - queenNerf), poisonDuration);
         }
         for (int i = x+1, j = y+1; i < 8 && j < 8 && !board.isWhite(i, j); i++, j++) {
-            board.poisonBlackAtPos(i, j, poisonDamage * (1.f + queenBoost), poisonDuration);
+            board.poisonBlackAtPos(i, j, poisonDamage * (1.f + queenBoost - queenNerf), poisonDuration);
         }
 	}
 }

@@ -73,7 +73,7 @@ public class WhiteKnight extends WhitePiece {
             return;
         for (int i = -1; i <=1; i++) {
             for (int j = -1; j <= 1; j++) {
-                board.damageBlackAtPos(bestSpotX + i, bestSpotY + j, damage);
+                board.damageBlackAtPos(bestSpotX + i, bestSpotY + j, damage * (1.f + queenBoost - queenNerf));
             }
         }
 	}

@@ -26,29 +26,29 @@ public class WhiteQueen extends WhitePiece {
 	public void activate(Board board, Game game) {
         // Straights
         for (int i = x-1; i >= 0; i--) {
-            board.queenBoostWhiteAtPos(i, y, boost);
+            board.queenBoostWhiteAtPos(i, y, boost * (1.f - queenNerf));
         }
         for (int i = x+1; i < 8; i++) {
-            board.queenBoostWhiteAtPos(i, y, boost);
+            board.queenBoostWhiteAtPos(i, y, boost * (1.f - queenNerf));
         }
         for (int i = y-1; i >= 0; i--) {
-            board.queenBoostWhiteAtPos(x, i, boost);
+            board.queenBoostWhiteAtPos(x, i, boost * (1.f - queenNerf));
         }
         for (int i = y+1; i < 8; i++) {
-            board.queenBoostWhiteAtPos(x, i, boost);
+            board.queenBoostWhiteAtPos(x, i, boost * (1.f - queenNerf));
         }
         // Diagonals
         for (int i = x-1, j = y-1; i >= 0 && j >= 0; i--, j--) {
-            board.queenBoostWhiteAtPos(i, j, boost);
+            board.queenBoostWhiteAtPos(i, j, boost * (1.f - queenNerf));
         }
         for (int i = x-1, j = y+1; i >= 0 && j < 8; i--, j++) {
-            board.queenBoostWhiteAtPos(i, j, boost);
+            board.queenBoostWhiteAtPos(i, j, boost * (1.f - queenNerf));
         }
         for (int i = x+1, j = y-1; i < 8 && j >= 0; i++, j--) {
-            board.queenBoostWhiteAtPos(i, j, boost);
+            board.queenBoostWhiteAtPos(i, j, boost * (1.f - queenNerf));
         }
         for (int i = x+1, j = y+1; i < 8 && j < 8; i++, j++) {
-            board.queenBoostWhiteAtPos(i, j, boost);
+            board.queenBoostWhiteAtPos(i, j, boost * (1.f - queenNerf));
         }
 	}
 }
