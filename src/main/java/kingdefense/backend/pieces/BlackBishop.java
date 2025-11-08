@@ -1,6 +1,7 @@
 package kingdefense.backend.pieces;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import kingdefense.backend.board.*;
 
@@ -31,19 +32,22 @@ public class BlackBishop extends BlackPiece {
         for (int i = x+1, j = y+1; i < 8 && j < 8 && !board.isWhite(new Tile(i, j)); i++, j++) {
             attainableTiles.add(new Tile(i, j));
         }
-        attainableTiles = new ArrayList<>(attainableTiles.reversed());
+        Collections.shuffle(attainableTiles);
+        ArrayList<Tile> attainableFallbackTiles = new ArrayList<>();
         if (!board.isWhite(new Tile(x + 1, y))) {
-            attainableTiles.add(new Tile(x + 1, y));
+            attainableFallbackTiles.add(new Tile(x + 1, y));
         }
         if (!board.isWhite(new Tile(x - 1, y))) {
-            attainableTiles.add(new Tile(x - 1, y));
+            attainableFallbackTiles.add(new Tile(x - 1, y));
         }
         if (!board.isWhite(new Tile(x, y + 1))) {
-            attainableTiles.add(new Tile(x, y + 1));
+            attainableFallbackTiles.add(new Tile(x, y + 1));
         }
         if (!board.isWhite(new Tile(x, y - 1))) {
-            attainableTiles.add(new Tile(x, y - 1));
+            attainableFallbackTiles.add(new Tile(x, y - 1));
         }
+        Collections.shuffle(attainableFallbackTiles);
+        attainableTiles.addAll(attainableFallbackTiles);
         ArrayList<PathFindingTile> neighbors = new ArrayList<>();
         for (int i = 0; i < attainableTiles.size(); i++) {
             if (board.isInBound(attainableTiles.get(i)))
@@ -69,19 +73,22 @@ public class BlackBishop extends BlackPiece {
         for (int i = x+1, j = y+1; i < 8 && j < 8 && board.isEmpty(new Tile(i, j)); i++, j++) {
             attainableTiles.add(new Tile(i, j));
         }
-        attainableTiles = new ArrayList<>(attainableTiles.reversed());
+        Collections.shuffle(attainableTiles);
+        ArrayList<Tile> attainableFallbackTiles = new ArrayList<>();
         if (board.isEmpty(new Tile(x + 1, y))) {
-            attainableTiles.add(new Tile(x + 1, y));
+            attainableFallbackTiles.add(new Tile(x + 1, y));
         }
         if (board.isEmpty(new Tile(x - 1, y))) {
-            attainableTiles.add(new Tile(x - 1, y));
+            attainableFallbackTiles.add(new Tile(x - 1, y));
         }
         if (board.isEmpty(new Tile(x, y + 1))) {
-            attainableTiles.add(new Tile(x, y + 1));
+            attainableFallbackTiles.add(new Tile(x, y + 1));
         }
         if (board.isEmpty(new Tile(x, y - 1))) {
-            attainableTiles.add(new Tile(x, y - 1));
+            attainableFallbackTiles.add(new Tile(x, y - 1));
         }
+        Collections.shuffle(attainableFallbackTiles);
+        attainableTiles.addAll(attainableFallbackTiles);
         ArrayList<PathFindingTile> neighbors = new ArrayList<>();
         for (int i = 0; i < attainableTiles.size(); i++) {
             neighbors.add(new PathFindingTile(attainableTiles.get(i)));

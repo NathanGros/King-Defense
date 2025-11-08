@@ -2,6 +2,7 @@ package kingdefense.backend.pieces;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 import kingdefense.backend.board.*;
 
@@ -25,10 +26,14 @@ public class BlackKnight extends BlackPiece {
         attainableTiles.add(tile.addWithTile(new Tile(-1, 2)));
         attainableTiles.add(tile.addWithTile(new Tile(1, -2)));
         attainableTiles.add(tile.addWithTile(new Tile(-1, -2)));
-        attainableTiles.add(tile.addWithTile(new Tile(1, 0)));
-        attainableTiles.add(tile.addWithTile(new Tile(-1, 0)));
-        attainableTiles.add(tile.addWithTile(new Tile(0, 1)));
-        attainableTiles.add(tile.addWithTile(new Tile(0, -1)));
+        Collections.shuffle(attainableTiles);
+        ArrayList<Tile> attainableFallbackTiles = new ArrayList<>();
+        attainableFallbackTiles.add(tile.addWithTile(new Tile(1, 0)));
+        attainableFallbackTiles.add(tile.addWithTile(new Tile(-1, 0)));
+        attainableFallbackTiles.add(tile.addWithTile(new Tile(0, 1)));
+        attainableFallbackTiles.add(tile.addWithTile(new Tile(0, -1)));
+        Collections.shuffle(attainableFallbackTiles);
+        attainableTiles.addAll(attainableFallbackTiles);
         return attainableTiles;
     }
 

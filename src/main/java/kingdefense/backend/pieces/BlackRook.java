@@ -1,6 +1,7 @@
 package kingdefense.backend.pieces;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import kingdefense.backend.board.*;
 
@@ -31,7 +32,7 @@ public class BlackRook extends BlackPiece {
         for (int i = y+1; i < 8 && !board.isWhite(new Tile(x, i)); i++) {
             attainableTiles.add(new Tile(x, i));
         }
-        attainableTiles = new ArrayList<>(attainableTiles.reversed());
+        Collections.shuffle(attainableTiles);
         ArrayList<PathFindingTile> neighbors = new ArrayList<>();
         for (int i = 0; i < attainableTiles.size(); i++) {
             if (board.isInBound(attainableTiles.get(i)))
@@ -57,7 +58,7 @@ public class BlackRook extends BlackPiece {
         for (int i = y+1; i < 8 && board.isEmpty(new Tile(x, i)); i++) {
             attainableTiles.add(new Tile(x, i));
         }
-        attainableTiles = new ArrayList<>(attainableTiles.reversed());
+        Collections.shuffle(attainableTiles);
         ArrayList<PathFindingTile> neighbors = new ArrayList<>();
         for (int i = 0; i < attainableTiles.size(); i++) {
             neighbors.add(new PathFindingTile(attainableTiles.get(i)));

@@ -25,7 +25,7 @@ public class Game {
         board = new Board(50);
         windowManager = new WindowManager();
         isRunning = false;
-        waveNb = 1;
+        waveNb = 20;
         isInWave = false;
         isBlackTurn = false;
         nbCoins = 0;

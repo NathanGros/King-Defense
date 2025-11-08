@@ -1,6 +1,7 @@
 package kingdefense.backend.pieces;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import kingdefense.backend.board.*;
 
@@ -20,6 +21,7 @@ public class BlackPawn extends BlackPiece {
         attainableTiles.add(tile.addWithTile(new Tile(-1, 0)));
         attainableTiles.add(tile.addWithTile(new Tile(0, 1)));
         attainableTiles.add(tile.addWithTile(new Tile(0, -1)));
+        Collections.shuffle(attainableTiles);
         return attainableTiles;
     }
 
