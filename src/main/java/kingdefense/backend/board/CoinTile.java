@@ -1,31 +1,25 @@
 package kingdefense.backend.board;
 
-public class CoinTile {
-    private Integer x;
-    private Integer y;
+public class CoinTile extends Tile {
     private Integer nbCoins;
 
-	public CoinTile(Integer x, Integer y, Integer nbCoins) {
-        this.x = x;
-        this.y = y;
+	public CoinTile(Integer tileX, Integer tileY, Integer nbCoins) {
+        super(tileX, tileY);
         this.nbCoins = nbCoins;
     }
-    public CoinTile(Integer x, Integer y) {
-        this(x, y, 0);
+	public CoinTile(Integer tileX, Integer tileY) {
+        super(tileX, tileY);
+        this.nbCoins = 0;
+    }
+    public CoinTile() {
+        super(0, 0);
+        this.nbCoins = 0;
+    }
+    public CoinTile(Tile tile, Integer nbCoins) {
+        super(tile.getX(), tile.getY());
+        this.nbCoins = nbCoins;
     }
 
-    public Integer getX() {
-		return x;
-	}
-	public void setX(Integer x) {
-		this.x = x;
-	}
-	public Integer getY() {
-		return y;
-	}
-	public void setY(Integer y) {
-		this.y = y;
-	}
 	public Integer getNbCoins() {
 		return nbCoins;
 	}
@@ -34,5 +28,10 @@ public class CoinTile {
 	}
     public void addCoins(Integer nbCoins) {
         this.nbCoins += nbCoins;
+    }
+
+    @Override
+    public String toString() {
+        return "x: " + x + ", y: " + y + ", nbCoins: " + nbCoins;
     }
 }

@@ -2,81 +2,65 @@ package kingdefense.backend.pieces;
 
 import java.util.ArrayList;
 
-import kingdefense.backend.board.Board;
-import kingdefense.backend.logic.PathFindingTile;
+import kingdefense.backend.board.*;
 
 public class BlackRook extends BlackPiece {
-	public BlackRook(Integer x, Integer y, Float health, Integer attack) {
-		super(x, y, health, attack);
+	public BlackRook(Float health, Integer attack) {
+		super(health, attack);
         this.priority = 5;
         this.coinDropNb = 5;
 	}
-    public BlackRook(Float health, Integer attack) {
-        this(0, 0, health, attack);
-    }
     public BlackRook() {
-        this(0, 0, 5.f, 5);
+        this(5.f, 5);
     }
 
 	@Override
     public ArrayList<PathFindingTile> getNeighbors(Board board, PathFindingTile tile) {
-        int x = tile.getTileX();
-        int y = tile.getTileY();
-        ArrayList<Integer> attainableX = new ArrayList<>();
-        ArrayList<Integer> attainableY = new ArrayList<>();
-        for (int i = x-1; i >= 0 && !board.isWhite(i, y); i--) {
-            attainableX.add(i);
-            attainableY.add(y);
+        int x = tile.getX();
+        int y = tile.getY();
+        ArrayList<Tile> attainableTiles = new ArrayList<>();
+        for (int i = x-1; i >= 0 && !board.isWhite(new Tile(i, y)); i--) {
+            attainableTiles.add(new Tile(i, y));
         }
-        for (int i = x+1; i < 8 && !board.isWhite(i, y); i++) {
-            attainableX.add(i);
-            attainableY.add(y);
+        for (int i = x+1; i < 8 && !board.isWhite(new Tile(i, y)); i++) {
+            attainableTiles.add(new Tile(i, y));
         }
-        for (int i = y-1; i >= 0 && !board.isWhite(x, i); i--) {
-            attainableX.add(x);
-            attainableY.add(i);
+        for (int i = y-1; i >= 0 && !board.isWhite(new Tile(x, i)); i--) {
+            attainableTiles.add(new Tile(x, i));
         }
-        for (int i = y+1; i < 8 && !board.isWhite(x, i); i++) {
-            attainableX.add(x);
-            attainableY.add(i);
+        for (int i = y+1; i < 8 && !board.isWhite(new Tile(x, i)); i++) {
+            attainableTiles.add(new Tile(x, i));
         }
-        attainableX = new ArrayList<>(attainableX.reversed());
-        attainableY = new ArrayList<>(attainableY.reversed());
+        attainableTiles = new ArrayList<>(attainableTiles.reversed());
         ArrayList<PathFindingTile> neighbors = new ArrayList<>();
-        for (int i = 0; i < attainableX.size(); i++) {
-            if (board.isInBound(attainableX.get(i), attainableY.get(i)))
-                neighbors.add(new PathFindingTile(attainableX.get(i), attainableY.get(i)));
+        for (int i = 0; i < attainableTiles.size(); i++) {
+            if (board.isInBound(attainableTiles.get(i)))
+                neighbors.add(new PathFindingTile(attainableTiles.get(i)));
         }
         return neighbors;
     }
 
 	@Override
     public ArrayList<PathFindingTile> getEmptyNeighbors(Board board, PathFindingTile tile) {
-        int x = tile.getTileX();
-        int y = tile.getTileY();
-        ArrayList<Integer> attainableX = new ArrayList<>();
-        ArrayList<Integer> attainableY = new ArrayList<>();
-        for (int i = x-1; i >= 0 && board.isEmpty(i, y); i--) {
-            attainableX.add(i);
-            attainableY.add(y);
+        int x = tile.getX();
+        int y = tile.getY();
+        ArrayList<Tile> attainableTiles = new ArrayList<>();
+        for (int i = x-1; i >= 0 && board.isEmpty(new Tile(i, y)); i--) {
+            attainableTiles.add(new Tile(i, y));
         }
-        for (int i = x+1; i < 8 && board.isEmpty(i, y); i++) {
-            attainableX.add(i);
-            attainableY.add(y);
+        for (int i = x+1; i < 8 && board.isEmpty(new Tile(i, y)); i++) {
+            attainableTiles.add(new Tile(i, y));
         }
-        for (int i = y-1; i >= 0 && board.isEmpty(x, i); i--) {
-            attainableX.add(x);
-            attainableY.add(i);
+        for (int i = y-1; i >= 0 && board.isEmpty(new Tile(x, i)); i--) {
+            attainableTiles.add(new Tile(x, i));
         }
-        for (int i = y+1; i < 8 && board.isEmpty(x, i); i++) {
-            attainableX.add(x);
-            attainableY.add(i);
+        for (int i = y+1; i < 8 && board.isEmpty(new Tile(x, i)); i++) {
+            attainableTiles.add(new Tile(x, i));
         }
-        attainableX = new ArrayList<>(attainableX.reversed());
-        attainableY = new ArrayList<>(attainableY.reversed());
+        attainableTiles = new ArrayList<>(attainableTiles.reversed());
         ArrayList<PathFindingTile> neighbors = new ArrayList<>();
-        for (int i = 0; i < attainableX.size(); i++) {
-            neighbors.add(new PathFindingTile(attainableX.get(i), attainableY.get(i)));
+        for (int i = 0; i < attainableTiles.size(); i++) {
+            neighbors.add(new PathFindingTile(attainableTiles.get(i)));
         }
         return neighbors;
     }

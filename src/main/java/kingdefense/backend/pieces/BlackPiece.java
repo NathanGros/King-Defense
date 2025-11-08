@@ -2,12 +2,10 @@ package kingdefense.backend.pieces;
 
 import java.util.ArrayList;
 
-import kingdefense.backend.board.Board;
-import kingdefense.backend.logic.PathFindingTile;
+import kingdefense.backend.board.*;
 
 public abstract class BlackPiece {
-    protected Integer x;
-    protected Integer y;
+    protected Tile tile;
     protected Float health;
     protected Float shieldHealth;
     protected Integer attack;
@@ -16,13 +14,11 @@ public abstract class BlackPiece {
 	protected ArrayList<Float> poisonDamageList;
     protected ArrayList<Integer> poisonTurnsLeftList;
 	protected boolean hasMoved;
-    protected Integer targetX;
-    protected Integer targetY;
+    protected Tile targetTile;
     protected Integer shortestPathLength;
 
-	public BlackPiece(Integer x, Integer y, Float health, Integer attack) {
-        this.x = x;
-        this.y = y;
+	public BlackPiece(Float health, Integer attack) {
+        this.tile = new Tile();
         this.health = health;
         this.shieldHealth = 0.f;
         this.attack = attack;
@@ -31,22 +27,15 @@ public abstract class BlackPiece {
         this.poisonDamageList = new ArrayList<>();
         this.poisonTurnsLeftList = new ArrayList<>();
         this.hasMoved = false;
-        this.targetX = -1;
-        this.targetY = -1;
+        this.targetTile = new Tile(-1, -1);
         this.shortestPathLength = -1;
     }
 
-	public Integer getX() {
-		return x;
+	public Tile getTile() {
+		return tile;
 	}
-	public void setX(Integer x) {
-		this.x = x;
-	}
-	public Integer getY() {
-		return y;
-	}
-	public void setY(Integer y) {
-		this.y = y;
+	public void setTile(Tile tile) {
+		this.tile = tile;
 	}
 	public Float getHealth() {
 		return health;
@@ -110,17 +99,11 @@ public abstract class BlackPiece {
 	public void setHasMoved() {
 		this.hasMoved = true;
 	}
-	public Integer getTargetX() {
-		return targetX;
+	public Tile getTargetTile() {
+		return targetTile;
 	}
-	public void setTargetX(Integer targetX) {
-		this.targetX = targetX;
-	}
-	public Integer getTargetY() {
-		return targetY;
-	}
-	public void setTargetY(Integer targetY) {
-		this.targetY = targetY;
+	public void setTargetTile(Tile targetTile) {
+		this.targetTile = targetTile;
 	}
 	public Integer getShortestPathLength() {
 		return shortestPathLength;
@@ -136,34 +119,33 @@ public abstract class BlackPiece {
     public abstract ArrayList<PathFindingTile> getEmptyNeighbors(Board board, PathFindingTile tile);
 
 	public boolean canMove(Board board) {
-        return (getEmptyNeighbors(board, new PathFindingTile(x, y)).size() > 0);
+        return (getEmptyNeighbors(board, new PathFindingTile(tile)).size() > 0);
 	}
 
-    public void move(Integer x, Integer y) {
-        this.x = x;
-        this.y = y;
+    public void move(Tile tile) {
+        this.tile = tile;
         setHasMoved();
     }
 
     public void move() {
-        move(targetX, targetY);
+        move(targetTile);
     }
 
     private boolean isNeighborValid(Board board, PathFindingTile neighbor, ArrayList<PathFindingTile> visited, ArrayList<PathFindingTile> visiting) {
         boolean isNeighborValid = true;
         // Check if neighbor is not a white piece
         for (WhitePiece whitePiece: board.getWhitePieces()) {
-            if (neighbor.getTileX() == whitePiece.getX() && neighbor.getTileY() == whitePiece.getY())
+            if (neighbor.isSamePlace(whitePiece.getTile()))
                 isNeighborValid = false;
         }
         // Check if neighbor is not already visited
         for (PathFindingTile visitedTile: visited) {
-            if (neighbor.getTileX() == visitedTile.getTileX() && neighbor.getTileY() == visitedTile.getTileY())
+            if (neighbor.isSamePlace(visitedTile))
                 isNeighborValid = false;
         }
         // Check if neighbor is not already in visiting queue (BFS property)
         for (PathFindingTile visitingTile: visiting) {
-            if (neighbor.getTileX() == visitingTile.getTileX() && neighbor.getTileY() == visitingTile.getTileY())
+            if (neighbor.isSamePlace(visitingTile))
                 isNeighborValid = false;
         }
         return isNeighborValid;
@@ -172,7 +154,7 @@ public abstract class BlackPiece {
     private void bfs(Board board, PathFindingTile startTile, WhiteKing whiteKing) {
         ArrayList<PathFindingTile> visiting = new ArrayList<>();
         ArrayList<PathFindingTile> visited = new ArrayList<>();
-        visited.add(new PathFindingTile(this.x, this.y));
+        visited.add(new PathFindingTile(this.tile));
         visited.getFirst().setDistance(0);
         startTile.setDistance(1);
         visiting.add(startTile);
@@ -180,7 +162,7 @@ public abstract class BlackPiece {
         while (!visiting.isEmpty()) {
             Integer tileDistance = visiting.getFirst().getDistance();
             // End BFS
-            if (visiting.getFirst().getTileX() == whiteKing.getX() && visiting.getFirst().getTileY() == whiteKing.getY()) {
+            if (visiting.getFirst().isSamePlace(whiteKing.getTile())) {
                 startTile.setDistance(tileDistance);
                 foundKing = true;
                 break;
@@ -215,19 +197,17 @@ public abstract class BlackPiece {
         }
         if (smallestPath == -1) {
             this.setShortestPathLength(-1);
-            this.setTargetX(x);
-            this.setTargetY(y);
+            this.setTargetTile(new Tile(tile));
         }
         else {
             this.setShortestPathLength(smallestPath);
-            this.setTargetX(startTiles.get(smallestPathIndex).getTileX());
-            this.setTargetY(startTiles.get(smallestPathIndex).getTileY());
+            this.setTargetTile(startTiles.get(smallestPathIndex));
         }
     }
 
 	public void computeShortestPath(Board board) {
         // Find the empty spots around the piece (there is at least one)
-        ArrayList<PathFindingTile> startTiles = getEmptyNeighbors(board, new PathFindingTile(this.x, this.y));
+        ArrayList<PathFindingTile> startTiles = getEmptyNeighbors(board, new PathFindingTile(tile));
         WhiteKing whiteKing = board.getWhiteKing();
         // For each spots, compute shortest path to white king using BFS, path made of non white occupied tiles
         for (PathFindingTile startTile: startTiles) {
@@ -239,6 +219,6 @@ public abstract class BlackPiece {
 
     @Override
     public String toString() {
-        return this.getPieceType() + ", x:" + x + ", y:" + y + ", health:" + health;
+        return this.getPieceType() + tile + ", health:" + health;
     }
 }

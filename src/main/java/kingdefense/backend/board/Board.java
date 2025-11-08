@@ -38,13 +38,13 @@ public class Board {
     }
     public void killBlackPiece(BlackPiece blackPiece) {
         for (CoinTile coin: coins) {
-            if (coin.getX() == blackPiece.getX() && coin.getY() == blackPiece.getY()) {
+            if (coin.isSamePlace(blackPiece.getTile())) {
                 coin.addCoins(blackPiece.getCoinDropNb());
                 blackPieces.remove(blackPiece);
                 return;
             }
         }
-        coins.add(new CoinTile(blackPiece.getX(), blackPiece.getY(), blackPiece.getCoinDropNb()));
+        coins.add(new CoinTile(blackPiece.getTile(), blackPiece.getCoinDropNb()));
         blackPieces.remove(blackPiece);
     }
     public ArrayList<CoinTile> getCoins() {
@@ -66,38 +66,38 @@ public class Board {
 		this.whiteKing = whiteKing;
 	}
 
-    public boolean isInBound(Integer x, Integer y) {
-        return (x >= 0 && x < 8 && y >= 0 && y < 8);
+    public boolean isInBound(Tile tile) {
+        return (tile.getX() >= 0 && tile.getX() < 8 && tile.getY() >= 0 && tile.getY() < 8);
     }
 
-    public boolean isEmpty(Integer x, Integer y) {
-        if (!isInBound(x, y))
+    public boolean isEmpty(Tile tile) {
+        if (!isInBound(tile))
             return false;
-        if (blackKing.getX() == x && blackKing.getY() == y)
+        if (blackKing.getTile().isSamePlace(tile))
             return false;
         for (BlackPiece blackPiece: blackPieces) {
-            if (blackPiece.getX() == x && blackPiece.getY() == y)
+            if (blackPiece.getTile().isSamePlace(tile))
                 return false;
         }
         for (WhitePiece whitePiece: whitePieces) {
-            if (whitePiece.getX() == x && whitePiece.getY() == y)
+            if (whitePiece.getTile().isSamePlace(tile))
                 return false;
         }
         return true;
     }
 
-    public boolean isWhite(Integer x, Integer y) {
+    public boolean isWhite(Tile tile) {
         for (WhitePiece whitePiece: whitePieces) {
-            if (whitePiece.getX() == x && whitePiece.getY() == y)
+            if (whitePiece.getTile().isSamePlace(tile))
                 return true;
         }
         return false;
     }
 
-    public void damageBlackAtPos(Integer x, Integer y, Float damage) {
+    public void damageBlackAtPos(Tile tile, Float damage) {
         ArrayList<BlackPiece> deadList = new ArrayList<>();
         for (BlackPiece blackPiece: blackPieces) {
-            if (blackPiece.getX() == x && blackPiece.getY() == y) {
+            if (blackPiece.getTile().isSamePlace(tile)) {
                 blackPiece.damage(damage);
                 if (blackPiece.getHealth() <= 0)
                     deadList.add(blackPiece);
@@ -114,10 +114,10 @@ public class Board {
             killBlackPiece(blackPiece);
     }
 
-    public void shieldDamageBlackAtPos(Integer x, Integer y, Float damage) {
+    public void shieldDamageBlackAtPos(Tile tile, Float damage) {
         ArrayList<BlackPiece> deadList = new ArrayList<>();
         for (BlackPiece blackPiece: blackPieces) {
-            if (blackPiece.getX() == x && blackPiece.getY() == y) {
+            if (blackPiece.getTile().isSamePlace(tile)) {
                 blackPiece.damageShield(damage);
                 if (blackPiece.getHealth() <= 0)
                     deadList.add(blackPiece);
@@ -128,17 +128,17 @@ public class Board {
         }
     }
 
-    public void poisonBlackAtPos(Integer x, Integer y, Float poisonDamage, Integer nbTurns) {
+    public void poisonBlackAtPos(Tile tile, Float poisonDamage, Integer nbTurns) {
         for (BlackPiece blackPiece: blackPieces) {
-            if (blackPiece.getX() == x && blackPiece.getY() == y) {
+            if (blackPiece.getTile().isSamePlace(tile)) {
                 blackPiece.poison(poisonDamage, nbTurns);
             }
         }
     }
 
-    public void queenBoostWhiteAtPos(Integer x, Integer y, Float queenBoost) {
+    public void queenBoostWhiteAtPos(Tile tile, Float queenBoost) {
         for (WhitePiece whitePiece: whitePieces) {
-            if (!whitePiece.getPieceType().equals("WhiteQueen") && whitePiece.getX() == x && whitePiece.getY() == y) {
+            if (!whitePiece.getPieceType().equals("WhiteQueen") && whitePiece.getTile().isSamePlace(tile)) {
                 whitePiece.addQueenBoost(queenBoost);
             }
         }

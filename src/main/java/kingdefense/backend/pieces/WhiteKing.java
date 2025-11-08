@@ -1,17 +1,16 @@
 package kingdefense.backend.pieces;
 
 import kingdefense.backend.board.Board;
+import kingdefense.backend.board.Tile;
 
 public class WhiteKing {
-    private Integer x;
-    private Integer y;
+    private Tile tile;
 	private Integer maxHealth;
     private Integer health;
     private boolean isPlaced;
 
 	public WhiteKing(Integer x, Integer y, Integer health) {
-        this.x = x;
-        this.y = y;
+        this.tile = new Tile(x, y);
         this.maxHealth = health;
         this.health = health;
         this.isPlaced = false;
@@ -20,17 +19,11 @@ public class WhiteKing {
         this(0, 0, health);
     }
 
-	public Integer getX() {
-		return x;
+	public Tile getTile() {
+		return tile;
 	}
-	public void setX(Integer x) {
-		this.x = x;
-	}
-	public Integer getY() {
-		return y;
-	}
-	public void setY(Integer y) {
-		this.y = y;
+	public void setTile(Tile tile) {
+		this.tile = tile;
 	}
     public Integer getMaxHealth() {
 		return maxHealth;
@@ -54,20 +47,6 @@ public class WhiteKing {
 		this.isPlaced = false;
 	}
 
-    public boolean isAdjacent(BlackPiece blackPiece) {
-        Integer x = blackPiece.getX();
-        Integer y = blackPiece.getY();
-        if (this.x == x + 1 && this.y == y)
-            return true;
-        if (this.x == x - 1 && this.y == y)
-            return true;
-        if (this.x == x && this.y == y + 1)
-            return true;
-        if (this.x == x && this.y == y - 1)
-            return true;
-        return false;
-    }
-
     public void damage(Board board, BlackPiece blackPiece) {
         health -= blackPiece.getAttack();
         if (health <= 0)
@@ -77,6 +56,6 @@ public class WhiteKing {
 
     @Override
     public String toString() {
-        return "WhiteKing" + ", x:" + x + ", y:" + y + ", health:" + health;
+        return "WhiteKing" + tile + ", health:" + health;
     }
 }

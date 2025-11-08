@@ -2,6 +2,7 @@ package kingdefense.backend.pieces;
 
 import kingdefense.backend.Game;
 import kingdefense.backend.board.Board;
+import kingdefense.backend.board.Tile;
 
 public class WhiteBishop extends WhitePiece {
     private Float poisonDamage;
@@ -29,17 +30,19 @@ public class WhiteBishop extends WhitePiece {
 
 	@Override
 	public void activate(Board board, Game game) {
-        for (int i = x-1, j = y-1; i >= 0 && j >= 0 && !board.isWhite(i, j); i--, j--) {
-            board.poisonBlackAtPos(i, j, poisonDamage * (1.f + queenBoost - queenNerf), poisonDuration);
+        int x = tile.getX();
+        int y = tile.getY();
+        for (int i = x-1, j = y-1; i >= 0 && j >= 0 && !board.isWhite(new Tile(i, j)); i--, j--) {
+            board.poisonBlackAtPos(new Tile(i, j), poisonDamage * (1.f + queenBoost - queenNerf), poisonDuration);
         }
-        for (int i = x-1, j = y+1; i >= 0 && j < 8 && !board.isWhite(i, j); i--, j++) {
-            board.poisonBlackAtPos(i, j, poisonDamage * (1.f + queenBoost - queenNerf), poisonDuration);
+        for (int i = x-1, j = y+1; i >= 0 && j < 8 && !board.isWhite(new Tile(i, j)); i--, j++) {
+            board.poisonBlackAtPos(new Tile(i, j), poisonDamage * (1.f + queenBoost - queenNerf), poisonDuration);
         }
-        for (int i = x+1, j = y-1; i < 8 && j >= 0 && !board.isWhite(i, j); i++, j--) {
-            board.poisonBlackAtPos(i, j, poisonDamage * (1.f + queenBoost - queenNerf), poisonDuration);
+        for (int i = x+1, j = y-1; i < 8 && j >= 0 && !board.isWhite(new Tile(i, j)); i++, j--) {
+            board.poisonBlackAtPos(new Tile(i, j), poisonDamage * (1.f + queenBoost - queenNerf), poisonDuration);
         }
-        for (int i = x+1, j = y+1; i < 8 && j < 8 && !board.isWhite(i, j); i++, j++) {
-            board.poisonBlackAtPos(i, j, poisonDamage * (1.f + queenBoost - queenNerf), poisonDuration);
+        for (int i = x+1, j = y+1; i < 8 && j < 8 && !board.isWhite(new Tile(i, j)); i++, j++) {
+            board.poisonBlackAtPos(new Tile(i, j), poisonDamage * (1.f + queenBoost - queenNerf), poisonDuration);
         }
 	}
 }

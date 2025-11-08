@@ -68,7 +68,7 @@ public class DrawingManager {
         if (whiteKing.isPlaced())
             DrawModel(
                 modelsManager.getPieceModel("WhiteKing"),
-                new Vector3().x(whiteKing.getX()).y(0.f).z(whiteKing.getY()),
+                new Vector3().x(whiteKing.getTile().getX()).y(0.f).z(whiteKing.getTile().getY()),
                 1.f,
                 WHITE
             );
@@ -77,7 +77,7 @@ public class DrawingManager {
 	private void drawBlackKing(BlackKing blackKing) {
         DrawModel(
             modelsManager.getPieceModel("BlackKing"),
-            new Vector3().x(blackKing.getX()).y(0.f).z(blackKing.getY()),
+            new Vector3().x(blackKing.getTile().getX()).y(0.f).z(blackKing.getTile().getY()),
             1.f,
             WHITE
         );
@@ -87,7 +87,7 @@ public class DrawingManager {
         for (WhitePiece whitePiece: whitePieces) {
             DrawModel(
                 modelsManager.getPieceModel(whitePiece.getPieceType()),
-                new Vector3().x(whitePiece.getX()).y(0.f).z(whitePiece.getY()),
+                new Vector3().x(whitePiece.getTile().getX()).y(0.f).z(whitePiece.getTile().getY()),
                 1.f,
                 WHITE
             );
@@ -98,7 +98,7 @@ public class DrawingManager {
         for (BlackPiece blackPiece: blackPieces) {
             DrawModel(
                 modelsManager.getPieceModel(blackPiece.getPieceType()),
-                new Vector3().x(blackPiece.getX()).y(0.f).z(blackPiece.getY()),
+                new Vector3().x(blackPiece.getTile().getX()).y(0.f).z(blackPiece.getTile().getY()),
                 1.f,
                 WHITE
             );

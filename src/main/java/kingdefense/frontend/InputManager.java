@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import kingdefense.backend.Game;
 import kingdefense.backend.board.CoinTile;
+import kingdefense.backend.board.Tile;
 import kingdefense.frontend.ui.*;
 
 public class InputManager {
@@ -42,7 +43,6 @@ public class InputManager {
             else if ((cross > 0) != sign)
                 return false; // Point is on a different side => outside polygon
         }
-
         return true;
     }
 
@@ -75,7 +75,7 @@ public class InputManager {
                 corners.add(GetWorldToScreen(new Vector3().x(i + 0.5f).y(0.f).z(j + 0.5f), camera));
                 corners.add(GetWorldToScreen(new Vector3().x(i + 0.5f).y(0.f).z(j - 0.5f), camera));
                 if (checkCollisionPointTile(GetMousePosition(), corners)) {
-                    game.putNewWhitePiece(i, j);
+                    game.putNewWhitePiece(new Tile(i, j));
                 }
             }
         }
@@ -92,7 +92,7 @@ public class InputManager {
                 corners.add(GetWorldToScreen(new Vector3().x(i + 0.5f).y(0.f).z(j + 0.5f), camera));
                 corners.add(GetWorldToScreen(new Vector3().x(i + 0.5f).y(0.f).z(j - 0.5f), camera));
                 if (checkCollisionPointTile(GetMousePosition(), corners)) {
-                    game.removeWhitePiece(i, j);
+                    game.removeWhitePiece(new Tile(i, j));
                 }
             }
         }

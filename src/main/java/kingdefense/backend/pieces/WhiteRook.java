@@ -2,6 +2,7 @@ package kingdefense.backend.pieces;
 
 import kingdefense.backend.Game;
 import kingdefense.backend.board.Board;
+import kingdefense.backend.board.Tile;
 
 public class WhiteRook extends WhitePiece {
     private Float damage;
@@ -24,17 +25,19 @@ public class WhiteRook extends WhitePiece {
 
 	@Override
 	public void activate(Board board, Game game) {
-        for (int i = x-1; i >= 0 && !board.isWhite(i, y); i--) {
-            board.shieldDamageBlackAtPos(i, y, damage * (1.f + queenBoost - queenNerf));
+        int x = tile.getX();
+        int y = tile.getY();
+        for (int i = x-1; i >= 0 && !board.isWhite(new Tile(i, y)); i--) {
+            board.shieldDamageBlackAtPos(new Tile(i, y), damage * (1.f + queenBoost - queenNerf));
         }
-        for (int i = x+1; i < 8 && !board.isWhite(i, y); i++) {
-            board.shieldDamageBlackAtPos(i, y, damage * (1.f + queenBoost - queenNerf));
+        for (int i = x+1; i < 8 && !board.isWhite(new Tile(i, y)); i++) {
+            board.shieldDamageBlackAtPos(new Tile(i, y), damage * (1.f + queenBoost - queenNerf));
         }
-        for (int i = y-1; i >= 0 && !board.isWhite(x, i); i--) {
-            board.shieldDamageBlackAtPos(x, i, damage * (1.f + queenBoost - queenNerf));
+        for (int i = y-1; i >= 0 && !board.isWhite(new Tile(x, i)); i--) {
+            board.shieldDamageBlackAtPos(new Tile(x, i), damage * (1.f + queenBoost - queenNerf));
         }
-        for (int i = y+1; i < 8 && !board.isWhite(x, i); i++) {
-            board.shieldDamageBlackAtPos(x, i, damage * (1.f + queenBoost - queenNerf));
+        for (int i = y+1; i < 8 && !board.isWhite(new Tile(x, i)); i++) {
+            board.shieldDamageBlackAtPos(new Tile(x, i), damage * (1.f + queenBoost - queenNerf));
         }
 	}
 }

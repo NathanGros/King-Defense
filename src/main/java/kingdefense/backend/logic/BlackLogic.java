@@ -39,7 +39,7 @@ public class BlackLogic {
             moveList.sort(new BlackPieceComparator());
             BlackPiece pieceToMove = moveList.getFirst();
             WhiteKing whiteKing = board.getWhiteKing();
-            if (pieceToMove.getTargetX() == whiteKing.getX() && pieceToMove.getTargetY() == whiteKing.getY()) {
+            if (pieceToMove.getTargetTile().isSamePlace(whiteKing.getTile())) {
                 whiteKing.damage(board, pieceToMove);
             }
             else
@@ -54,13 +54,12 @@ public class BlackLogic {
         }
         // The place is blocked
         for (BlackPiece blackPiece: board.getBlackPieces()) {
-            if (blackPiece.getX() == board.getBlackKing().getX() && blackPiece.getY() == board.getBlackKing().getY())
+            if (blackPiece.getTile().isSamePlace(board.getBlackKing().getTile()))
                 return;
         }
         // Place next piece at kings position
         BlackPiece nextPiece = board.getBlackKing().popStockPiece(frontWaveBox);
-        nextPiece.setX(board.getBlackKing().getX());
-        nextPiece.setY(board.getBlackKing().getY());
+        nextPiece.setTile(new Tile(board.getBlackKing().getTile()));
         board.addBlackPiece(nextPiece);
     }
 

@@ -2,33 +2,26 @@ package kingdefense.backend.pieces;
 
 import java.util.ArrayList;
 
+import kingdefense.backend.board.Tile;
 import kingdefense.frontend.ui.WaveBox;
 
 public class BlackKing {
-    private Integer x;
-    private Integer y;
+    private Tile tile;
     private ArrayList<BlackPiece> stockPieces;
 
 	public BlackKing(Integer x, Integer y) {
-        this.x = x;
-        this.y = y;
+        this.tile = new Tile(x, y);
         stockPieces = new ArrayList<>();
     }
 	public BlackKing() {
         this(0, 0);
     }
 
-    public Integer getX() {
-		return x;
+	public Tile getTile() {
+		return tile;
 	}
-	public void setX(Integer x) {
-		this.x = x;
-	}
-	public Integer getY() {
-		return y;
-	}
-	public void setY(Integer y) {
-		this.y = y;
+	public void setTile(Tile tile) {
+		this.tile = tile;
 	}
 	public ArrayList<BlackPiece> getStockPieces() {
 		return stockPieces;
@@ -46,6 +39,6 @@ public class BlackKing {
 
     @Override
     public String toString() {
-        return "BlackKing" + ", x:" + x + ", y:" + y;
+        return "BlackKing" + tile;
     }
 }

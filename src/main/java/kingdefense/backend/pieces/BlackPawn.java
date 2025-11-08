@@ -1,46 +1,44 @@
 package kingdefense.backend.pieces;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
-import kingdefense.backend.board.Board;
-import kingdefense.backend.logic.PathFindingTile;
+import kingdefense.backend.board.*;
 
 public class BlackPawn extends BlackPiece {
-    public BlackPawn(Integer x, Integer y, Float health, Integer attack) {
-        super(x, y, health, attack);
+    public BlackPawn(Float health, Integer attack) {
+        super(health, attack);
         this.priority = 1;
         this.coinDropNb = 1;
     }
-    public BlackPawn(Float health, Integer attack) {
-        this(0, 0, health, attack);
-    }
     public BlackPawn() {
-        this(0, 0, 1.f, 1);
+        this(1.f, 1);
+    }
+
+    private ArrayList<Tile> getAttainableTiles(Tile tile) {
+        ArrayList<Tile> attainableTiles = new ArrayList<>();
+        attainableTiles.add(tile.addWithTile(new Tile(1, 0)));
+        attainableTiles.add(tile.addWithTile(new Tile(-1, 0)));
+        attainableTiles.add(tile.addWithTile(new Tile(0, 1)));
+        attainableTiles.add(tile.addWithTile(new Tile(0, -1)));
+        return attainableTiles;
     }
 
     public ArrayList<PathFindingTile> getNeighbors(Board board, PathFindingTile tile) {
-        int x = tile.getTileX();
-        int y = tile.getTileY();
-        ArrayList<Integer> attainableX = new ArrayList<>(Arrays.asList(1, -1, 0, 0));
-        ArrayList<Integer> attainableY = new ArrayList<>(Arrays.asList(0, 0, 1, -1));
+        ArrayList<Tile> attainableTiles = getAttainableTiles(tile);
         ArrayList<PathFindingTile> neighbors = new ArrayList<>();
-        for (int i = 0; i < attainableX.size(); i++) {
-            if (board.isInBound(x + attainableX.get(i), y + attainableY.get(i)))
-                neighbors.add(new PathFindingTile(x + attainableX.get(i), y + attainableY.get(i)));
+        for (int i = 0; i < attainableTiles.size(); i++) {
+            if (board.isInBound(attainableTiles.get(i)))
+                neighbors.add(new PathFindingTile(attainableTiles.get(i)));
         }
         return neighbors;
     }
 
     public ArrayList<PathFindingTile> getEmptyNeighbors(Board board, PathFindingTile tile) {
-        int x = tile.getTileX();
-        int y = tile.getTileY();
-        ArrayList<Integer> attainableX = new ArrayList<>(Arrays.asList(1, -1, 0, 0));
-        ArrayList<Integer> attainableY = new ArrayList<>(Arrays.asList(0, 0, 1, -1));
+        ArrayList<Tile> attainableTiles = getAttainableTiles(tile);
         ArrayList<PathFindingTile> neighbors = new ArrayList<>();
-        for (int i = 0; i < attainableX.size(); i++) {
-            if (board.isEmpty(x + attainableX.get(i), y + attainableY.get(i)))
-                neighbors.add(new PathFindingTile(x + attainableX.get(i), y + attainableY.get(i)));
+        for (int i = 0; i < attainableTiles.size(); i++) {
+            if (board.isEmpty(attainableTiles.get(i)))
+                neighbors.add(new PathFindingTile(attainableTiles.get(i)));
         }
         return neighbors;
     }

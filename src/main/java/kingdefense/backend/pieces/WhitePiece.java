@@ -1,17 +1,15 @@
 package kingdefense.backend.pieces;
 
 import kingdefense.backend.Game;
-import kingdefense.backend.board.Board;
+import kingdefense.backend.board.*;
 
 public abstract class WhitePiece {
-    protected Integer x;
-    protected Integer y;
+    protected Tile tile;
     protected Float queenBoost;
     protected Float queenNerf;
 
 	public WhitePiece(Integer x, Integer y) {
-        this.x = x;
-        this.y = y;
+        this.tile = new Tile(x, y);
         queenBoost = 0.f;
         queenNerf = 0.f;
     }
@@ -19,17 +17,11 @@ public abstract class WhitePiece {
         this(0, 0);
     }
 
-	public Integer getX() {
-		return x;
+	public Tile getTile() {
+		return tile;
 	}
-	public void setX(Integer x) {
-		this.x = x;
-	}
-	public Integer getY() {
-		return y;
-	}
-	public void setY(Integer y) {
-		this.y = y;
+	public void setTile(Tile tile) {
+		this.tile = tile;
 	}
     public Float getQueenBoost() {
 		return queenBoost;
@@ -58,9 +50,9 @@ public abstract class WhitePiece {
             if (!blackPiece.getPieceType().equals("BlackQueen"))
                 continue;
             BlackQueen blackQueen = (BlackQueen) blackPiece;
-            int pieceX = blackQueen.getX();
-            int pieceY = blackQueen.getY();
-            if (pieceX >= x - 1 && pieceX <= x + 1 && pieceY >= y - 1 && pieceY <= y + 1) {
+            int pieceX = blackQueen.getTile().getX();
+            int pieceY = blackQueen.getTile().getY();
+            if (pieceX >= tile.getX() - 1 && pieceX <= tile.getX() + 1 && pieceY >= tile.getY() - 1 && pieceY <= tile.getY() + 1) {
                 addQueenNerf(blackQueen.getNerf());
             }
         }
@@ -70,6 +62,6 @@ public abstract class WhitePiece {
 
     @Override
     public String toString() {
-        return this.getPieceType() + ", x:" + x + ", y:" + y;
+        return this.getPieceType() + tile;
     }
 }
