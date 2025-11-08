@@ -30,6 +30,10 @@ public class PathFindingTile {
 		this.distance = distance;
 	}
 
+    public boolean isSamePlace(PathFindingTile tile) {
+        return tileX.equals(tile.getTileX()) && tileY.equals(tile.getTileY());
+    }
+
     @Override
     public String toString() {
         return "x: " + tileX + ", y: " + tileY + ", d: " + distance;
