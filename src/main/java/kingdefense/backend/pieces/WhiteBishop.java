@@ -33,16 +33,28 @@ public class WhiteBishop extends WhitePiece {
         int x = tile.getX();
         int y = tile.getY();
         for (int i = x-1, j = y-1; i >= 0 && j >= 0 && !board.isWhite(new Tile(i, j)); i--, j--) {
+            if (board.isEmpty(new Tile(i, j)))
+                continue;
             board.poisonBlackAtPos(new Tile(i, j), poisonDamage * (1.f + queenBoost - queenNerf), poisonDuration);
+            break;
         }
         for (int i = x-1, j = y+1; i >= 0 && j < 8 && !board.isWhite(new Tile(i, j)); i--, j++) {
+            if (board.isEmpty(new Tile(i, j)))
+                continue;
             board.poisonBlackAtPos(new Tile(i, j), poisonDamage * (1.f + queenBoost - queenNerf), poisonDuration);
+            break;
         }
         for (int i = x+1, j = y-1; i < 8 && j >= 0 && !board.isWhite(new Tile(i, j)); i++, j--) {
+            if (board.isEmpty(new Tile(i, j)))
+                continue;
             board.poisonBlackAtPos(new Tile(i, j), poisonDamage * (1.f + queenBoost - queenNerf), poisonDuration);
+            break;
         }
         for (int i = x+1, j = y+1; i < 8 && j < 8 && !board.isWhite(new Tile(i, j)); i++, j++) {
+            if (board.isEmpty(new Tile(i, j)))
+                continue;
             board.poisonBlackAtPos(new Tile(i, j), poisonDamage * (1.f + queenBoost - queenNerf), poisonDuration);
+            break;
         }
 	}
 }
