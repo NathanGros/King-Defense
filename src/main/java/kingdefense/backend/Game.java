@@ -3,6 +3,7 @@ package kingdefense.backend;
 import static com.raylib.Raylib.GetFrameTime;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import kingdefense.backend.board.*;
 import kingdefense.backend.logic.*;
@@ -13,6 +14,7 @@ public class Game {
     private Board board;
     private WindowManager windowManager;
 	private boolean isRunning;
+    private Integer waveNb;
     private boolean isInWave;
 	private boolean isBlackTurn;
     private Integer nbCoins;
@@ -23,6 +25,7 @@ public class Game {
         board = new Board(50);
         windowManager = new WindowManager();
         isRunning = false;
+        waveNb = 1;
         isInWave = false;
         isBlackTurn = false;
         nbCoins = 0;
@@ -150,28 +153,45 @@ public class Game {
 
     public void stopWave() {
         isInWave = false;
+        waveNb++;
         fillWaveStock();
     }
 
     public void fillWaveStock() {
-        board.getBlackKing().addStockPiece(new BlackPawn(), windowManager.getWaveBox());
-        board.getBlackKing().addStockPiece(new BlackPawn(), windowManager.getWaveBox());
-        board.getBlackKing().addStockPiece(new BlackKnight(), windowManager.getWaveBox());
-        board.getBlackKing().addStockPiece(new BlackBishop(), windowManager.getWaveBox());
-        board.getBlackKing().addStockPiece(new BlackRook(), windowManager.getWaveBox());
-        board.getBlackKing().addStockPiece(new BlackPawn(), windowManager.getWaveBox());
-        board.getBlackKing().addStockPiece(new BlackRook(), windowManager.getWaveBox());
-        board.getBlackKing().addStockPiece(new BlackQueen(), windowManager.getWaveBox());
-        board.getBlackKing().addStockPiece(new BlackKnight(), windowManager.getWaveBox());
-        board.getBlackKing().addStockPiece(new BlackPawn(), windowManager.getWaveBox());
-        board.getBlackKing().addStockPiece(new BlackBishop(), windowManager.getWaveBox());
-        board.getBlackKing().addStockPiece(new BlackRook(), windowManager.getWaveBox());
-        board.getBlackKing().addStockPiece(new BlackBishop(), windowManager.getWaveBox());
-        board.getBlackKing().addStockPiece(new BlackKnight(), windowManager.getWaveBox());
-        board.getBlackKing().addStockPiece(new BlackKnight(), windowManager.getWaveBox());
-        board.getBlackKing().addStockPiece(new BlackKnight(), windowManager.getWaveBox());
-        board.getBlackKing().addStockPiece(new BlackRook(), windowManager.getWaveBox());
-        board.getBlackKing().addStockPiece(new BlackQueen(), windowManager.getWaveBox());
+        float pawnProbability = 0.3f;
+        float knightProbability = 0.25f;
+        float bishopProbability = 0.20f;
+        float rookProbability = 0.20f;
+        float queenProbability = 0.05f;
+        for (int i = 0; i < waveNb; i++) {
+            float probabilityResult = new Random().nextFloat();
+            float probabilityThreshold = pawnProbability;
+            if (probabilityResult <= probabilityThreshold) {
+                board.getBlackKing().addStockPiece(new BlackPawn(), windowManager.getWaveBox());
+                continue;
+            }
+            probabilityThreshold += knightProbability;
+            if (probabilityResult <= probabilityThreshold) {
+                board.getBlackKing().addStockPiece(new BlackKnight(), windowManager.getWaveBox());
+                continue;
+            }
+            probabilityThreshold += bishopProbability;
+            if (probabilityResult <= probabilityThreshold) {
+                board.getBlackKing().addStockPiece(new BlackBishop(), windowManager.getWaveBox());
+                continue;
+            }
+            probabilityThreshold += rookProbability;
+            if (probabilityResult <= probabilityThreshold) {
+                board.getBlackKing().addStockPiece(new BlackRook(), windowManager.getWaveBox());
+                continue;
+            }
+            probabilityThreshold += queenProbability;
+            if (probabilityResult <= probabilityThreshold) {
+                board.getBlackKing().addStockPiece(new BlackQueen(), windowManager.getWaveBox());
+                continue;
+            }
+            System.out.println("Error generating wave: Total probability is over 1.0f");
+        }
     }
 
     public void putNewWhitePiece(Tile tile) {
