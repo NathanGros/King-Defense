@@ -1,28 +1,17 @@
-package kingdefense.frontend;
-
-import static com.raylib.Raylib.*;
+package kingdefense.frontend.game;
 
 import java.util.ArrayList;
+
+import static com.raylib.Raylib.*;
 
 import kingdefense.backend.Game;
 import kingdefense.backend.board.CoinTile;
 import kingdefense.backend.board.Tile;
-import kingdefense.frontend.ui.*;
+import kingdefense.frontend.ui.AvailablePiecesBox;
+import kingdefense.frontend.ui.WaveBox;
 
-public class InputManager {
-    public InputManager() {
-    }
-
-    public void checkCameraMovement(CameraManager cameraManager) {
-        // if (IsKeyPressed(KEY_R)) {
-        //     cameraManager.rotate();
-        // }
-        // if (GetMouseWheelMove() == -1) {
-        //     cameraManager.zoomOut();
-        // }
-        // if (GetMouseWheelMove() == 1) {
-        //     cameraManager.zoomIn();
-        // }
+public class GameInputManager {
+    public GameInputManager() {
     }
 
     // GPT generated, no clue what's going on but it works
@@ -110,10 +99,20 @@ public class InputManager {
             waveBox.scrollUp();
     }
 
-    public void checkInputs(Game game, Camera3D camera, AvailablePiecesBox availablePiecesBox, WaveBox waveBox) {
+    private void checkStopGame(Game game) {
+        if (IsKeyPressed(KEY_ESCAPE))
+            game.stopGame();
+    }
+
+    public void checkNotWaveInputs(Game game, Camera3D camera, AvailablePiecesBox availablePiecesBox, WaveBox waveBox) {
         checkPutWhitePiece(game, camera);
         checkRemoveWhitePiece(game, camera);
         availablePiecesBox.checkWhitePieceChange(game);
         waveBox.checkStartWave(game);
+    }
+
+    public void checkAllTimeInputs(Game game, Camera3D camera) {
+        collectCoins(game, camera);
+        checkStopGame(game);
     }
 }

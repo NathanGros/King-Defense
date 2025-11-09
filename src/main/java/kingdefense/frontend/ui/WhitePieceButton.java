@@ -42,7 +42,6 @@ public class WhitePieceButton extends Button {
         UnloadRenderTexture(modelRenderTexture);
     }
 
-    @Override
     public void activate(Game game) {
         if (isClicked())
             game.setSelectedWhitePiece(name);

@@ -47,6 +47,4 @@ public abstract class Button {
             return false;
         return CheckCollisionPointRec(GetMousePosition(), new Rectangle().x(x).y(y).width(width).height(height));
     }
-
-    public abstract void activate(Game game);
 }

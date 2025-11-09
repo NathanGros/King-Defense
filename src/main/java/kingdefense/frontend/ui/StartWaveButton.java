@@ -15,7 +15,6 @@ public class StartWaveButton extends Button {
         DrawText("Start wave", x + 20, y + 5, 35, RAYWHITE);
     }
 
-    @Override
     public void activate(Game game) {
         if (isClicked()) {
             game.startWave();

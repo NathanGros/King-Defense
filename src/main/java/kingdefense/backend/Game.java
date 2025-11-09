@@ -8,12 +8,12 @@ import java.util.Random;
 import kingdefense.backend.board.*;
 import kingdefense.backend.logic.*;
 import kingdefense.backend.pieces.*;
-import kingdefense.frontend.WindowManager;
+import kingdefense.frontend.game.GameScreen;
 
 public class Game {
+    private GameScreen gameScreen;
+	private boolean isGameRunning;
     private Board board;
-    private WindowManager windowManager;
-	private boolean isRunning;
     private Integer waveNb;
     private boolean isInWave;
 	private boolean isBlackTurn;
@@ -22,9 +22,9 @@ public class Game {
     private String selectedWhitePiece;
 
 	public Game() {
+        gameScreen = new GameScreen();
+        isGameRunning = true;
         board = new Board(50);
-        windowManager = new WindowManager();
-        isRunning = false;
         waveNb = 20;
         isInWave = false;
         isBlackTurn = false;
@@ -62,7 +62,7 @@ public class Game {
 	}
 
     public void startGame() {
-        isRunning = true;
+        isGameRunning = true;
         addAvailableWhitePiece(new WhitePawn());
         addAvailableWhitePiece(new WhitePawn());
         addAvailableWhitePiece(new WhitePawn());
@@ -74,15 +74,14 @@ public class Game {
         addAvailableWhitePiece(new WhiteRook());
         addAvailableWhitePiece(new WhiteRook());
         addAvailableWhitePiece(new WhiteQueen());
-        windowManager.launchWindow();
+        gameScreen.launchGameScreen();
         fillWaveStock();
         gameLoop();
     }
 
     public void stopGame() {
-        isRunning = false;
-        windowManager.closeWindow();
-        System.out.println("\nEnd of game\n");
+        isGameRunning = false;
+        gameScreen.stopGameScreen();
     }
 
     public ArrayList<Tile> getValidNeighbors(Tile tile, ArrayList<Tile> visited, ArrayList<Tile> visiting) {
@@ -167,27 +166,27 @@ public class Game {
             float probabilityResult = new Random().nextFloat();
             float probabilityThreshold = pawnProbability;
             if (probabilityResult <= probabilityThreshold) {
-                board.getBlackKing().addStockPiece(new BlackPawn(), windowManager.getWaveBox());
+                board.getBlackKing().addStockPiece(new BlackPawn(), gameScreen.getWaveBox());
                 continue;
             }
             probabilityThreshold += knightProbability;
             if (probabilityResult <= probabilityThreshold) {
-                board.getBlackKing().addStockPiece(new BlackKnight(), windowManager.getWaveBox());
+                board.getBlackKing().addStockPiece(new BlackKnight(), gameScreen.getWaveBox());
                 continue;
             }
             probabilityThreshold += bishopProbability;
             if (probabilityResult <= probabilityThreshold) {
-                board.getBlackKing().addStockPiece(new BlackBishop(), windowManager.getWaveBox());
+                board.getBlackKing().addStockPiece(new BlackBishop(), gameScreen.getWaveBox());
                 continue;
             }
             probabilityThreshold += rookProbability;
             if (probabilityResult <= probabilityThreshold) {
-                board.getBlackKing().addStockPiece(new BlackRook(), windowManager.getWaveBox());
+                board.getBlackKing().addStockPiece(new BlackRook(), gameScreen.getWaveBox());
                 continue;
             }
             probabilityThreshold += queenProbability;
             if (probabilityResult <= probabilityThreshold) {
-                board.getBlackKing().addStockPiece(new BlackQueen(), windowManager.getWaveBox());
+                board.getBlackKing().addStockPiece(new BlackQueen(), gameScreen.getWaveBox());
                 continue;
             }
             System.out.println("Error generating wave: Total probability is over 1.0f");
@@ -236,17 +235,19 @@ public class Game {
 
     public void gameLoop() {
         float timerPlayerAction = 1.f;
-        while(isRunning) {
-            windowManager.windowInteract(this);
+        while (isGameRunning) {
+            gameScreen.drawScreen(this);
+            gameScreen.interactScreen(this);
             if (board.getWhiteKing().getHealth() <= 0) {
                 stopGame();
+                continue;
             }
             if (isInWave) {
                 timerPlayerAction += GetFrameTime();
                 if (timerPlayerAction >= 1.f) {
                     timerPlayerAction = 0.f;
                     if (isBlackTurn)
-                        BlackLogic.play(this, board, windowManager.getWaveBox());
+                        BlackLogic.play(this, board, gameScreen.getWaveBox());
                     else
                         WhiteLogic.activatePieces(board, this);
                     isBlackTurn = !isBlackTurn;

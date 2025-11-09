@@ -40,7 +40,6 @@ public class BlackPieceButton extends Button {
         UnloadRenderTexture(modelRenderTexture);
     }
 
-	@Override
 	public void activate(Game game) {
 		// TODO ennemy info
 	}

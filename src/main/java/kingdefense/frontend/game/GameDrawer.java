@@ -1,4 +1,4 @@
-package kingdefense.frontend;
+package kingdefense.frontend.game;
 
 import static com.raylib.Colors.*;
 import static com.raylib.Raylib.*;
@@ -8,18 +8,23 @@ import java.util.ArrayList;
 import org.bytedeco.javacpp.IntPointer;
 
 import kingdefense.backend.Game;
-import kingdefense.backend.board.*;
+import kingdefense.backend.board.Board;
+import kingdefense.backend.board.CoinTile;
 import kingdefense.backend.pieces.*;
-import kingdefense.frontend.ui.*;
+import kingdefense.frontend.CameraManager;
+import kingdefense.frontend.ModelsManager;
+import kingdefense.frontend.ShadersManager;
+import kingdefense.frontend.ui.AvailablePiecesBox;
+import kingdefense.frontend.ui.WaveBox;
 
-public class DrawingManager {
+public class GameDrawer {
     private Color backgroundColor;
     private Color menusBackgroundColor;
     private Color healthColor;
     private ModelsManager modelsManager;
 	private ShadersManager shadersManager;
 
-	public DrawingManager() {
+	public GameDrawer() {
         backgroundColor = new Color().r((byte) 51).g((byte) 51).b((byte) 51).a((byte) 255);
         menusBackgroundColor = new Color().r((byte) 37).g((byte) 37).b((byte) 37).a((byte) 255);
         healthColor = new Color().r((byte) 195).g((byte) 88).b((byte) 51).a((byte) 255);

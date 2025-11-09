@@ -4,8 +4,6 @@ import static com.raylib.Raylib.*;
 
 import java.util.ArrayList;
 
-import com.raylib.Raylib.Color;
-
 import kingdefense.backend.Game;
 import kingdefense.backend.pieces.BlackPiece;
 import kingdefense.frontend.ModelsManager;
