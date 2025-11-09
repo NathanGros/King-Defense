@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 import kingdefense.backend.Game;
 import kingdefense.backend.pieces.BlackPiece;
+import kingdefense.frontend.Colors;
 import kingdefense.frontend.ModelsManager;
 import kingdefense.frontend.PieceRenderer;
 import kingdefense.frontend.ShadersManager;
@@ -126,9 +127,9 @@ public class WaveBox {
         }
     }
 
-    public void draw(Game game, Color menusBackgroundColor, Color startWaveButtonColor) {
-        DrawRectangle(x, y, width, height, menusBackgroundColor);
-        startWaveButton.draw(startWaveButtonColor);
+    public void draw(Game game) {
+        DrawRectangle(x, y, width, height, Colors.buttonBackgroundColor);
+        startWaveButton.draw();
         drawWavePieces(game.getBoard().getBlackKing().getStockPieces());
     }
 }

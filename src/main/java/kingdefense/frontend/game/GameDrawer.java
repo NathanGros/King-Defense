@@ -1,6 +1,5 @@
 package kingdefense.frontend.game;
 
-import static com.raylib.Colors.*;
 import static com.raylib.Raylib.*;
 
 import java.util.ArrayList;
@@ -12,22 +11,17 @@ import kingdefense.backend.board.Board;
 import kingdefense.backend.board.CoinTile;
 import kingdefense.backend.pieces.*;
 import kingdefense.frontend.CameraManager;
+import kingdefense.frontend.Colors;
 import kingdefense.frontend.ModelsManager;
 import kingdefense.frontend.ShadersManager;
 import kingdefense.frontend.ui.AvailablePiecesBox;
 import kingdefense.frontend.ui.WaveBox;
 
 public class GameDrawer {
-    private Color backgroundColor;
-    private Color menusBackgroundColor;
-    private Color healthColor;
     private ModelsManager modelsManager;
 	private ShadersManager shadersManager;
 
 	public GameDrawer() {
-        backgroundColor = new Color().r((byte) 51).g((byte) 51).b((byte) 51).a((byte) 255);
-        menusBackgroundColor = new Color().r((byte) 37).g((byte) 37).b((byte) 37).a((byte) 255);
-        healthColor = new Color().r((byte) 195).g((byte) 88).b((byte) 51).a((byte) 255);
         modelsManager = new ModelsManager();
         shadersManager = new ShadersManager();
     }
@@ -54,7 +48,7 @@ public class GameDrawer {
             modelsManager.getChessBoardModel(),
             new Vector3().x(3.5f).y(0.f).z(3.5f),
             8.f,
-            WHITE
+            Colors.white
         );
     }
 
@@ -64,7 +58,7 @@ public class GameDrawer {
                 modelsManager.getCoinsModel(coin.getNbCoins()),
                 new Vector3().x(coin.getX()).y(0.f).z(coin.getY()),
                 1.f,
-                WHITE
+                Colors.white
             );
         }
     }
@@ -75,7 +69,7 @@ public class GameDrawer {
                 modelsManager.getPieceModel("WhiteKing"),
                 new Vector3().x(whiteKing.getTile().getX()).y(0.f).z(whiteKing.getTile().getY()),
                 1.f,
-                WHITE
+                Colors.white
             );
 	}
 
@@ -84,7 +78,7 @@ public class GameDrawer {
             modelsManager.getPieceModel("BlackKing"),
             new Vector3().x(blackKing.getTile().getX()).y(0.f).z(blackKing.getTile().getY()),
             1.f,
-            WHITE
+            Colors.white
         );
 	}
 
@@ -94,7 +88,7 @@ public class GameDrawer {
                 modelsManager.getPieceModel(whitePiece.getPieceType()),
                 new Vector3().x(whitePiece.getTile().getX()).y(0.f).z(whitePiece.getTile().getY()),
                 1.f,
-                WHITE
+                Colors.white
             );
         }
 	}
@@ -105,7 +99,7 @@ public class GameDrawer {
                 modelsManager.getPieceModel(blackPiece.getPieceType()),
                 new Vector3().x(blackPiece.getTile().getX()).y(0.f).z(blackPiece.getTile().getY()),
                 1.f,
-                WHITE
+                Colors.white
             );
         }
 	}
@@ -125,12 +119,12 @@ public class GameDrawer {
         int healthBarWidth = GetScreenWidth() - 2 * healthBarStartX;
         int healthBarHeight = GetScreenHeight() / 50;
         int healthWidth = healthBarWidth * whiteKing.getHealth() / whiteKing.getMaxHealth();
-        DrawRectangle(healthBarStartX, healthBarStartY, healthBarWidth, healthBarHeight, menusBackgroundColor);
-        DrawRectangle(healthBarStartX, healthBarStartY, healthWidth, healthBarHeight, healthColor);
+        DrawRectangle(healthBarStartX, healthBarStartY, healthBarWidth, healthBarHeight, Colors.buttonBackgroundColor);
+        DrawRectangle(healthBarStartX, healthBarStartY, healthWidth, healthBarHeight, Colors.red);
     }
 
     private void drawEarnedCoins(Integer coins) {
-        DrawText(coins.toString(), GetScreenWidth() * 18 / 20, GetScreenHeight() / 13, 30, YELLOW);
+        DrawText(coins.toString(), GetScreenWidth() * 18 / 20, GetScreenHeight() / 13, 30, Colors.yellow);
     }
 
     public void drawGame(Game game, CameraManager cameraManager, AvailablePiecesBox availablePiecesBox, WaveBox waveBox) {
@@ -139,7 +133,7 @@ public class GameDrawer {
             Matrix lightView;
             Matrix lightProj;
             BeginTextureMode(shadersManager.getShadowMap());
-                ClearBackground(WHITE);
+                ClearBackground(Colors.white);
                 BeginMode3D(shadersManager.getLightCamera());
                     lightView = rlGetMatrixModelview();
                     lightProj = rlGetMatrixProjection();
@@ -148,7 +142,7 @@ public class GameDrawer {
             EndTextureMode();
             Matrix lightViewProj = MatrixMultiply(lightView, lightProj);
 
-            ClearBackground(backgroundColor);
+            ClearBackground(Colors.backgroundColor);
             SetShaderValueMatrix(shadersManager.getShaders(), shadersManager.getLightVPLoc(), lightViewProj);
             rlEnableShader(shadersManager.getShaders().id());
             IntPointer slot = new IntPointer(1); // Can be anything 0 to 15, but 0 will probably be taken up
@@ -162,8 +156,8 @@ public class GameDrawer {
             EndMode3D();
             // Draw UI
             drawHealth(game.getBoard().getWhiteKing());
-            waveBox.draw(game, menusBackgroundColor, healthColor);
-            availablePiecesBox.draw(game.getBoard().getWhiteKing(), game.getAvailableWhitePieces(), menusBackgroundColor);
+            waveBox.draw(game);
+            availablePiecesBox.draw(game.getBoard().getWhiteKing(), game.getAvailableWhitePieces());
             drawEarnedCoins(game.getNbCoins());
         EndDrawing();
     }

@@ -7,6 +7,7 @@ import java.util.HashMap;
 
 import kingdefense.backend.Game;
 import kingdefense.backend.pieces.*;
+import kingdefense.frontend.Colors;
 import kingdefense.frontend.ModelsManager;
 import kingdefense.frontend.PieceRenderer;
 import kingdefense.frontend.ShadersManager;
@@ -98,7 +99,7 @@ public class AvailablePiecesBox {
         }
     }
 
-    public void draw(WhiteKing whiteKing, ArrayList<WhitePiece> availableWhitePieces, Color menusBackgroundColor) {
+    public void draw(WhiteKing whiteKing, ArrayList<WhitePiece> availableWhitePieces) {
         HashMap<String, Integer> pieceCount = new HashMap<>();
         pieceCount.put("WhiteKing", 0);
         pieceCount.put("WhiteQueen", 0);
@@ -113,7 +114,7 @@ public class AvailablePiecesBox {
         for (WhitePiece whitePiece: availableWhitePieces) {
             pieceCount.put(whitePiece.getPieceType(), pieceCount.get(whitePiece.getPieceType()) + 1);
         }
-        DrawRectangle(x, y, width, height, menusBackgroundColor);
+        DrawRectangle(x, y, width, height, Colors.buttonBackgroundColor);
         for (WhitePieceButton pieceButton: whitePieceButtons) {
             pieceButton.draw(
                 false,

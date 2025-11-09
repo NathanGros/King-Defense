@@ -1,6 +1,5 @@
 package kingdefense.frontend;
 
-import static com.raylib.Colors.*;
 import static com.raylib.Raylib.*;
 
 public class PieceRenderer {
@@ -19,9 +18,9 @@ public class PieceRenderer {
         RenderTexture pieceRenderTexture = LoadRenderTexture(pieceWidth, pieceHeight);
         pieceCamera._position(Vector3Add(pieceCamera.target(), Vector3Scale(new Vector3().x(0).y(2.5f).z(7), distance)));
         BeginTextureMode(pieceRenderTexture);
-            ClearBackground(BLANK);
+            ClearBackground(Colors.transparent);
             BeginMode3D(pieceCamera);
-                DrawModel(pieceModel, new Vector3().x(0).y(0).z(0), 1.0f, WHITE);
+                DrawModel(pieceModel, new Vector3().x(0).y(0).z(0), 1.0f, Colors.white);
             EndMode3D();
         EndTextureMode();
         return pieceRenderTexture;

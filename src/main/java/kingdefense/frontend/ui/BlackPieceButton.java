@@ -1,9 +1,9 @@
 package kingdefense.frontend.ui;
 
-import static com.raylib.Colors.*;
 import static com.raylib.Raylib.*;
 
 import kingdefense.backend.Game;
+import kingdefense.frontend.Colors;
 
 public class BlackPieceButton extends Button {
     private String name;
@@ -33,7 +33,7 @@ public class BlackPieceButton extends Button {
             .y(y)
             .width(width)
             .height(height);
-        DrawTexturePro(modelTexture, sourceRec, destRec, new Vector2().x(0).y(0), 0, WHITE);
+        DrawTexturePro(modelTexture, sourceRec, destRec, new Vector2().x(0).y(0), 0, Colors.white);
     }
 
     public void unload() {
@@ -43,5 +43,4 @@ public class BlackPieceButton extends Button {
 	public void activate(Game game) {
 		// TODO ennemy info
 	}
-    
 }

@@ -2,8 +2,6 @@ package kingdefense.frontend.ui;
 
 import static com.raylib.Raylib.*;
 
-import kingdefense.backend.Game;
-
 public abstract class Button {
     protected Integer x;
     protected Integer y;
