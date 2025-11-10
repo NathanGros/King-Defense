@@ -125,10 +125,10 @@ public class GameDrawer {
     }
 
     private void drawEarnedCoins(Integer coins) {
-        DrawText(coins.toString(), GetScreenWidth() * 18 / 20, GetScreenHeight() / 13, 30, Colors.yellow);
+        DrawText(coins.toString(), GetScreenWidth() * 17 / 20, GetScreenHeight() / 13, 30, Colors.yellow);
     }
 
-    public void drawGame(Game game, CameraManager cameraManager, AvailablePiecesBox availablePiecesBox, WaveBox waveBox, TextButton exitButton) {
+    public void drawGame(Game game, CameraManager cameraManager, AvailablePiecesBox availablePiecesBox, WaveBox waveBox, TextButton exitButton, TextButton shopButton) {
         SetShaderValue(shadersManager.getShaders(), shadersManager.getShaders().locs().get(SHADER_LOC_VECTOR_VIEW), cameraManager.getCamera()._position(), SHADER_UNIFORM_VEC3);
         BeginDrawing();
             // Draw board
@@ -162,6 +162,7 @@ public class GameDrawer {
             waveBox.draw(game);
             availablePiecesBox.draw(game.getBoard().getWhiteKing(), game.getAvailableWhitePieces());
             drawEarnedCoins(game.getNbCoins());
+            shopButton.draw();
             exitButton.draw();
         EndDrawing();
     }

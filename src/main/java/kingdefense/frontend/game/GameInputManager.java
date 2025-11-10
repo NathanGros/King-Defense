@@ -105,11 +105,18 @@ public class GameInputManager {
             game.stopGame();
     }
 
-    public void checkNotWaveInputs(Game game, Camera3D camera, AvailablePiecesBox availablePiecesBox, WaveBox waveBox) {
+    private void checkEnterShop(Game game, TextButton shopButton) {
+        if (shopButton.isClicked()) {
+            game.startShop();
+        }
+    }
+
+    public void checkNotWaveInputs(Game game, Camera3D camera, AvailablePiecesBox availablePiecesBox, WaveBox waveBox, TextButton shopButton) {
         checkPutWhitePiece(game, camera);
         checkRemoveWhitePiece(game, camera);
         availablePiecesBox.checkWhitePieceChange(game);
         waveBox.checkStartWave(game);
+        checkEnterShop(game, shopButton);
     }
 
     public void checkAllTimeInputs(Game game, Camera3D camera, WaveBox waveBox, TextButton exitButton) {

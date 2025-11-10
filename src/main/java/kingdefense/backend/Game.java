@@ -13,6 +13,8 @@ import kingdefense.frontend.game.GameScreen;
 public class Game {
     private GameScreen gameScreen;
 	private boolean isGameRunning;
+    private Shop shop;
+	private boolean isShopRunning;
     private Board board;
     private Integer waveNb;
     private boolean isInWave;
@@ -24,6 +26,7 @@ public class Game {
 	public Game() {
         gameScreen = new GameScreen();
         isGameRunning = true;
+        isShopRunning = false;
         board = new Board(50);
         waveNb = 20;
         isInWave = false;
@@ -76,6 +79,7 @@ public class Game {
         addAvailableWhitePiece(new WhiteQueen());
         gameScreen.launchGameScreen();
         fillWaveStock();
+        shop = new Shop();
         gameLoop();
     }
 
@@ -233,6 +237,10 @@ public class Game {
         }
     }
 
+    public void startShop() {
+        isShopRunning = true;
+    }
+
     public void gameLoop() {
         float timerPlayerAction = 1.f;
         while (isGameRunning) {
@@ -255,6 +263,10 @@ public class Game {
             }
             else {
                 timerPlayerAction = 1.f;
+            }
+            if (isShopRunning) {
+                shop.startShop();
+                isShopRunning = false;
             }
         }
     }

@@ -18,6 +18,7 @@ public class GameScreen {
     private AvailablePiecesBox availablePiecesBox;
     private WaveBox waveBox;
     private TextButton exitButton;
+    private TextButton shopButton;
 
     public GameScreen() {
         cameraManager = new CameraManager();
@@ -34,6 +35,13 @@ public class GameScreen {
             GetScreenWidth() / 7,
             GetScreenHeight() / 12,
             "Back"
+        );
+        shopButton = new TextButton(
+            GetScreenWidth() * 19 / 20 - GetScreenHeight() / 12,
+            GetScreenHeight() / 24,
+            GetScreenHeight() / 12,
+            GetScreenHeight() / 12,
+            "Shop"
         );
     }
 
@@ -55,12 +63,12 @@ public class GameScreen {
 
     public void interactScreen(Game game) {
         if (!game.isInWave()) {
-            gameInputManager.checkNotWaveInputs(game, cameraManager.getCamera(), availablePiecesBox, waveBox);
+            gameInputManager.checkNotWaveInputs(game, cameraManager.getCamera(), availablePiecesBox, waveBox, shopButton);
         }
         gameInputManager.checkAllTimeInputs(game, cameraManager.getCamera(), waveBox, exitButton);
     }
 
     public void drawScreen(Game game) {
-        gameDrawer.drawGame(game, cameraManager, availablePiecesBox, waveBox, exitButton);
+        gameDrawer.drawGame(game, cameraManager, availablePiecesBox, waveBox, exitButton, shopButton);
     }
 }
