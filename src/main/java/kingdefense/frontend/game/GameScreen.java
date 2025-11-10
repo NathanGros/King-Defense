@@ -1,9 +1,13 @@
 package kingdefense.frontend.game;
 
+import static com.raylib.Raylib.GetScreenWidth;
+import static com.raylib.Raylib.GetScreenHeight;
+
 import kingdefense.backend.Game;
 import kingdefense.frontend.CameraManager;
 import kingdefense.frontend.PieceRenderer;
 import kingdefense.frontend.ui.AvailablePiecesBox;
+import kingdefense.frontend.ui.TextButton;
 import kingdefense.frontend.ui.WaveBox;
 
 public class GameScreen {
@@ -13,6 +17,7 @@ public class GameScreen {
     private GameInputManager gameInputManager;
     private AvailablePiecesBox availablePiecesBox;
     private WaveBox waveBox;
+    private TextButton exitButton;
 
     public GameScreen() {
         cameraManager = new CameraManager();
@@ -23,6 +28,13 @@ public class GameScreen {
     private void initUiElements() {
         availablePiecesBox = new AvailablePiecesBox(gameDrawer.getModelsManager(), gameDrawer.getShadersManager(), pieceRenderer);
         waveBox = new WaveBox(gameDrawer.getModelsManager(), gameDrawer.getShadersManager(), pieceRenderer);
+        exitButton = new TextButton(
+            GetScreenWidth() / 20,
+            GetScreenHeight() / 24,
+            GetScreenWidth() / 7,
+            GetScreenHeight() / 12,
+            "Back"
+        );
     }
 
     public void launchGameScreen() {
@@ -42,14 +54,13 @@ public class GameScreen {
 	}
 
     public void interactScreen(Game game) {
-        gameInputManager.checkWaveBoxScroll(waveBox);
         if (!game.isInWave()) {
             gameInputManager.checkNotWaveInputs(game, cameraManager.getCamera(), availablePiecesBox, waveBox);
         }
-        gameInputManager.checkAllTimeInputs(game, cameraManager.getCamera());
+        gameInputManager.checkAllTimeInputs(game, cameraManager.getCamera(), waveBox, exitButton);
     }
 
     public void drawScreen(Game game) {
-        gameDrawer.drawGame(game, cameraManager, availablePiecesBox, waveBox);
+        gameDrawer.drawGame(game, cameraManager, availablePiecesBox, waveBox, exitButton);
     }
 }

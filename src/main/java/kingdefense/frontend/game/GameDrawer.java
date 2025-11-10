@@ -15,6 +15,7 @@ import kingdefense.frontend.Colors;
 import kingdefense.frontend.ModelsManager;
 import kingdefense.frontend.ShadersManager;
 import kingdefense.frontend.ui.AvailablePiecesBox;
+import kingdefense.frontend.ui.TextButton;
 import kingdefense.frontend.ui.WaveBox;
 
 public class GameDrawer {
@@ -127,9 +128,10 @@ public class GameDrawer {
         DrawText(coins.toString(), GetScreenWidth() * 18 / 20, GetScreenHeight() / 13, 30, Colors.yellow);
     }
 
-    public void drawGame(Game game, CameraManager cameraManager, AvailablePiecesBox availablePiecesBox, WaveBox waveBox) {
+    public void drawGame(Game game, CameraManager cameraManager, AvailablePiecesBox availablePiecesBox, WaveBox waveBox, TextButton exitButton) {
         SetShaderValue(shadersManager.getShaders(), shadersManager.getShaders().locs().get(SHADER_LOC_VECTOR_VIEW), cameraManager.getCamera()._position(), SHADER_UNIFORM_VEC3);
         BeginDrawing();
+            // Draw board
             Matrix lightView;
             Matrix lightProj;
             BeginTextureMode(shadersManager.getShadowMap());
@@ -154,11 +156,13 @@ public class GameDrawer {
             BeginMode3D(cameraManager.getCamera());
                 drawBoard(game.getBoard());
             EndMode3D();
+
             // Draw UI
             drawHealth(game.getBoard().getWhiteKing());
             waveBox.draw(game);
             availablePiecesBox.draw(game.getBoard().getWhiteKing(), game.getAvailableWhitePieces());
             drawEarnedCoins(game.getNbCoins());
+            exitButton.draw();
         EndDrawing();
     }
 }

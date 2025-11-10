@@ -8,6 +8,7 @@ import kingdefense.backend.Game;
 import kingdefense.backend.board.CoinTile;
 import kingdefense.backend.board.Tile;
 import kingdefense.frontend.ui.AvailablePiecesBox;
+import kingdefense.frontend.ui.TextButton;
 import kingdefense.frontend.ui.WaveBox;
 
 public class GameInputManager {
@@ -99,8 +100,8 @@ public class GameInputManager {
             waveBox.scrollUp();
     }
 
-    private void checkStopGame(Game game) {
-        if (IsKeyPressed(KEY_ESCAPE))
+    private void checkStopGame(Game game, TextButton exitButton) {
+        if (exitButton.isClicked())
             game.stopGame();
     }
 
@@ -111,8 +112,9 @@ public class GameInputManager {
         waveBox.checkStartWave(game);
     }
 
-    public void checkAllTimeInputs(Game game, Camera3D camera) {
+    public void checkAllTimeInputs(Game game, Camera3D camera, WaveBox waveBox, TextButton exitButton) {
+        checkWaveBoxScroll(waveBox);
         collectCoins(game, camera);
-        checkStopGame(game);
+        checkStopGame(game, exitButton);
     }
 }
