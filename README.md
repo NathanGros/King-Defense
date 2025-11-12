@@ -1,8 +1,8 @@
 # King-Defense
-A chess inspired Tower defense game
+A chess inspired Tower defense game, made in Java with Raylib.
 
-The ennemy (black) spawns ennemies (black pieces) during waves. These ennemies will try to hurt your white king.
+Black spawns enemies (black pieces) during waves. These enemies will try to hurt your white king.
 
-To stop them, you can place towers (white pieces) with special abilities, and collect coins when the ennemies die.
+To stop them, you can place towers (white pieces) with special abilities, and collect coins when the enemies die.
 
 With these, you can buy upgrades, survive longer and repeat !
