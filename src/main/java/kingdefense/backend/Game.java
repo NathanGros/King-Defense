@@ -3,6 +3,7 @@ package kingdefense.backend;
 import static com.raylib.Raylib.GetFrameTime;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import kingdefense.backend.board.*;
@@ -17,6 +18,7 @@ public class Game {
 	private boolean isShopRunning;
     private Board board;
     private Integer waveNb;
+    private ArrayList<Float> thresholds = new ArrayList<>(Arrays.asList(0.1f, 0.0f, 0.0f, 0.0f, 0.0f));
     private boolean isInWave;
 	private boolean isBlackTurn;
     private Integer nbCoins;
@@ -28,7 +30,7 @@ public class Game {
         isGameRunning = true;
         isShopRunning = false;
         board = new Board(50);
-        waveNb = 20;
+        waveNb = 1;
         isInWave = false;
         isBlackTurn = false;
         nbCoins = 0;
@@ -160,40 +162,59 @@ public class Game {
         fillWaveStock();
     }
 
-    public void fillWaveStock() {
-        float pawnProbability = 0.3f;
-        float knightProbability = 0.25f;
-        float bishopProbability = 0.20f;
-        float rookProbability = 0.20f;
-        float queenProbability = 0.05f;
+    private void updateThresholds() {
+        Float sum = 0.f;
+        for (Float val: thresholds) {
+            sum += val;
+        }
+        Integer pieceType;
+        if (waveNb < 3) {
+            return;
+        }
+        else if (waveNb < 5) {
+            pieceType = new Random().nextInt(2);
+        }
+        else if (waveNb < 8) {
+            pieceType = new Random().nextInt(3);
+        }
+        else if (waveNb < 10) {
+            pieceType = new Random().nextInt(4);
+        }
+        else {
+            pieceType = new Random().nextInt(5);
+        }
+        thresholds.set(pieceType, thresholds.get(pieceType) + sum * 0.1f);
+    }
+
+    private void fillWaveStock() {
+        updateThresholds();
+        float sum = 0.f;
+        for (Float val: thresholds) {
+            sum += val;
+        }
         for (int i = 0; i < waveNb; i++) {
-            float probabilityResult = new Random().nextFloat();
-            float probabilityThreshold = pawnProbability;
+            float probabilityResult = new Random().nextFloat() * sum;
+            float probabilityThreshold = thresholds.get(0);
             if (probabilityResult <= probabilityThreshold) {
                 board.getBlackKing().addStockPiece(new BlackPawn(), gameScreen.getWaveBox());
                 continue;
             }
-            probabilityThreshold += knightProbability;
+            probabilityThreshold += thresholds.get(1);
             if (probabilityResult <= probabilityThreshold) {
                 board.getBlackKing().addStockPiece(new BlackKnight(), gameScreen.getWaveBox());
                 continue;
             }
-            probabilityThreshold += bishopProbability;
+            probabilityThreshold += thresholds.get(2);
             if (probabilityResult <= probabilityThreshold) {
                 board.getBlackKing().addStockPiece(new BlackBishop(), gameScreen.getWaveBox());
                 continue;
             }
-            probabilityThreshold += rookProbability;
+            probabilityThreshold += thresholds.get(3);
             if (probabilityResult <= probabilityThreshold) {
                 board.getBlackKing().addStockPiece(new BlackRook(), gameScreen.getWaveBox());
                 continue;
             }
-            probabilityThreshold += queenProbability;
-            if (probabilityResult <= probabilityThreshold) {
-                board.getBlackKing().addStockPiece(new BlackQueen(), gameScreen.getWaveBox());
-                continue;
-            }
-            System.out.println("Error generating wave: Total probability is over 1.0f");
+            board.getBlackKing().addStockPiece(new BlackQueen(), gameScreen.getWaveBox());
         }
     }
 
