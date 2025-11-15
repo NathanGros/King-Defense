@@ -183,7 +183,7 @@ public class Game {
         else {
             pieceType = new Random().nextInt(5);
         }
-        thresholds.set(pieceType, thresholds.get(pieceType) + sum * 0.1f);
+        thresholds.set(pieceType, thresholds.get(pieceType) + sum * 0.5f);
     }
 
     private void fillWaveStock() {
