@@ -81,7 +81,7 @@ public class Game {
         addAvailableWhitePiece(new WhiteQueen());
         gameScreen.launchGameScreen();
         fillWaveStock();
-        shop = new Shop();
+        shop = new Shop(this);
         gameLoop();
     }
 

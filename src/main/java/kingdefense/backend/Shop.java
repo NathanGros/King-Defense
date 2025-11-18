@@ -5,10 +5,12 @@ import kingdefense.frontend.shop.ShopScreen;
 public class Shop {
     private ShopScreen shopScreen;
     private boolean isShopRunning;
+    private Game game;
 
-    public Shop() {
+    public Shop(Game game) {
         shopScreen = new ShopScreen();
         isShopRunning = true;
+        this.game = game;
     }
 
     public void startShop() {
@@ -23,7 +25,7 @@ public class Shop {
     public void shopLoop() {
         while (isShopRunning) {
             shopScreen.drawScreen();
-            shopScreen.interactScreen(this);
+            shopScreen.interactScreen(this, game);
         }
     }
 }
