@@ -12,13 +12,37 @@ public class ShopInputManager {
     public ShopInputManager() {
     }
 
-    private void buttonAction(Game game, Integer id) {
-        switch (id) {
+    private void buttonAction(Game game, ShopButton shopButton) {
+        switch (shopButton.getId()) {
             case 0:
-                game.addAvailableWhitePiece(new WhitePawn());
+                try {
+                    game.removeCoins(shopButton.getCost());
+                    game.addAvailableWhitePiece(new WhitePawn());
+                } catch (IllegalArgumentException e) {}
                 break;
             case 1:
-                game.addAvailableWhitePiece(new WhiteKnight());
+                try {
+                    game.removeCoins(shopButton.getCost());
+                    game.addAvailableWhitePiece(new WhiteKnight());
+                } catch (IllegalArgumentException e) {}
+                break;
+            case 2:
+                try {
+                    game.removeCoins(shopButton.getCost());
+                    game.addAvailableWhitePiece(new WhiteBishop());
+                } catch (IllegalArgumentException e) {}
+                break;
+            case 3:
+                try {
+                    game.removeCoins(shopButton.getCost());
+                    game.addAvailableWhitePiece(new WhiteRook());
+                } catch (IllegalArgumentException e) {}
+                break;
+            case 4:
+                try {
+                    game.removeCoins(shopButton.getCost());
+                    game.addAvailableWhitePiece(new WhiteQueen());
+                } catch (IllegalArgumentException e) {}
                 break;
             default:
                 break;
@@ -32,7 +56,7 @@ public class ShopInputManager {
         }
         for (ShopButton shopButton: shopButtons) {
             if (shopButton.isClicked()) {
-                buttonAction(game, shopButton.getId());
+                buttonAction(game, shopButton);
             }
         }
     }

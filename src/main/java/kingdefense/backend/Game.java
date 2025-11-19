@@ -21,7 +21,7 @@ public class Game {
     private ArrayList<Float> thresholds = new ArrayList<>(Arrays.asList(0.1f, 0.0f, 0.0f, 0.0f, 0.0f));
     private boolean isInWave;
 	private boolean isBlackTurn;
-    private Integer nbCoins;
+    private Integer bank;
     private ArrayList<WhitePiece> availableWhitePieces;
     private String selectedWhitePiece;
 
@@ -33,7 +33,7 @@ public class Game {
         waveNb = 1;
         isInWave = false;
         isBlackTurn = false;
-        nbCoins = 0;
+        bank = 0;
         availableWhitePieces = new ArrayList<>();
         selectedWhitePiece = "WhiteKing";
     }
@@ -44,14 +44,19 @@ public class Game {
     public boolean isInWave() {
 		return isInWave;
 	}
-    public Integer getNbCoins() {
-		return nbCoins;
+    public Integer getBank() {
+		return bank;
 	}
-	public void setNbCoins(Integer nbCoins) {
-		this.nbCoins = nbCoins;
+	public void setBank(Integer nbCoins) {
+		this.bank = nbCoins;
 	}
 	public void addCoins(Integer nbCoins) {
-		this.nbCoins += nbCoins;
+		this.bank += nbCoins;
+	}
+	public void removeCoins(Integer nbCoins) throws IllegalArgumentException {
+        if (this.bank < nbCoins)
+            throw new IllegalArgumentException("Not enough coins in the bank");
+		this.bank -= nbCoins;
 	}
     public void addAvailableWhitePiece(WhitePiece whitePiece) {
         availableWhitePieces.add(whitePiece);
@@ -130,7 +135,6 @@ public class Game {
         ArrayList<Tile> visited = new ArrayList<>();
         visiting.add(blackKingTile);
         while (!visiting.isEmpty()) {
-            System.out.println(visiting.size());
             // End BFS
             if (visiting.getFirst().isSamePlace(whiteKingTile)) {
                 return true;

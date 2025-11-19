@@ -1,8 +1,6 @@
 package kingdefense.frontend.shop;
 
-import static com.raylib.Raylib.BeginDrawing;
-import static com.raylib.Raylib.ClearBackground;
-import static com.raylib.Raylib.EndDrawing;
+import static com.raylib.Raylib.*;
 
 import java.util.ArrayList;
 
@@ -15,13 +13,18 @@ public class ShopDrawer {
     public ShopDrawer() {
     }
 
-    public void draw(TextButton exitButton, ArrayList<ShopButton> shopButtons) {
+    private void drawEarnedCoins(Integer coins) {
+        DrawText(coins.toString(), GetScreenWidth() * 17 / 20, GetScreenHeight() / 13, 30, Colors.yellow);
+    }
+
+    public void draw(TextButton exitButton, ArrayList<ShopButton> shopButtons, Integer bank) {
         BeginDrawing();
         ClearBackground(Colors.backgroundColor);
         exitButton.draw();
         for (ShopButton shopButton: shopButtons) {
             shopButton.draw();
         }
+        drawEarnedCoins(bank);
         EndDrawing();
     }
 }

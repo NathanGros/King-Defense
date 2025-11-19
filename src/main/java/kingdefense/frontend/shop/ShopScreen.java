@@ -27,25 +27,26 @@ public class ShopScreen {
     }
 
     private void initShopButtons() {
-        Integer boxButtonNbWidth = 2;
-        Integer boxButtonNbHeight = 1;
+        Integer boxNbX = 3;
+        Integer boxNbY = 2;
+        Integer buttonBorder = GetScreenWidth() / 20;
         Integer boxX = GetScreenWidth() / 10;
         Integer boxY = GetScreenHeight() / 6;
         Integer boxWidth = GetScreenWidth() - boxX * 2;
-        Integer boxHeight = GetScreenHeight() - boxY * 2;
+        Integer boxHeight = GetScreenHeight() - boxY * 3;
         shopButtons = new ArrayList<>();
-        for (int i = 0; i < 2; i++) {
+        for (int i = 0; i < 5; i++) {
             shopButtons.add(new ShopButton(i, 
-                boxX + (i % boxButtonNbWidth) * boxWidth / boxButtonNbWidth,
-                boxY + (i / boxButtonNbWidth) * boxHeight / boxButtonNbHeight,
-                boxWidth / boxButtonNbWidth,
-                boxHeight / boxButtonNbHeight
+                boxX + (i % boxNbX) * boxWidth / boxNbX + buttonBorder / 2,
+                boxY + (i / boxNbX) * boxHeight / boxNbY + buttonBorder / 2,
+                boxWidth / boxNbX - buttonBorder,
+                boxHeight / boxNbY - buttonBorder
             ));
         }
     }
 
-    public void drawScreen() {
-        shopDrawer.draw(exitButton, shopButtons);
+    public void drawScreen(Game game) {
+        shopDrawer.draw(exitButton, shopButtons, game.getBank());
     }
 
     public void interactScreen(Shop shop, Game game) {

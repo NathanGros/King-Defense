@@ -22,6 +22,9 @@ public class ShopButton extends Button {
     public Integer getId() {
         return id;
     }
+    public Integer getCost() {
+        return cost;
+    }
 
     public void draw() {
         DrawRectangle(x, y, width, height, Colors.buttonBackgroundColor);

@@ -24,7 +24,7 @@ public class Shop {
 
     public void shopLoop() {
         while (isShopRunning) {
-            shopScreen.drawScreen();
+            shopScreen.drawScreen(game);
             shopScreen.interactScreen(this, game);
         }
     }

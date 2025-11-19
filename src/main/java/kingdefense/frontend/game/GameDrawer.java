@@ -161,7 +161,7 @@ public class GameDrawer {
             drawHealth(game.getBoard().getWhiteKing());
             waveBox.draw(game);
             availablePiecesBox.draw(game.getBoard().getWhiteKing(), game.getAvailableWhitePieces());
-            drawEarnedCoins(game.getNbCoins());
+            drawEarnedCoins(game.getBank());
             shopButton.draw();
             exitButton.draw();
         EndDrawing();
