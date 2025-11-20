@@ -5,4 +5,4 @@ Black spawns enemies (black pieces) during waves. These enemies will try to hurt
 
 To stop them, you can place towers (white pieces) with special abilities, and collect coins when the enemies die.
 
-With these, you can buy permanent upgrades, buy new pieces in shop, survive longer and repeat !
+With these, you can buy permanent upgrades, buy new pieces or upgrades in shop, survive longer and repeat !
