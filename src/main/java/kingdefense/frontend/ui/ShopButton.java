@@ -16,7 +16,7 @@ public class ShopButton extends Button {
         this.cost = cost;
     }
     public ShopButton(Integer id, Integer x, Integer y, Integer width, Integer height) {
-        this(id, x, y, width, height, 1);
+        this(id, x, y, width, height, 0);
     }
 
     public Integer getId() {
@@ -24,6 +24,9 @@ public class ShopButton extends Button {
     }
     public Integer getCost() {
         return cost;
+    }
+    public void setCost(Integer cost) {
+        this.cost = cost;
     }
 
     public void draw() {

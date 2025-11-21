@@ -43,6 +43,11 @@ public class ShopScreen {
                 boxHeight / boxNbY - buttonBorder
             ));
         }
+        shopButtons.get(0).setCost(3);
+        shopButtons.get(1).setCost(8);
+        shopButtons.get(2).setCost(10);
+        shopButtons.get(3).setCost(15);
+        shopButtons.get(4).setCost(20);
     }
 
     public void drawScreen(Game game) {
